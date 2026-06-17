@@ -1,0 +1,13 @@
+{
+  "name": "vincentgraul",
+  "owner": {
+    "name": "Vincent Graul"
+  },
+  "plugins": [
+    {
+      "name": "claude-workflow",
+      "source": "./",
+      "description": "Chaîne de travail spec-driven : scaffold → spec → jira → orchestrator (contract + front/back en parallèle) → pr. Inclut les subagents et le hook anti-commit sur main/master."
+    }
+  ]
+}
