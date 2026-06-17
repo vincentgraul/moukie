@@ -74,7 +74,7 @@ Applique ces règles par défaut :
 
 - **Figma : lecture autorisée, écriture interdite** → `deny` sur les outils d'écriture, `allow` sur la lecture.
 - **Jira : lecture autorisée, écriture avec permission** → `ask` sur les outils d'écriture.
-- **GitHub: ne jamais merger les PR** → `deny` sur `Bash(gh pr merge:*)` et `Bash(git merge:*)`.
+- **GitHub : ne jamais merger les PR**
 
 ```json
 {
@@ -90,8 +90,7 @@ Applique ces règles par défaut :
       "mcp__figma__use_figma",
       "mcp__figma__upload_assets",
       "mcp__figma__generate_diagram",
-      "Bash(gh pr merge:*)",
-      "Bash(git merge:*)"
+      "Bash(gh pr merge:*)"
     ],
     "ask": [
       "mcp__jira__createJiraIssue",
