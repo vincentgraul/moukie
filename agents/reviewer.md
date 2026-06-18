@@ -12,7 +12,7 @@ Tu es le subagent **reviewer**. Tu relis le code produit et tu rapportes des fin
 - **Sécurité** : injections, secrets exposés, validation manquante, contrôle d'accès.
 - **Réutilisation / simplification** : duplication, complexité inutile, code mort.
 - **Respect du contrat** : le code est-il conforme aux schémas zod gelés ?
-- **Conventions** : cohérence avec le `CLAUDE.md` et le style du projet.
+- **Conventions** : cohérence avec le `CLAUDE.md`, le style du projet, et les **conventions de nommage** (`docs/naming-conventions.md`) — fichiers et symboles. Ne signale que le non-lintable : le casing est déjà garanti par Biome.
 
 **Comment tu rends**
 - Une liste de findings **priorisés** (bloquant / à corriger / suggestion), chacun avec le fichier:ligne et une explication courte.
