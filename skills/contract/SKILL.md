@@ -1,6 +1,7 @@
 ---
 name: contract
-description: Définit, gèle ou fait évoluer le contrat d'interface partagé entre le front et le back — la forme des requêtes, réponses et erreurs de chaque endpoint, en schémas zod. Se déclenche avant de lancer des subagents front et back en parallèle sur une feature qui touche l'API, pour qu'ils codent contre une source unique de vérité sans se marcher dessus.
+description: Définit, gèle ou fait évoluer le contrat d'interface partagé entre le front et le back. la forme des requêtes, réponses et erreurs de chaque endpoint, en schémas zod. Se déclenche avant de lancer des subagents front et back en parallèle sur une feature qui touche l'API, pour qu'ils codent contre une source unique de vérité sans se marcher dessus.
+model: opus
 ---
 
 # Contrat d'interface front/back
@@ -10,11 +11,11 @@ Mène les échanges en **français**.
 
 **Quand l'utiliser** : avant de spawner les subagents front et back sur une story qui touche l'API. Une story front-only ou back-only n'en a **pas besoin**.
 
-**Modèle de gestion — gel strict** : une fois gelé, le contrat est immuable pendant le travail parallèle. Tout changement passe par la Phase 3 (suspension du parallèle), jamais par une édition locale dans un worktree.
+**Modèle de gestion** : une fois gelé, le contrat est immuable pendant le travail parallèle. Tout changement passe par la Phase 3 (suspension du parallèle), jamais par une édition locale dans un worktree.
 
 ---
 
-## Phase 0 — Localisation du contrat
+## Phase 0 — Pré-requis
 
 Détermine où vit le contrat selon le type de repo (lis le `CLAUDE.md`) :
 
@@ -25,7 +26,7 @@ Détermine ensuite si on **crée** un nouveau contrat, on l'**étend**, ou on le
 
 ---
 
-## Phase 1 — Définir & geler (avant le parallèle)
+## Phase 1 — Définition
 
 À partir de la/des story(ies) qui touchent l'API :
 
@@ -35,7 +36,7 @@ Détermine ensuite si on **crée** un nouveau contrat, on l'**étend**, ou on le
 
 ---
 
-## Phase 2 — Travail parallèle (gel strict)
+## Phase 2 — Travail parallèle
 
 Pendant que les subagents front et back tournent dans leurs worktrees isolés, le contrat est **immuable** :
 

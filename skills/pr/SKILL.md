@@ -1,13 +1,14 @@
 ---
 name: pr
 description: Ouvre une pull request GitHub pour la branche courante une fois le ticket terminé. Lance tests et linter (et corrige si besoin), commit et pousse la branche, puis crée la PR via le CLI `gh` avec un titre en conventional commit et un lien vers le ticket Jira. Ne merge jamais la PR.
+model: sonnet
 ---
 
 # Ouverture d'une PR GitHub
 
 Prépare puis ouvre une pull request pour la branche courante. Mène les échanges en **français**.
-La skill **enchaîne le travail elle-même** (tests, lint, commits, push) — elle ne se contente pas de vérifier.
-Elle s'arrête à l'**ouverture de la PR** : ne merge jamais (cohérent avec le `deny gh pr merge` du scaffold).
+La skill **enchaîne le travail elle-même** (tests, lint, commits, push). elle ne se contente pas de vérifier.
+Elle s'arrête à l'**ouverture de la PR** : ne merge jamais.
 
 ---
 
@@ -19,7 +20,7 @@ Elle s'arrête à l'**ouverture de la PR** : ne merge jamais (cohérent avec le 
 
 ---
 
-## Phase 1 — Qualité (tests + lint)
+## Phase 1 — Qualité
 
 - Lance le **linter/formatter** (Biome) puis la **suite de tests** du projet.
 - **En cas d'échec, corrige** et relance jusqu'au vert.
@@ -29,7 +30,7 @@ Elle s'arrête à l'**ouverture de la PR** : ne merge jamais (cohérent avec le 
 
 ## Phase 2 — Commits & push
 
-- Commit les changements restants avec des messages en **conventional commit** (cohérent Lot D), y compris les corrections de la Phase 1.
+- Commit les changements restants avec des messages en **conventional commit**, y compris les corrections de la Phase 1.
 - **Pousse la branche** sur le remote (crée l'upstream si nécessaire avec `git push -u`).
 
 ---

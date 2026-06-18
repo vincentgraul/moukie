@@ -1,6 +1,7 @@
 ---
 name: orchestrator
 description: Implémente une story Jira de bout en bout via des subagents front et back travaillant en parallèle sur des worktrees isolés, autour d'un contrat d'interface gelé. Se déclenche quand l'utilisateur veut implémenter un ticket. Gère une story à la fois : une branche, le contrat si la story est multi-couche, le travail parallèle, l'intégration, la revue, puis le passage à `pr`. Ne merge jamais.
+model: sonnet
 ---
 
 # Orchestrateur d'implémentation parallèle
@@ -21,7 +22,7 @@ N'envoie **aucune** notification pour le progrès de routine. Garde le message s
 
 - Identifie le **ticket Jira cible** (sa clé). Lis-le via le MCP Jira et lis la **story correspondante** dans `specs/<feature>.md`.
 - Détermine les **couches concernées** : **front-only**, **back-only**, ou **front + back**.
-- Crée et bascule sur une **branche dédiée** nommée avec la clé Jira (ex. `PROJ-34-...`), depuis la base à jour. Jamais sur `main`/`master`.
+- Crée et bascule sur une **branche dédiée** nommée avec la clé Jira (ex. `PROJ-34-...`), depuis la base à jour. Jamais sur `main` ou `master`.
 
 ---
 
@@ -46,7 +47,7 @@ Respecte les règles de subagents du scaffold : **writers isolés par worktree**
 
 ## Phase 3 — Arbitrage des changements de contrat
 
-Si un subagent **remonte un besoin de changement d'interface** (au lieu de bricoler un contournement), applique le protocole de `contract` (gel strict) :
+Si un subagent **remonte un besoin de changement de contrat** applique le protocole de `contract` (gel strict) :
 
 1. **Suspends** les lanes concernées.
 2. Amende la **source unique** sur la branche du ticket.
