@@ -1,6 +1,6 @@
 ---
 name: scaffold
-description: Initialise toute la configuration Claude Code d'un projet via un entretien guidé. Se déclenche quand l'utilisateur souhaite créer un nouveau projet ou configurer Claude Code dans un projet existant, afin de générer un CLAUDE.md de qualité plus les subagents, skills, hooks et settings nécessaires.
+description: Initialise toute la configuration Claude Code d'un projet via un entretien guidé. Se déclenche quand l'utilisateur souhaite créer un nouveau projet ou configurer Claude Code dans un projet existant, afin de générer un CLAUDE.md de qualité plus les agents, skills, hooks et settings nécessaires.
 model: opus
 ---
 
@@ -96,64 +96,82 @@ Assure toi que le MCP Jira soit bien connecté.
 
 ## Phase 2 — Architecture
 
-Reprends le fichier canonique du plugin `references/architecture.md`
+### Stratégie de dépôt 
 
-## Phase 2 — Génération du settings.json
+Un projet contenant deux apps ou plus (ex: front et back) sera en **monorepo**. Sinon il sera en repo simple.
 
-Écris `.claude/settings.json` à la racine du projet. **Lis-le d'abord s'il existe déjà et fusionne**, n'écrase jamais des tableaux `allow` / `deny` / `ask` ou `hooks` existants, ajoute aux tableaux.
+---
 
-### Permissions
+### Architecture Front (web & mobile)
+
+L'architecture front suit **Feature-Sliced Design v2.1**.
+Le skill `feature-sliced-design` (embarqué dans le plugin) **fait foi**.
+
+#### Utilisation de steiger
+
+Installe `steiger` et `@feature-sliced/steiger-plugin` en devDependency et ajoute un script `fsd` dans le `package.json` pour l'éxécuter.
+
+---
+
+### Architecture Back
+
+L'architecture back suit **Modular Monolith et Vertical Slice** :
+
+- **Vertical Slice** : le code est organisé par feature (chaque slice contient sa route, sa logique et son accès données), pas par couche technique
+- **Modular Monolith** : les slices sont regroupées en modules (bounded contexts) qui communiquent via leur API publique
+
+## Phase 3 — Génération des fichiers de configuration
+
+### Génération du .claude/settings.json
+
+Si le `.claude/settings.json` n'éxiste pas à la racine du projet crée le, sinon fusionne le avec les règles suivantes :
+
+#### Permissions
 
 Les noms d'outils MCP sont **propres à chaque serveur connecté**. Ne devine pas, ne hardcode pas.
 **Liste d'abord les outils réellement exposés par chaque serveur MCP connecté** (Figma, Jira) et
 classe chacun en **lecture** ou **écriture**.
+
 Applique ensuite les règles ci-dessous à ces noms réels :
 
 - Figma : **lecture autorisée, écriture interdite** → `deny` sur les outils d'écriture, `allow` sur la lecture.
 - Jira : **lecture autorisée, écriture avec permission** → `ask` sur les outils d'écriture.
 - GitHub : **aucun merge sur `master` ou `main` et ne merge jamais les PR**
 
----
+### Génération du biome.json
 
-## Phase 3 — Configuration de Biome
+Si le `biome.json` n'éxiste pas à la racine du projet lance `biome init`, sinon fusionne le en activant les règles suivantes : `useFilenamingConvention`, `useNamingConvention` et `noDefaultExport`.
 
-Configure **Biome** à la racine. Biome est une devDependency parmi d'autres : son installation suit le sort des paquets du `package.json`, ce n'est pas une étape à part.
-
-- **Écris `biome.json`** à la racine. Si un `biome.json` existe déjà, **lis-le et fusionne** plutôt que d'écraser. Mets : formatter activé, `linter.rules.recommended`, plus les règles qui encodent le **sous-ensemble lintable** des conventions (`references/naming-conventions.md`) :
-  - `useFilenamingConvention` réglé sur le casing de fichiers retenu (ex. `kebab-case`),
-  - `useNamingConvention` pour le casing des identifiants,
-  - `noDefaultExport` si la convention impose les named exports.
-  
-  Adapte les règles à la stack et aux conventions **réelles** du projet ; n'active pas de règle que tu ne peux pas justifier.
-- **Câble les scripts** `package.json` : `lint`, `format`, `check` (via `biome`).
-- **Vérifie que la config tourne avant de continuer** : lance `biome check .`. Une erreur de **config** (règle inconnue, JSON invalide) se corrige ici ; des findings lint légitimes, eux, sont normaux.
-- Hook **format-on-write** (`PostToolUse` sur `Write|Edit`) : **optionnel** — propose-le, ne l'impose pas.
+Ajoute un script `check` dans le `package.json` pour éxécuter `biome check`.
+**Vérifie que la configuration fonctionne bien avant de continuer.**
 
 ---
 
-## Phase 4 — Mise en place des subagents
+## Phase 4 — Mise en place des agents
 
-Les subagents sont définis dans le plugin. Assure toi que tu as bien accès aux subagents suivant (sinon, signal le): `backend`, `devops`, `front-mobile`, `front-web`, `QA`, `reviewer`.
+Les agents sont définis dans le plugin. Assure toi que tu as bien accès aux agents suivant (sinon, signal le): `backend`, `devops`, `front-mobile`, `front-web`, `QA`, `reviewer`.
 
-Utilise les subagents requis pour ce projet en prenant en compte ces règles:
+Utilise les agents requis pour ce projet en prenant en compte ces règles:
 
-- Les subagents writers seront isolés par **worktree**, avec leurs permissions d'**écriture (`Write`/`Edit`) pré-autorisées** pour qu'ils avancent sans s'interrompre
-- Le travail des subagents en parallèle est piloté par le skill `orchestrator`, autour d'un contrat d'interface géré par le skill `contract`
-- Un subagent est **autonome**, il n'a pas besoin de moi pour avancer dans son travail
+- Les agents writers seront isolés par **worktree**, avec leurs permissions d'**écriture (`Write`/`Edit`) pré-autorisées** pour qu'ils avancent sans s'interrompre
+- Le travail des agents en parallèle est piloté par le skill `orchestrator`, autour d'un contrat d'interface géré par le skill `contract`
+- Un agent est **autonome**, il n'a pas besoin de moi pour avancer dans son travail
 
 ---
 
-## Phase 5 — Utilisation des skills de workflow
+## Phase 5 — Utilisation des skills
 
-Assure toi que tu as bien accès aux skills suivant: `spec`, `jira`, `contract`, `orchestrator`, `pr`
+Assure toi que tu as bien accès aux skills suivant: `spec`, `jira`, `contract`, `orchestrator`, `pr` sinon signal le.
 
 ---
 
 ## Phase 6 — Génération du CLAUDE.md
 
-Génère le `CLAUDE.md` **en dernier**, une fois la stack, les permissions, l'outillage, les hooks, les subagents et les skills de workflow définis, pour qu'il puisse les documenter fidèlement.
+Génère le `CLAUDE.md` **en dernier**, une fois la stack, les permissions, l'outillage, les hooks, les agents et les skills de workflow définis, pour qu'il puisse les documenter fidèlement.
 
-Écris le `CLAUDE.md` à la racine du repository. Garde-le **sous ~150 lignes**.
-Utilise le cadre WHAT / WHY / HOW.
+Écris le `CLAUDE.md` à la racine du projet. Garde-le **sous ~150 lignes**.
+Utilise le cadre `WHAT` / `WHY` / `HOW`.
 
-**Conventions de nommage** : reprends le fichier canonique du plugin `references/naming-conventions.md`, **adapte-le à la stack retenue** (ne garde que les sections pertinentes — ex. Hono côté back, React côté front), et écris-le dans le projet en `docs/naming-conventions.md`. Référence-le depuis le `CLAUDE.md`. C'est ce fichier projet que les agents writers et le `reviewer` consultent. Le **sous-ensemble lintable** est déjà encodé dans `biome.json` (Phase 3) — ici, tu **documentes et référence**, tu ne re-spécifies pas les règles Biome.
+### Conventions de nommage
+
+Pour définir les conventions de nommage du projet reprends le fichier canonique du plugin `references/naming-conventions.md` et écris-le dans le projet en `docs/naming-conventions.md`. Référence-le depuis le `CLAUDE.md`. C'est ce fichier que les agents consultent.
