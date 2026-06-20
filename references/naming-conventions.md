@@ -1,14 +1,7 @@
 # Conventions de nommage
 
-Source **canonique** des conventions de nommage de fichiers et de symboles, livrée avec le plugin `claude-workflow`.
-
-**Comment c'est utilisé :**
-- Le skill `scaffold` reprend ce fichier, l'**adapte à la stack retenue** pour le projet, et le matérialise côté projet (`docs/naming-conventions.md`, référencé depuis le `CLAUDE.md`) — pour que les agents writers, qui lisent les fichiers du projet, puissent s'y conformer.
-- Les agents `front-web`, `front-mobile`, `backend` codent en respectant ces conventions ; l'agent `reviewer` les vérifie.
-
-**Lintable vs guidé :** ce qui est *lintable* (casing des fichiers, des variables, des types) est **imposé par Biome** (`useFilenamingConvention`, `useNamingConvention`) — déterministe, pas négociable. Ce fichier couvre le reste (où ranger un fichier, suffixes sémantiques, nommage des endpoints) que le lint ne sait pas exprimer.
-
-> ⚠️ Valeurs par défaut proposées — **à ajuster** aux conventions réelles avant usage.
+Source **canonique** des conventions de nommage de fichiers et de symboles.
+Le skill `scaffold` reprend ce fichier, l'adapte à la stack retenue et le matérialise dans le projet (`docs/naming-conventions.md`) pour que les agents et les skills puissent s'y conformer.
 
 ---
 
@@ -27,7 +20,7 @@ Source **canonique** des conventions de nommage de fichiers et de symboles, livr
 
 ---
 
-## Front — React (web)
+## Front (web)
 
 | Élément | Convention | Exemple |
 |---|---|---|
@@ -42,9 +35,9 @@ Source **canonique** des conventions de nommage de fichiers et de symboles, livr
 
 ---
 
-## Front — React Native (mobile)
+## Front (mobile)
 
-Mêmes règles que React web, plus :
+Mêmes règles que front web, plus :
 
 | Élément | Convention | Exemple |
 |---|---|---|
@@ -54,7 +47,7 @@ Mêmes règles que React web, plus :
 
 ---
 
-## Back — Hono
+## Back
 
 | Élément | Convention | Exemple |
 |---|---|---|
