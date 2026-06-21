@@ -4,17 +4,7 @@ description: Initialise toute la configuration Claude Code d'un projet via un en
 model: opus
 ---
 
-# Scaffolding du projet
-
-Mène un entretien puis génère une configuration `.claude/` complète pour les besoins du projet.
-Déroule les phases dans l'ordre et mène l'entretien en **français**.
-Pose un lot de questions à la fois avec l'outil `AskUserQuestion`.
-Ne déverse jamais toutes les questions d'un coup, et n'écris aucun fichier tant que l'entretien n'est pas terminé et confirmé.
- **Utilise WebSearch durant l'entretien afin d'être à jour pour proposer les meilleures pratiques**
-
-Ce scaffold est défini dans mon plugin Claude (https://github.com/vincentgraul/claude-workflow). Il vient donc avec d'autres skills, des agents et des hooks. **Tu te dois d'avoir connaissance de cet environnement**.
-
----
+# Skill Scaffold
 
 ## Règles
 
@@ -30,6 +20,8 @@ N'écris pas de commentaires dans le code. Pas de mention de co-auteur Claude ou
 
 Ne fais aucun merge sur `master` ou `main` et ne merge jamais les PR.
 
+---
+
 ## Phase 1 — Préparation
 
 Avant de poser quoi que ce soit, regarde le repository pour que les questions soient pré-remplies plutôt que génériques :
@@ -41,9 +33,10 @@ Résume en une ou deux lignes ce que tu as détecté, puis démarre l'entretien 
 
 ## Phase 2 — Entretien
 
-Pose les questions par lots. Laisse toujours l'utilisateur remplacer les valeurs par défaut.
+Pose les questions en **français** par lots et dans l'ordre en utilisant l'outil `AskUserQuestion`. Laisse toujours l'utilisateur remplacer les valeurs par défaut.
 Saute toute question déjà résolue par la Phase 1. 
 À la fin de l'entretien récapitule et demande une confirmation avant d'écrire quoi que ce soit.
+ **Utilise WebSearch durant l'entretien afin d'être à jour pour proposer les meilleures pratiques**
 
 ### Lot A — Identité
 - Nom du projet
