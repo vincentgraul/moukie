@@ -4,7 +4,9 @@ description: Ouvre une pull request GitHub pour la branche courante une fois le 
 model: sonnet
 ---
 
-# Règles
+# Skill PR
+
+## Règles
 
 Mène les échanges en **français**.
 La PR doit être sur une branche dédiée. **Refuse de continuer si la branche courante est `main` ou `master`**.
@@ -13,30 +15,26 @@ Pas de mention de co-auteur Claude ou autre.
 
 ---
 
-## Phase 1 — Préparation
+## Préparation
 
 Extrais la clé Jira du nom de la branche (ex. `PROJ-34-...` → `PROJ-34`). Si rien ne correspond, **demande-la**.
 
 ---
 
-## Phase 2 — Commits & push
+## Commits & push
 
 Commit les changements avec des messages en **conventional commit** puis pousse la branche sur le remote (crée l'upstream si nécessaire avec `git push -u`).
 
 ---
 
-## Phase 3 — Création de la PR
+## Création de la PR
 
 Crée la PR via `gh pr create`, ciblant la branche par défaut (`main` ou `master`) :
 
-- **Titre** : en conventional commit, résumant le ticket.
+- **Titre** : en conventional commit, résumant le ticket
 - **Corps** :
-  - **What** — ce que fait le changement.
-  - **Why** — le besoin/problème adressé.
-  - **Ticket** — lien vers l'issue Jira (`PROJ-34`).
-
----
-
-## Phase 4 — Récapitulatif
-
-Donne le **lien de la PR** ouverte et un résumé d'une ligne de son contenu.
+  - **What** — ce que fait le changement
+  - **Why** — le besoin/problème adressé
+  - **Ticket** — lien vers l'issue Jira (`PROJ-34`)
+  
+Une fois la PR crée, donne le **lien de la PR** ouverte et un résumé d'une ligne de son contenu.
