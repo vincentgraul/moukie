@@ -24,7 +24,7 @@ Pour définir les conventions de nommage du projet reprends le fichier canonique
 
 ### Commentaires
 
-N'écris pas de commentaires dans le code. Pas de mention non plus de co-écriture avec Claude ou autre.
+N'écris pas de commentaires dans le code. Pas de mention de co-auteur Claude ou autre.
 
 ### Git
 
@@ -52,7 +52,7 @@ Saute toute question déjà résolue par la Phase 1.
 - Description du projet (**tu te dois de poser des questions si la description ne te semble pas suffisamment clair**)
 
 ### Lot B — Stack
-Ceci est la stack que j'utilise généralement sur mes projets mais sens toi libre de proposer autre chose :
+Ceci est la stack que j'utilise généralement sur mes projets mais sens-toi libre de proposer autre chose :
 
 #### Commun
 - langage: `TypeScript`
@@ -92,22 +92,22 @@ Ceci est la stack que j'utilise généralement sur mes projets mais sens toi lib
 
 #### GitHub
 J'utilise un compte `Github Free`.
-Assure toi que le CLI `gh` soit bien installé.
+Assure-toi que le CLI `gh` soit bien installé.
 
 #### Figma
 J'utilise un compte `Figma Professionnel License Full`.
-Assure toi que le MCP Figma soit bien connecté.
+Assure-toi que le MCP Figma soit bien connecté.
 **Demande deux URLs :**
 - les maquettes du projet sur Figma
 - le DS du projet sur Figma
 
 #### Jira
 J'utilise un compte `Jira Free`
-Assure toi que le MCP Jira soit bien connecté.
+Assure-toi que le MCP Jira soit bien connecté.
 **Demande l'url du projet Jira**.
 
 #### Docker
-Si le projet a besoin d'un backend, vérifie que `Docker Desktop` soit bien installé sur mon environnement, sinon informe moi avant de continuer.
+Si le projet a besoin d'un backend, vérifie que `Docker Desktop` soit bien installé sur mon environnement, sinon informe-moi avant de continuer.
 
 ---
 
@@ -141,7 +141,7 @@ L'architecture back suit **Modular Monolith et Vertical Slice** :
 
 ### Génération du .claude/settings.json
 
-Si le `.claude/settings.json` n'existe pas à la racine du projet crée le, sinon fusionne le avec les règles suivantes :
+Si le `.claude/settings.json` n'existe pas à la racine du projet crée-le, sinon fusionne-le avec les règles suivantes :
 
 #### Permissions
 
@@ -166,13 +166,13 @@ Ajoute un script `check` dans le `package.json` pour exécuter `biome check`.
 ### Génération du docker-compose.yml
 
 Si le projet a besoin d'un backend, crée un `docker-compose.yml` à la racine du projet avec les informations que tu estimes nécessaires.
-Si ce fichier existe déjà fusionne le. 
+Si ce fichier existe déjà fusionne-le. 
 
 ---
 
 ## Phase 5 — Mise en place des agents
 
-Les agents sont définis dans le plugin. Assure toi que tu as bien accès aux agents suivant (sinon, signale le): `backend`, `devops`, `front-mobile`, `front-web`, `QA`, `reviewer`.
+Les agents sont définis dans le plugin. Assure-toi que tu as bien accès aux agents suivant (sinon, signale-le): `backend`, `devops`, `front-mobile`, `front-web`, `QA`, `reviewer`.
 
 Utilise les agents requis pour ce projet en prenant en compte ces règles:
 
@@ -184,7 +184,7 @@ Utilise les agents requis pour ce projet en prenant en compte ces règles:
 
 ## Phase 6 — Utilisation des skills
 
-Assure toi que tu as bien accès aux skills suivant: `spec`, `jira`, `contract`, `orchestrator`, `pr` sinon signale le.
+Assure-toi que tu as bien accès aux skills suivant: `spec`, `jira`, `contract`, `orchestrator`, `pr` sinon signale-le.
 
 ---
 
