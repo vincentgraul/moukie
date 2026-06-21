@@ -30,7 +30,7 @@ N'écris pas de commentaires dans le code. Pas de mention de co-auteur Claude ou
 
 Ne fais aucun merge sur `master` ou `main` et ne merge jamais les PR.
 
-## Phase 1 — Détection du contexte
+## Phase 1 — Préparation
 
 Avant de poser quoi que ce soit, regarde le repository pour que les questions soient pré-remplies plutôt que génériques :
 lance `ls -la` et lis `package.json`, `tsconfig.json`, `README`, `CLAUDE.md` et les fichiers dans le `.claude/`.
