@@ -10,13 +10,27 @@ Mène un entretien puis génère une configuration `.claude/` complète pour les
 Déroule les phases dans l'ordre et mène l'entretien en **français**.
 Pose un lot de questions à la fois avec l'outil `AskUserQuestion`.
 Ne déverse jamais toutes les questions d'un coup, et n'écris aucun fichier tant que l'entretien n'est pas terminé et confirmé.
- **Utilise WebSearch durant l'entretien afin d'être à jour pour proposer les meilleurs pratiques**
+ **Utilise WebSearch durant l'entretien afin d'être à jour pour proposer les meilleures pratiques**
 
 Ce scaffold est défini dans mon plugin Claude (https://github.com/vincentgraul/claude-workflow). Il vient donc avec d'autres skills, des agents et des hooks. **Tu te dois d'avoir connaissance de cet environnement**.
 
 ---
 
-## Phase 0 — Détection du contexte
+## Règles
+
+### Conventions de nommage
+
+Pour définir les conventions de nommage du projet reprends le fichier canonique du plugin `references/naming-conventions.md` et écris-le dans le projet en `docs/naming-conventions.md`. Référence-le depuis le `CLAUDE.md`. C'est ce fichier que les agents consultent.
+
+### Commentaires
+
+N'écris pas de commentaires dans le code. Pas de mention non plus de co-écriture avec Claude ou autre.
+
+### Git
+
+Ne fais aucun merge sur `master` ou `main` et ne merge jamais les PR.
+
+## Phase 1 — Détection du contexte
 
 Avant de poser quoi que ce soit, regarde le repository pour que les questions soient pré-remplies plutôt que génériques :
 lance `ls -la` et lis `package.json`, `tsconfig.json`, `README`, `CLAUDE.md` et les fichiers dans le `.claude/`.
@@ -25,10 +39,10 @@ Résume en une ou deux lignes ce que tu as détecté, puis démarre l'entretien 
 
 ---
 
-## Phase 1 — Entretien
+## Phase 2 — Entretien
 
 Pose les questions par lots. Laisse toujours l'utilisateur remplacer les valeurs par défaut.
-Saute toute question déjà résolue par la Phase 0. 
+Saute toute question déjà résolue par la Phase 1. 
 À la fin de l'entretien récapitule et demande une confirmation avant d'écrire quoi que ce soit.
 
 ### Lot A — Identité
@@ -92,9 +106,12 @@ J'utilise un compte `Jira Free`
 Assure toi que le MCP Jira soit bien connecté.
 **Demande l'url du projet Jira**.
 
+#### Docker
+Si le projet a besoin d'un backend, vérifie que `Docker Desktop` soit bien installé sur mon environnement, sinon informe moi avant de continuer.
+
 ---
 
-## Phase 2 — Architecture
+## Phase 3 — Architecture
 
 ### Stratégie de dépôt 
 
@@ -109,7 +126,7 @@ Le skill `feature-sliced-design` (embarqué dans le plugin) **fait foi**.
 
 #### Utilisation de steiger
 
-Installe `steiger` et `@feature-sliced/steiger-plugin` en devDependency et ajoute un script `fsd` dans le `package.json` pour l'éxécuter.
+Installe `steiger` et `@feature-sliced/steiger-plugin` en devDependency et ajoute un script `fsd` dans le `package.json` pour l'exécuter.
 
 ---
 
@@ -120,11 +137,11 @@ L'architecture back suit **Modular Monolith et Vertical Slice** :
 - **Vertical Slice** : le code est organisé par feature (chaque slice contient sa route, sa logique et son accès données), pas par couche technique
 - **Modular Monolith** : les slices sont regroupées en modules (bounded contexts) qui communiquent via leur API publique
 
-## Phase 3 — Génération des fichiers de configuration
+## Phase 4 — Génération des fichiers de configuration
 
 ### Génération du .claude/settings.json
 
-Si le `.claude/settings.json` n'éxiste pas à la racine du projet crée le, sinon fusionne le avec les règles suivantes :
+Si le `.claude/settings.json` n'existe pas à la racine du projet crée le, sinon fusionne le avec les règles suivantes :
 
 #### Permissions
 
@@ -134,22 +151,28 @@ classe chacun en **lecture** ou **écriture**.
 
 Applique ensuite les règles ci-dessous à ces noms réels :
 
-- Figma : **lecture autorisée, écriture interdite** → `deny` sur les outils d'écriture, `allow` sur la lecture.
-- Jira : **lecture autorisée, écriture avec permission** → `ask` sur les outils d'écriture.
-- GitHub : **aucun merge sur `master` ou `main` et ne merge jamais les PR**
+- Figma : `deny` sur les outils d'écriture, `allow` sur la lecture
+- Jira : `allow` sur les outils d'écriture et de lecture
+- GitHub : `allow` sur l'outil git et gh
+- Bun : `allow` sur l'outil Bun
 
 ### Génération du biome.json
 
-Si le `biome.json` n'éxiste pas à la racine du projet lance `biome init`, sinon fusionne le en activant les règles suivantes : `useFilenamingConvention`, `useNamingConvention` et `noDefaultExport`.
+Si le `biome.json` n'existe pas à la racine du projet lance `biome init`, sinon fusionne le en activant les règles suivantes : `useFilenamingConvention`, `useNamingConvention` et `noDefaultExport`.
 
-Ajoute un script `check` dans le `package.json` pour éxécuter `biome check`.
+Ajoute un script `check` dans le `package.json` pour exécuter `biome check`.
 **Vérifie que la configuration fonctionne bien avant de continuer.**
+
+### Génération du docker-compose.yml
+
+Si le projet a besoin d'un backend, crée un `docker-compose.yml` à la racine du projet avec les informations que tu estimes nécessaires.
+Si ce fichier existe déjà fusionne le. 
 
 ---
 
-## Phase 4 — Mise en place des agents
+## Phase 5 — Mise en place des agents
 
-Les agents sont définis dans le plugin. Assure toi que tu as bien accès aux agents suivant (sinon, signal le): `backend`, `devops`, `front-mobile`, `front-web`, `QA`, `reviewer`.
+Les agents sont définis dans le plugin. Assure toi que tu as bien accès aux agents suivant (sinon, signale le): `backend`, `devops`, `front-mobile`, `front-web`, `QA`, `reviewer`.
 
 Utilise les agents requis pour ce projet en prenant en compte ces règles:
 
@@ -159,19 +182,20 @@ Utilise les agents requis pour ce projet en prenant en compte ces règles:
 
 ---
 
-## Phase 5 — Utilisation des skills
+## Phase 6 — Utilisation des skills
 
-Assure toi que tu as bien accès aux skills suivant: `spec`, `jira`, `contract`, `orchestrator`, `pr` sinon signal le.
+Assure toi que tu as bien accès aux skills suivant: `spec`, `jira`, `contract`, `orchestrator`, `pr` sinon signale le.
 
 ---
 
-## Phase 6 — Génération du CLAUDE.md
+## Phase 7 — Génération du CLAUDE.md
 
 Génère le `CLAUDE.md` **en dernier**, une fois la stack, les permissions, l'outillage, les hooks, les agents et les skills de workflow définis, pour qu'il puisse les documenter fidèlement.
 
 Écris le `CLAUDE.md` à la racine du projet. Garde-le **sous ~150 lignes**.
 Utilise le cadre `WHAT` / `WHY` / `HOW`.
 
-### Conventions de nommage
+## Phase 8 - Commit & Push
 
-Pour définir les conventions de nommage du projet reprends le fichier canonique du plugin `references/naming-conventions.md` et écris-le dans le projet en `docs/naming-conventions.md`. Référence-le depuis le `CLAUDE.md`. C'est ce fichier que les agents consultent.
+Une fois le scaffold finalisé crée une branche `scaffold`, commit, push cette branche et ouvre une PR sur `main` (ou `master`).
+Incite ensuite l'utilisateur à faire le merge de cette PR.
