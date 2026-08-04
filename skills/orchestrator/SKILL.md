@@ -43,6 +43,7 @@ Si tu ne peux pas trancher seul (changement de contrat structurant, choix produi
 En tant qu'orchestrateur tu dois m'informer de l'avancement du travail.
 Pour ce faire utilise l'outil `PushNotification` à **deux moments seulement** :
 
+- **Contrat à valider** : quand le contrat est construit et attend une validation de l'utilisateur avant gel. **Message : clé du ticket + contrat à valider**
 - **Blocage** : dès que tu es bloqué et qu'il te faut une décision de l'utilisateur. **Message : clé du ticket + raison du blocage**
 - **Ticket finalisé** : une fois la PR ouverte. **Message : clé du ticket + PR ouverte**
 
@@ -64,10 +65,11 @@ Quand les lanes ont terminé, **intègre** leur travail sur la branche du ticket
 ## PR
 
 Une fois le code terminé tu vas pouvoir ouvrir une PR avec le skill `pr`.
-Mais avant ça, lance l'agent `reviewer`. Il rend des findings priorisés :
+Mais avant ça, lance l'agent `reviewer` en lui donnant les critères d'acceptation de la story. Il rend des constats priorisés :
 
-- **Findings bloquants ou à corriger** : fais-les appliquer par l'agent concerné (`front-web` / `front-mobile` / `backend`) sur la branche du ticket, puis relance une revue ciblée si le changement est conséquent.
+- **Constats bloquants ou à corriger** : fais-les appliquer par l'agent concerné (`front-web` / `front-mobile` / `backend`) sur la branche du ticket, puis relance une revue ciblée si le changement est conséquent.
 - **Suggestions** : applique-les si elles sont rapides et sûres, sinon note-les dans le corps de la PR.
 
-Si un finding bloquant relève d'un choix produit ou structurant que tu ne peux pas trancher seul, **notifie l'utilisateur** et attends sa décision.
-N'enchaîne sur la PR qu'une fois les findings bloquants levés.
+**Un critère d'acceptation non couvert est bloquant. N'enchaîne pas sur la PR tant qu'il en reste un**.
+Si un constat bloquant relève d'un choix produit ou structurant que tu ne peux pas trancher seul, **notifie l'utilisateur** et attends sa décision.
+N'enchaîne sur la PR qu'une fois les constats bloquants levés.
