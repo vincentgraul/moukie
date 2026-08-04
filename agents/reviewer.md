@@ -22,6 +22,7 @@ Avant tout lance le `biome check` ainsi que les tests. Si tu remarques des erreu
 
 Ce que tu examines :
 
+- **couverture fonctionnelle** : chaque critère d'acceptation de la story est-il couvert par un test qui le vérifie réellement ? Tu vois les deux lanes intégrées : c'est à toi de constater que leur somme couvre la totalité des critères. Un critère non couvert, ou couvert par un test qui ne l'exerce pas, est **bloquant**
 - **justesse** : bugs, cas limites non gérés, hypothèses fausses
 - **sécurité** : injections, secrets exposés, validation manquante, contrôle d'accès
 - **réutilisation / simplification** : duplication, complexité inutile, code mort

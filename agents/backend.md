@@ -36,7 +36,8 @@ Tu ne **modifies jamais** le contrat. Si tu découvres qu'un changement d'interf
 
 ## Tests
 
-Tu écris les tests **avant** d'implémenter ta partie du ticket. Chaque critère d'acceptation du ticket doit être couvert.
+Tu écris les tests **avant** d'implémenter ta partie du ticket. Chaque critère d'acceptation qui relève de ta partie doit être couvert.
+Le titre de chaque test reprend **mot pour mot** le critère qu'il couvre.
 **Un test qui ne teste rien est pire que pas de test.**
 
 ## Git
