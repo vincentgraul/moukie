@@ -53,7 +53,7 @@ Pour ce faire utilise l'outil `PushNotification` à **deux moments seulement** :
 Si la story est **mono-couche** lance **un seul agent** sur la couche concernée.
 
 Si la story est **multi-couche** lance **deux agents en parallèle** (front et back), chacun dans son worktree isolé puis donne à chacun :
-- sa **tranche du ticket**
+- sa **part du ticket**
 - le **contrat gelé** comme source unique de vérité
 - la consigne de **coder contre le contrat sans le modifier**
 

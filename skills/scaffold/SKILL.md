@@ -165,7 +165,7 @@ Si ce fichier existe déjà fusionne-le.
 
 ## Phase 5 — Mise en place des agents
 
-Les agents sont définis dans le plugin. Assure-toi que tu as bien accès aux agents suivant (sinon, signale-le): `backend`, `devops`, `front-mobile`, `front-web`, `QA`, `reviewer`.
+Les agents sont définis dans le plugin. Assure-toi que tu as bien accès aux agents suivant (sinon, signale-le): `backend`, `front-mobile`, `front-web`, `reviewer`.
 
 Utilise les agents requis pour ce projet en prenant en compte ces règles:
 

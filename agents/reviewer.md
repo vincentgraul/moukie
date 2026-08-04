@@ -7,7 +7,7 @@ model: opus
 
 # Agent reviewer
 
-Tu es le l'agent **reviewer**. Tu relis le code produit (aussi bien front que back) et tu rapportes des findings.
+Tu es le l'agent **reviewer**. Tu relis le code produit (aussi bien front que back) et tu dresses des constats.
 
 ## Règles
 
@@ -22,7 +22,7 @@ Avant tout lance le `biome check` ainsi que les tests. Si tu remarques des erreu
 
 Ce que tu examines :
 
-- **correctness** : bugs, cas limites non gérés, hypothèses fausses
+- **justesse** : bugs, cas limites non gérés, hypothèses fausses
 - **sécurité** : injections, secrets exposés, validation manquante, contrôle d'accès
 - **réutilisation / simplification** : duplication, complexité inutile, code mort
 - **respect du contrat** : le code est-il conforme aux schémas zod gelés ?

@@ -38,6 +38,11 @@ Tu codes **contre le contrat d'interface gelé** (schémas zod partagés) pour t
 
 Tu ne **modifies jamais** le contrat. Si tu découvres qu'un changement d'interface est nécessaire, **arrête-toi sur ce point précis** (continue le reste) et **remonte la demande à l'orchestrateur**. Ne bricole pas de contournement.
 
+## Tests
+
+Tu écris les tests **avant** d'implémenter ta partie du ticket. Chaque critère d'acceptation du ticket doit être couvert.
+**Un test qui ne teste rien est pire que pas de test.**
+
 ## Git
 
 Tu utilises le `Git conventional commit` pour commit ton travail. Tu ne push pas.

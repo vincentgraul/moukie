@@ -35,9 +35,7 @@ Chaque skill a une **frontière nette** et passe explicitement la main à la sui
 | `front-web` | opus | tous | Lane front web — React + TS, design system [Empreint](https://github.com/vincentgraul/empreint), maquettes Figma (lecture) |
 | `front-mobile` | opus | tous | Lane front mobile — React Native + TS, Empreint, Figma (lecture) |
 | `backend` | opus | Read/Edit/Write/Bash/Grep/Glob | Lane back — endpoints, logique métier, accès données |
-| `QA` | sonnet | Read/Edit/Write/Bash/Grep/Glob | Tests, couverture des critères d'acceptation |
-| `reviewer` | opus | Read/Grep/Glob/Bash | Revue lecture seule avant PR — findings priorisés |
-| `devops` | sonnet | Read/Edit/Write/Bash/Grep/Glob | CI/CD (GitHub Actions), hébergement, infra — **ad hoc**, hors boucle par story |
+| `reviewer` | opus | Read/Grep/Glob/Bash/Skill | Revue lecture seule avant PR — findings priorisés |
 
 Les writers travaillent **contre le contrat zod gelé** : ils ne le modifient jamais et remontent tout besoin de changement à l'orchestrateur.
 
