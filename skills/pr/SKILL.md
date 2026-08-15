@@ -24,7 +24,7 @@ Lis la story. Son titre et ses critères d'acceptation alimentent le corps de la
 
 ## Commits & push
 
-Commit les changements avec des messages en **conventional commit** puis pousse la branche sur le remote (crée l'upstream si nécessaire avec `git push -u`).
+Commit les changements avec des messages en **anglais** et en **conventional commit** puis pousse la branche sur le remote (crée l'upstream si nécessaire avec `git push -u`).
 
 ---
 
