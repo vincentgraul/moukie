@@ -1,6 +1,6 @@
 ---
 name: spec
-description: Crée ou met à jour les specs fonctionnelles d'un projet via un entretien guidé. Se déclenche quand l'utilisateur veut rédiger, affiner ou mettre à jour une spec. Produit un fichier `specs/<feature>.md` validé, prêt à être découpé en epics/stories/tickets par le skill `jira`.
+description: Crée ou met à jour les specs fonctionnelles d'un projet via un entretien guidé. Se déclenche quand l'utilisateur veut rédiger, affiner ou mettre à jour une spec. Produit un dossier `specs/<feature>/` validé, son cadrage et une story par fichier, prêtes à être implémentées une par une par le skill `orchestrator`.
 model: opus
 ---
 
@@ -8,8 +8,8 @@ model: opus
 
 ## Règles
 
-Ce skill s'arrête à la **spec validée** : il ne crée aucun ticket Jira lui-même, il passe la main à `jira`.
-Le nom du fichier spec sera le nom de la feature en kebab-case.
+Ce skill s'arrête à la **spec validée** : il n'implémente rien lui-même, il passe la main à `orchestrator`.
+Une spec contient des features qui elles-mêmes contiennent des stories. Les stories vivent dans `specs/<feature>/`.
 
 ---
 
@@ -18,7 +18,7 @@ Le nom du fichier spec sera le nom de la feature en kebab-case.
 Avant de poser quoi que ce soit, situe-toi :
 
 - lis le `CLAUDE.md` du projet pour comprendre la stack, le périmètre et les conventions
-- liste le dossier `specs/` s'il existe et lis les specs déjà présentes.
+- liste le dossier `specs/` s'il existe et lis les features déjà présentes avec leur `README.md` et les stories qui les composent
 - détermine si l'utilisateur **crée une nouvelle spec** ou **met à jour une spec existante**. En cas de doute, demande-lui
 
 Résume en une ou deux lignes ce que tu as détecté, puis démarre l'entretien.
@@ -65,10 +65,22 @@ Chaque critère d'acceptation doit être **vérifiable** : un comportement obser
 
 ## Phase 3 — Construction
 
-Écris `specs/<feature>.md`. En **mise à jour**, lis d'abord la spec existante et **modifie au plus près** plutôt que de la réécrire intégralement.
+Une feature est **un dossier**, chacune de ses stories **un fichier** :
 
-Écris chaque section à partir du jet brut et des réponses obtenues en Phase 2 : objectif, périmètre et hors-périmètre, découpage en user stories (chacune avec slug et critères d'acceptation). Ne laisse aucune section vide. S'il manque encore un élément, retourne le demander plutôt que de le combler toi-même.
-Respecte ce template exactement, c'est lui que `jira` lit pour découper :
+```
+specs/
+└── panier/                        ← la feature
+    ├── README.md                  ← son cadrage
+    ├── ajout-article.md           ← une story
+    └── modification-quantite.md   ← une story
+```
+
+En **mise à jour**, lis d'abord l'existant et **modifie au plus près** plutôt que de réécrire. Ajouter une story, c'est ajouter un fichier : ne touche pas aux autres.
+Écris à partir du jet brut et des réponses obtenues en Phase 2. Ne laisse aucune section vide. S'il manque encore un élément, retourne le demander plutôt que de le combler toi-même.
+
+### Le cadrage de la feature
+
+`specs/<feature>/README.md`, où `<feature>` est le nom de la feature en **kebab-case**. Ce fichier ne contient aucune story il porte ce qui vaut pour toutes :
 
 ```markdown
 ---
@@ -84,27 +96,33 @@ status: draft
 ## Objectif & périmètre
 …
 
-## User stories
-
-### Story (<slug>) — <titre>
-En tant que <rôle>, je veux <…> afin de <…>.
-**Critères d'acceptation :**
-- [ ] …
-- [ ] …
-
-### Story (<slug>) — <titre>
-…
-
 ## Notes techniques (optionnel)
 …
 ```
 
-Une nouvelle spec naît toujours en `status: draft`.
-Le **slug** est un identifiant stable en kebab-case (ex. `auth-login`). Il est **unique dans la spec** et **fixé une fois pour toutes**. C'est lui qui appaire la story à son issue Jira.
-Les **critères d'acceptation** restent une checklist dans la story. **Jamais** un ticket par critère.
+Une nouvelle feature naît toujours en `status: draft`. Le `status` vit **ici et nulle part ailleurs** : on valide un cadrage entier, jamais une story isolée.
+N'ajoute pas d'index des stories dans ce fichier : le contenu du dossier le donne déjà, et un index se désynchronise.
+
+### Une story
+
+`specs/<feature>/<story>.md`, où `<story>` est le **slug** de la story. C'est ce fichier que l'`orchestrator` lit pour implémenter :
+
+```markdown
+# <Titre lisible>
+
+En tant que <rôle>, je veux <…> afin de <…>.
+
+**Critères d'acceptation :**
+- [ ] …
+- [ ] …
+```
+
+Le **slug** est en kebab-case (ex. `ajout-article`) et **fixé une fois pour toutes**, même si le titre lisible change : c'est le nom du fichier qui garantit son unicité, et le renommer casse le lien avec la branche et la PR de la story. C'est **l'identifiant de la story** dans tout le workflow, il la désigne à l'oral, il nomme sa branche `<feature>/<story>`, qui reprend exactement son chemin sous `specs/`.
+
+Les **critères d'acceptation** restent une checklist. **Jamais** une story par critère.
 
 ---
 
 ## Phase 4 — Validation
 
-Présente la spec générée à l'utilisateur. Quand l'utilisateur valide, passe le frontmatter à `status: validated` puis propose de passer la main au skill `jira`.
+Présente le cadrage et les stories générés à l'utilisateur. Quand l'utilisateur valide, passe le frontmatter du `README.md` de la feature à `status: validated` puis propose de passer la main au skill `orchestrator` pour implémenter une première story.

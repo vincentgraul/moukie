@@ -56,7 +56,7 @@ Ceci est la stack que j'utilise généralement sur mes projets mais sens-toi lib
 - CI/CD: `GitHub Actions`
 - conteneurisation: `Docker`
 - workflows: `Git conventional commit`, `Spec-driven development`
-- gestion de projet: `Jira`
+- gestion de projet: les specs versionnées dans `specs/`
 
 #### Frontend web
 - bibliothèques: `React`, `Empreint`, `TanStack Router`, `TanStack Form`, `TanStack Query`
@@ -93,11 +93,6 @@ Assure-toi que le MCP Figma soit bien connecté.
 **Demande deux URLs :**
 - les maquettes du projet sur Figma
 - le DS du projet sur Figma
-
-#### Jira
-J'utilise un compte `Jira Free`
-Assure-toi que le MCP Jira soit bien connecté.
-**Demande l'url du projet Jira**.
 
 #### Docker
 Si le projet a besoin d'un backend, vérifie que `Docker Desktop` soit bien installé sur mon environnement, sinon informe-moi avant de continuer.
@@ -139,13 +134,12 @@ Si le `.claude/settings.json` n'existe pas à la racine du projet crée-le, sino
 #### Permissions
 
 Les noms d'outils MCP sont **propres à chaque serveur connecté**. Ne devine pas, ne hardcode pas.
-**Liste d'abord les outils réellement exposés par chaque serveur MCP connecté** (Figma, Jira) et
+**Liste d'abord les outils réellement exposés par chaque serveur MCP connecté** (Figma) et
 classe chacun en **lecture** ou **écriture**.
 
 Applique ensuite les règles ci-dessous à ces noms réels :
 
 - Figma : `deny` sur les outils d'écriture, `allow` sur la lecture
-- Jira : `allow` sur les outils d'écriture et de lecture
 - GitHub : `allow` sur l'outil git et gh
 - Bun : `allow` sur l'outil Bun
 
@@ -177,7 +171,7 @@ Utilise les agents requis pour ce projet en prenant en compte ces règles:
 
 ## Phase 6 — Utilisation des skills
 
-Assure-toi que tu as bien accès aux skills suivant: `spec`, `jira`, `contract`, `orchestrator`, `pr` sinon signale-le.
+Assure-toi que tu as bien accès aux skills suivant: `spec`, `contract`, `orchestrator`, `pr` sinon signale-le.
 
 ---
 

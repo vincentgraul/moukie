@@ -1,6 +1,6 @@
 ---
 name: pr
-description: Ouvre une pull request GitHub pour la branche courante une fois le ticket terminé. Commit et pousse la branche, puis crée la PR via le CLI `gh` avec un titre en conventional commit et un lien vers le ticket Jira. Ne merge jamais la PR.
+description: Ouvre une pull request GitHub pour la branche courante une fois la story terminée. Commit et pousse la branche, puis crée la PR via le CLI `gh` avec un titre en conventional commit et un renvoi vers la story dans la spec. Ne merge jamais la PR.
 model: sonnet
 ---
 
@@ -17,7 +17,8 @@ Pas de mention de co-auteur Claude ou autre.
 
 ## Préparation
 
-Extrais la clé Jira du nom de la branche (ex. `PROJ-34-...` → `PROJ-34`). Si rien ne correspond, **demande-la**.
+Le nom de la branche est le chemin de la story sous `specs/` : `<feature>/<story>` (ex. `panier/ajout-article` → `specs/panier/ajout-article.md`). Si le nom ne suit pas ce format, **demande** la feature et le slug.
+Lis la story. Son titre et ses critères d'acceptation alimentent le corps de la PR.
 
 ---
 
@@ -35,6 +36,7 @@ Crée la PR via `gh pr create`, ciblant la branche par défaut (`main` ou `maste
 - **Corps** :
   - **What** — ce que fait le changement
   - **Why** — le besoin/problème adressé
-  - **Ticket** — lien vers l'issue Jira (`PROJ-34`)
+  - **Story** — son titre et le chemin de son fichier (ex. `specs/panier/ajout-article.md`)
+  - **Critères d'acceptation** — la checklist de la story, reprise telle quelle
   
 Une fois la PR crée, donne le **lien de la PR** ouverte et un résumé d'une ligne de son contenu.

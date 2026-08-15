@@ -9,20 +9,19 @@ Le plugin embarque les **skills** du workflow, les **subagents** d'implémentati
 ## Le pipeline
 
 ```
-scaffold  →  spec  →  jira  →  ┌─ contract ─┐  →  reviewer  →  pr
-(config)    (WHY)   (tickets)  │ orchestrator│    (revue)     (PR)
-                               │ front ∥ back│
-                               └────────────┘
+scaffold  →  spec  →  ┌─ contract ─┐  →  reviewer  →  pr
+(config)    (WHY)     │ orchestrator│    (revue)     (PR)
+                      │ front ∥ back│
+                      └────────────┘
 ```
 
 | Étape | Skill | Rôle | S'arrête à |
 |-------|-------|------|-----------|
 | 1 | `scaffold` | Entretien guidé → génère `.claude/` (settings, hooks, CLAUDE.md), branche les subagents et skills | Config validée |
-| 2 | `spec` | Cadrage d'une feature → `specs/<feature>.md` (Epic + Stories + critères) | Spec `validated` |
-| 3 | `jira` | Découpe la spec validée en hiérarchie Jira (1 Epic, N Stories) | Tickets créés/synchronisés |
-| 4a | `contract` | Gèle l'interface front/back en schémas **zod** (si la story est multi-couche) | Contrat gelé |
-| 4b | `orchestrator` | Implémente **une story** : lance les lanes front/back en parallèle (worktrees isolés), intègre, fait revoir | PR ouverte (délègue à `pr`) |
-| 5 | `pr` | Tests + lint, commit (conventional), push, `gh pr create` | PR ouverte (**ne merge jamais**) |
+| 2 | `spec` | Cadrage d'une feature → `specs/<feature>/` (son `README.md` + une story par fichier) | Feature `validated` |
+| 3a | `contract` | Gèle l'interface front/back en schémas **zod** (si la story est multi-couche) | Contrat gelé |
+| 3b | `orchestrator` | Implémente **une story** : lance les lanes front/back en parallèle (worktrees isolés), intègre, fait revoir | PR ouverte (délègue à `pr`) |
+| 4 | `pr` | Commit (conventional), push, `gh pr create` | PR ouverte (**ne merge jamais**) |
 
 Chaque skill a une **frontière nette** et passe explicitement la main à la suivante. Aucun ne merge ni ne saute d'étape.
 
@@ -52,7 +51,6 @@ Les writers travaillent **contre le contrat zod gelé** : ils ne le modifient ja
 
 - **`gh` CLI** installé et authentifié (compte GitHub Free suffit).
 - **`jq`** (pour le hook anti-commit).
-- **MCP Jira** connecté (écriture en `ask` via les permissions du scaffold).
 - **MCP Figma** connecté (lecture seule ; l'écriture est en `deny`).
 - Front : design system [Empreint](https://github.com/vincentgraul/empreint).
 
@@ -79,8 +77,7 @@ Tout est piloté en langage naturel — les skills se déclenchent sur l'intenti
 
 - *« configure Claude Code pour ce projet »* → `scaffold`
 - *« rédige la spec de la feature panier »* → `spec`
-- *« crée les tickets Jira de cette spec »* → `jira`
-- *« implémente PROJ-34 »* → `orchestrator` (qui enchaîne `contract`, les lanes, `reviewer`, `pr`)
+- *« implémente la story ajout-article »* → `orchestrator` (qui enchaîne `contract`, les lanes, `reviewer`, `pr`)
 
 Les échanges sont menés en **français**.
 
@@ -89,5 +86,7 @@ Les échanges sont menés en **français**.
 ## Conventions
 
 - **Git** : conventional commits ; jamais sur `main`/`master` ; jamais de merge automatique.
-- **Spec → Jira** : 1 fichier spec = 1 Epic ; chaque `### Story (<slug>) —` = 1 Story ; les critères d'acceptation restent une checklist (jamais un ticket par critère). Le **slug** stable appaire la story à son issue Jira (le titre lisible peut changer).
+- **Pas de tracker externe** : les specs versionnées dans `specs/` sont la source unique du besoin, l'avancement se lit dans les PR GitHub.
+- **Une feature est un dossier, une story est un fichier** : `specs/<feature>/README.md` porte le cadrage et le `status` ; chaque `specs/<feature>/<story>.md` porte une story et ses critères d'acceptation (une checklist — jamais une story par critère).
+- **Le slug est l'identifiant de la story** : c'est le nom de son fichier, donc unique par construction et fixé une fois pour toutes (le titre lisible, lui, peut changer). Sa branche `<feature>/<story>` reprend exactement son chemin sous `specs/`.
 - **Contrat** : source unique de vérité en zod, gel strict pendant le travail parallèle.
