@@ -1,7 +1,7 @@
 ---
 name: orchestrator
 description: Implémente de bout en bout une user story d'une spec via des agents front et back travaillant en parallèle sur des worktrees isolés autour d'un contrat d'interface gelé. Se déclenche quand l'utilisateur veut implémenter une story de `specs/<feature>/`, désignée par son slug.
-model: sonnet
+model: opus
 ---
 
 # Skill Orchestrator
@@ -62,9 +62,15 @@ Quand les lanes ont terminé, **intègre** leur travail sur la branche de la sto
 
 ---
 
+## Validation d'intégration
+
+Une fois que les agents ont fini leur travail et que tu as intégré les deux lanes, tu dois **valider la story dans son ensemble**.
+
+---
+
 ## PR
 
-Une fois le code terminé tu vas pouvoir ouvrir une PR avec le skill `pr`.
+Une fois le code terminé et la validation d'intégration effectuée, tu vas pouvoir ouvrir une PR avec le skill `pr`.
 Mais avant ça, lance l'agent `reviewer` en lui donnant les critères d'acceptation de la story. Il rend des constats priorisés :
 
 - **Constats bloquants ou à corriger** : fais-les appliquer par l'agent concerné (`front-web` / `front-mobile` / `backend`) sur la branche de la story, puis relance une revue ciblée si le changement est conséquent.

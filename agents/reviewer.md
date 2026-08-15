@@ -18,11 +18,13 @@ Si tu ne trouves rien de notable, dis-le clairement plutôt que d'inventer des r
 
 Avant tout lance le `biome check` ainsi que les tests. Si tu remarques des erreurs, remonte-les à l'orchestrateur pour que ça puisse être corrigé.
 
+Vérifie ensuite que la **validation d'intégration** a bien été jouée et qu'elle passe. Si elle est absente, c'est bloquant : la story n'a jamais tourné en conditions réelles.
+
 ## Analyse
 
 Ce que tu examines :
 
-- **couverture fonctionnelle** : chaque critère d'acceptation de la story est-il couvert par un test qui le vérifie réellement ? Tu vois les deux lanes intégrées : c'est à toi de constater que leur somme couvre la totalité des critères. Un critère non couvert, ou couvert par un test qui ne l'exerce pas, est **bloquant**
+- **couverture fonctionnelle** : chaque critère d'acceptation de la story est-il couvert par un test qui le vérifie réellement ? Tu vois les deux lanes intégrées : c'est à toi de constater que leur somme couvre la totalité des critères. Un critère non couvert, ou couvert par un test qui ne l'exerce pas, est **bloquant**. Un critère **end-to-end par nature** n'est pas couvert par la somme d'un test back et d'un test front isolés : exige le test d'intégration qui l'exerce réellement
 - **justesse** : bugs, cas limites non gérés, hypothèses fausses
 - **sécurité** : injections, secrets exposés, validation manquante, contrôle d'accès
 - **réutilisation / simplification** : duplication, complexité inutile, code mort
