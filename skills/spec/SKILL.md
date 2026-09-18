@@ -1,6 +1,6 @@
 ---
 name: spec
-description: Crée ou met à jour les specs fonctionnelles d'un projet via un entretien guidé. Se déclenche quand l'utilisateur veut rédiger, affiner ou mettre à jour une spec. Produit un dossier `specs/<feature>/` validé, son cadrage et une story par fichier, prêtes à être implémentées une par une par le skill `orchestrator`.
+description: Crée ou met à jour les specs d'un projet via un entretien guidé. Se déclenche quand l'utilisateur veut créer ou mettre à jour une spec. Crée un dossier `project/specs/<feature>/` ainsi qu'à l'intérieur un fichier par story, prêtes à être implémentées une par une par le skill `orchestrator`.
 model: opus
 ---
 
@@ -9,7 +9,7 @@ model: opus
 ## Règles
 
 Ce skill s'arrête à la **spec validée** : il n'implémente rien lui-même, il passe la main à `orchestrator`.
-Une spec contient des features qui elles-mêmes contiennent des stories. Les stories vivent dans `specs/<feature>/`.
+Une spec contient des features qui elles-mêmes contiennent des stories. Les stories vivent dans `project/specs/<feature>/`.
 
 ---
 
@@ -17,8 +17,7 @@ Une spec contient des features qui elles-mêmes contiennent des stories. Les sto
 
 Avant de poser quoi que ce soit, situe-toi :
 
-- lis le `CLAUDE.md` du projet pour comprendre la stack, le périmètre et les conventions
-- liste le dossier `specs/` s'il existe et lis les features déjà présentes avec leur `README.md` et les stories qui les composent
+- liste le dossier `project/specs/` s'il existe et lis les features déjà présentes avec leur `README.md` et les stories qui les composent
 - détermine si l'utilisateur **crée une nouvelle spec** ou **met à jour une spec existante**. En cas de doute, demande-lui
 
 Résume en une ou deux lignes ce que tu as détecté, puis démarre l'entretien.
@@ -68,7 +67,7 @@ Chaque critère d'acceptation doit être **vérifiable** : un comportement obser
 Une feature est **un dossier**, chacune de ses stories **un fichier** :
 
 ```
-specs/
+project/specs/
 └── panier/                        ← la feature
     ├── README.md                  ← son cadrage
     ├── ajout-article.md           ← une story
@@ -80,7 +79,7 @@ En **mise à jour**, lis d'abord l'existant et **modifie au plus près** plutôt
 
 ### Le cadrage de la feature
 
-`specs/<feature>/README.md`, où `<feature>` est le nom de la feature en **kebab-case**. Ce fichier ne contient aucune story il porte ce qui vaut pour toutes :
+`project/specs/<feature>/README.md`, où `<feature>` est le nom de la feature en **kebab-case**. Ce fichier ne contient aucune story il porte ce qui vaut pour toutes :
 
 ```markdown
 ---
@@ -105,7 +104,7 @@ N'ajoute pas d'index des stories dans ce fichier : le contenu du dossier le donn
 
 ### Une story
 
-`specs/<feature>/<story>.md`, où `<story>` est le **slug** de la story. C'est ce fichier que l'`orchestrator` lit pour implémenter :
+`project/specs/<feature>/<story>.md`, où `<story>` est le **slug** de la story. C'est ce fichier que l'`orchestrator` lit pour implémenter :
 
 ```markdown
 # <Titre lisible>
@@ -117,7 +116,7 @@ En tant que <rôle>, je veux <…> afin de <…>.
 - [ ] …
 ```
 
-Le **slug** est en kebab-case (ex. `ajout-article`) et **fixé une fois pour toutes**, même si le titre lisible change : c'est le nom du fichier qui garantit son unicité, et le renommer casse le lien avec la branche et la PR de la story. C'est **l'identifiant de la story** dans tout le workflow, il la désigne à l'oral, il nomme sa branche `<feature>/<story>`, qui reprend exactement son chemin sous `specs/`.
+Le **slug** est en kebab-case (ex. `ajout-article`) et **fixé une fois pour toutes**, même si le titre lisible change : c'est le nom du fichier qui garantit son unicité, et le renommer casse le lien avec la branche et la PR de la story. C'est **l'identifiant de la story** dans tout le workflow, il la désigne à l'oral, il nomme sa branche `<feature>/<story>`, qui reprend exactement son chemin sous `project/specs/`.
 
 Les **critères d'acceptation** restent une checklist. **Jamais** une story par critère.
 

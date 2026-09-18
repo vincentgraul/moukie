@@ -17,7 +17,7 @@ Pas de mention de co-auteur Claude ou autre.
 
 ## Préparation
 
-Le nom de la branche est le chemin de la story sous `specs/` : `<feature>/<story>` (ex. `panier/ajout-article` → `specs/panier/ajout-article.md`). Si le nom ne suit pas ce format, **demande** la feature et le slug.
+Le nom de la branche est le chemin de la story sous `project/specs/` : `<feature>/<story>` (ex. `panier/ajout-article` → `project/specs/panier/ajout-article.md`). Si le nom ne suit pas ce format, **demande** la feature et le slug.
 Lis la story. Son titre et ses critères d'acceptation alimentent le corps de la PR.
 
 ---
@@ -36,7 +36,7 @@ Crée la PR via `gh pr create`, ciblant la branche par défaut (`main` ou `maste
 - **Corps** :
   - **What** — ce que fait le changement
   - **Why** — le besoin/problème adressé
-  - **Story** — son titre et le chemin de son fichier (ex. `specs/panier/ajout-article.md`)
+  - **Story** — son titre et le chemin de son fichier (ex. `project/specs/panier/ajout-article.md`)
   - **Critères d'acceptation** — la checklist de la story, reprise telle quelle
   
 Une fois la PR crée, donne le **lien de la PR** ouverte et un résumé d'une ligne de son contenu.

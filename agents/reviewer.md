@@ -30,6 +30,6 @@ Ce que tu examines :
 - **réutilisation / simplification** : duplication, complexité inutile, code mort
 - **respect du contrat** : le code est-il conforme aux schémas zod gelés ?
 - **architecture** : sur le **front** lance `steiger` et vérifie la conformité à **Feature-Sliced Design** (couches, frontières d'import, placement), réfère-toi au skill `feature-sliced-design`. Sur le **back**, conformité à l'architecture **Modular Monolith et Vertical Slice**
-- **conventions** : cohérence avec le `CLAUDE.md`, le style du projet, et les **conventions de nommage** (`docs/naming-conventions.md`)
+- **conventions** : cohérence avec `project/stack.md`, `project/architecture.md`, les **conventions de nommage** (`${CLAUDE_PLUGIN_ROOT}/references/naming-conventions.md`), les règles propres au projet dans `project/rules/`, et le style du projet
 
 Une fois ton analyse terminée, arrête-toi et rends ton rapport à l'orchestrateur en classant tes retours en `bloquant` / `à corriger` / `suggestion` avec le `fichier:ligne`.

@@ -39,7 +39,7 @@ Documente le changement d'interface pour que les deux lanes sachent ce qui a bou
 
 ## Phase 1 — Préparation
 
-Détermine où vit le contrat selon le type de repo (lis le `CLAUDE.md`) :
+Détermine où vit le contrat selon le type de repo (lis `project/architecture.md`) :
 
 - **repo simple** : dans `src/shared/`
 - **monorepo** : un package dédié `packages/shared/`, exposé comme `@<scope>/shared` et importé à l'identique par `apps/web`, `apps/mobile` et `apps/api`

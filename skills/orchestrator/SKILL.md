@@ -1,6 +1,6 @@
 ---
 name: orchestrator
-description: Implémente de bout en bout une user story d'une spec via des agents front et back travaillant en parallèle sur des worktrees isolés autour d'un contrat d'interface gelé. Se déclenche quand l'utilisateur veut implémenter une story de `specs/<feature>/`, désignée par son slug.
+description: Implémente de bout en bout une user story d'une spec via des agents front et back travaillant en parallèle sur des worktrees isolés autour d'un contrat d'interface gelé. Se déclenche quand l'utilisateur veut implémenter une story de `project/specs/<feature>/`, désignée par son slug.
 model: opus
 ---
 
@@ -17,8 +17,8 @@ Les agents sont **autonomes**. Ils n'ont pas besoin de l'utilisateur pour avance
 
 ## Préparation
 
-Tout d'abord identifie la story par son **slug** et lis `specs/<feature>/<story>.md`. Lis aussi le `README.md` de la feature, qui porte le contexte et le périmètre : **refuse de continuer** si son frontmatter n'est pas `status: validated`.
-Détermine les **couches concernées** : **front-only**, **back-only**, ou **front et back** puis crée et bascule sur une **branche dédiée** nommée `<feature>/<story>`, soit le chemin de la story sous `specs/` (ex. `panier/ajout-article`).
+Tout d'abord identifie la story par son **slug** et lis `project/specs/<feature>/<story>.md`. Lis aussi le `README.md` de la feature, qui porte le contexte et le périmètre : **refuse de continuer** si son frontmatter n'est pas `status: validated`.
+Détermine les **couches concernées** : **front-only**, **back-only**, ou **front et back** puis crée et bascule sur une **branche dédiée** nommée `<feature>/<story>`, soit le chemin de la story sous `project/specs/` (ex. `panier/ajout-article`).
 
 ---
 

@@ -1,7 +1,7 @@
 # Conventions de nommage
 
 Source **canonique** des conventions de nommage de fichiers et de symboles.
-Le skill `scaffold` reprend ce fichier, l'adapte à la stack retenue et le matérialise dans le projet (`docs/naming-conventions.md`) pour que les agents et les skills puissent s'y conformer.
+Ce fichier **fait foi** pour tous les projets. Les agents et les skills le lisent directement via `${CLAUDE_PLUGIN_ROOT}/references/naming-conventions.md` : il n'est jamais recopié dans un projet, pour qu'une correction ici profite à tous les projets d'un coup.
 
 ---
 
