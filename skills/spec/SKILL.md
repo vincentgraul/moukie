@@ -43,6 +43,7 @@ Tu ne poses de questions que sur ce qui manque encore. Utilise `AskUserQuestion`
 
 **Ne pose jamais de question ouverte sur ce qui s'énumère.** « Y a-t-il des cas limites ? » obtient toujours « non », et « non » est toujours faux. Propose une **liste de candidats** et laisse l'utilisateur cocher, écarter, compléter : réagir fait remonter ce que produire ne fait pas remonter. Pré-remplis systématiquement tes options à partir de ce que tu as sous la main :
 
+- les **annotations de la maquette** : si la feature a des écrans dans Figma, invoque le skill `figma-annotations` avant de questionner. Les champs requis, les valeurs possibles, les visibilités conditionnelles et les règles de bouton y sont souvent déjà écrits — les redemander à l'utilisateur, c'est lui faire ressaisir ce qu'il a déjà produit
 - le **code existant** : rôles et entités déjà modélisés, erreurs déjà en place, contrat zod déjà écrit, pour que tes propositions collent au projet plutôt qu'au générique
 - les **specs validées précédentes** : elles portent le niveau de granularité et les critères que l'utilisateur réclame d'habitude
 - `WebSearch` sur le domaine de la feature (panier, authentification, paiement, upload…) : les cas limites standards sont documentés, sers-t'en pour bâtir l'énumération à filtrer
@@ -107,6 +108,10 @@ N'ajoute pas d'index des stories dans ce fichier : le contenu du dossier le donn
 `project/specs/<feature>/<story>.md`, où `<story>` est le **slug** de la story. C'est ce fichier que l'`orchestrator` lit pour implémenter :
 
 ```markdown
+---
+figma: <URL du nœud de l'écran, si la story en a un>
+---
+
 # <Titre lisible>
 
 En tant que <rôle>, je veux <…> afin de <…>.
@@ -117,6 +122,8 @@ En tant que <rôle>, je veux <…> afin de <…>.
 ```
 
 Le **slug** est en kebab-case (ex. `ajout-article`) et **fixé une fois pour toutes**, même si le titre lisible change : c'est le nom du fichier qui garantit son unicité, et le renommer casse le lien avec la branche et la PR de la story. C'est **l'identifiant de la story** dans tout le workflow, il la désigne à l'oral, il nomme sa branche `<feature>/<story>`, qui reprend exactement son chemin sous `project/specs/`.
+
+Le champ `figma` porte l'URL du **nœud** de l'écran (elle contient un `node-id`), pas celle du fichier. Il rend la récolte des annotations rejouable : sans lui, un agent devra retrouver le bon frame à la main. Laisse-le vide si la story n'a pas d'écran.
 
 Les **critères d'acceptation** restent une checklist. **Jamais** une story par critère.
 

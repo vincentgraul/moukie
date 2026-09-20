@@ -25,6 +25,13 @@ scaffold  →  spec  →  ┌─ contract ─┐  →  reviewer  →  pr
 
 Chaque skill a une **frontière nette** et passe explicitement la main à la suivante. Aucun ne merge ni ne saute d'étape.
 
+À côté de ces étapes, deux **skills de connaissance** sont invoqués par les autres plutôt que par l'utilisateur :
+
+| Skill | Rôle | Invoqué par |
+|-------|------|-------------|
+| `feature-sliced-design` | La méthodologie FSD v2.1 qui fait foi côté front | `front-web`, `front-mobile`, `reviewer` |
+| `figma-annotations` | Récolte les annotations Dev Mode des maquettes et les normalise en règles exploitables | `spec`, `contract` |
+
 ---
 
 ## Le vault `project/`

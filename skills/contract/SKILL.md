@@ -52,6 +52,7 @@ Détermine ensuite si on **crée** un nouveau contrat, on l'**étend**, ou on le
 
 Construis le contrat à partir des stories qui touchent l'API :
 
+- les **énumérations**, les **champs requis** et les **valeurs par défaut** sont déjà dans les critères de la story quand la feature a des maquettes annotées : `figma-annotations` les y a rangés au moment de la spec. Reprends-les, ne les réinvente pas. Si la story porte un `figma:` mais qu'aucun critère n'en vient, invoque `figma-annotations` toi-même
 - pour chaque endpoint, définis en **zod** : la **requête**, la **réponse**, les **erreurs**, ainsi que la **route** et la **méthode**
 - exporte les **types inférés** (`z.infer`) pour que front et back consomment les mêmes types
 - fais valider le contrat par l'utilisateur, puis **gèle-le** : il devient la référence. Les subagents codent contre, sans le modifier
