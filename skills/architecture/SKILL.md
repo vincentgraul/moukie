@@ -33,7 +33,7 @@ Ce sont les préférences de Moukie. C'est ton **point de départ** : une hypoth
 - **back** : **Modular Monolith** et **Vertical Slice**
   - **Vertical Slice** : le code est organisé par feature, chaque slice contenant sa route, sa logique et son accès aux données, pas par couche technique
   - **Modular Monolith** : les slices sont regroupées en modules (bounded contexts) qui communiquent par leur API publique
-- **contrat partagé** : en zod, dans `src/shared/` en dépôt simple, ou dans un package dédié `packages/shared/` en monorepo, exposé comme `@<scope>/shared` et importé à l'identique par chaque app ; en OpenAPI ou en GraphQL, le fichier source dans un dossier `contract/` à la racine
+- **contrat partagé** : en Standard Schema, dans `src/shared/` en dépôt simple, ou dans un package dédié `packages/shared/` en monorepo, exposé comme `@<scope>/shared` et importé à l'identique par chaque app ; en OpenAPI ou en GraphQL, le fichier source dans un dossier `contract/` à la racine
 - **communication entre apps** : par HTTP, contre le contrat, dans le format retenu par la stack
 
 Ces préférences supposent une application avec un front, un back, ou les deux. Elles ne conviennent pas à tous les projets : une bibliothèque de composants n'a ni pages ni back, un site e-commerce sur Shopify a l'architecture de Shopify, une app mobile seule n'a pas besoin de monorepo. Dans ces cas, propose l'organisation que le projet demande, et dis pourquoi.

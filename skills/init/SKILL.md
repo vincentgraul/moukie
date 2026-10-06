@@ -253,7 +253,7 @@ Une ligne par commande du projet : celles que les agents, l'orchestrateur et le 
 | Vérifier l'architecture, s'il y a un outil | `check:architecture` |
 | Générer les types du contrat, si son format le demande | … |
 
-Écris la commande **réelle** du projet (un script du `package.json`, une cible de `Makefile`, une tâche Gradle…), jamais une commande supposée, et vérifie qu'elle fonctionne. Les commandes créées par `scaffold`, comme la génération des types, en font partie. Une commande sans objet n'a pas de ligne : avec un contrat en zod, par exemple, il n'y a rien à générer.
+Écris la commande **réelle** du projet (un script du `package.json`, une cible de `Makefile`, une tâche Gradle…), jamais une commande supposée, et vérifie qu'elle fonctionne. Les commandes créées par `scaffold`, comme la génération des types, en font partie. Une commande sans objet n'a pas de ligne : avec un contrat Standard Schema, par exemple, il n'y a rien à générer.
 
 ### La table des règles
 

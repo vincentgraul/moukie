@@ -85,4 +85,4 @@ Quel que soit son format :
 | Route HTTP | kebab-case, ressource au **pluriel** | `/users/:id/cart-items` |
 | Schéma de requête | `<Action>Request` | `LoginRequest` |
 | Schéma de réponse | `<Action>Response` | `LoginResponse` |
-| Type tiré du contrat | même nom que son schéma | `type LoginRequest = z.infer<typeof LoginRequest>` avec zod |
+| Type tiré du contrat | même nom que son schéma | `type LoginRequest = z.infer<typeof LoginRequest>` avec Zod |

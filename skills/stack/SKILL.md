@@ -60,9 +60,9 @@ Ce sont les préférences de Moukie. C'est ton **point de départ** : une hypoth
 - plateforme : `Shopify`
 
 ### Contrat entre apps
-- format : `zod`, quand toutes les apps sont en TypeScript
+- format : `Standard Schema`, avec `Zod`, quand toutes les apps sont en TypeScript
 
-Le **format du contrat** est un arbitrage comme un autre, mais il découle des apps retenues : zod quand toutes sont en TypeScript, OpenAPI dès qu'une API REST sert une app hors TypeScript (iOS, Android, Flutter, back dans un autre langage), GraphQL pour une API GraphQL. Le skill `contract` documente les trois. Pour OpenAPI et GraphQL, retiens aussi le générateur de types de chaque app.
+Le **format du contrat** est un arbitrage comme un autre, mais il découle des apps retenues : Standard Schema quand toutes sont en TypeScript, avec la bibliothèque de schémas retenue (Zod par défaut), OpenAPI dès qu'une API REST sert une app hors TypeScript (iOS, Android, Flutter, back dans un autre langage), GraphQL pour une API GraphQL. Le skill `contract` documente les trois. Pour OpenAPI et GraphQL, retiens aussi le générateur de types de chaque app.
 
 ---
 

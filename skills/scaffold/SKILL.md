@@ -39,8 +39,8 @@ Dans cet ordre, et seulement ce qui manque :
 
 - le **manifeste racine** du projet (le `package.json` en JavaScript, ou son équivalent), avec ses workspaces si l'architecture retient un monorepo, et la configuration de l'outil de monorepo retenu par la stack
 - **chaque app manquante**, à l'emplacement que fixe l'architecture, générée par le **générateur officiel** de son framework quand il en existe un, en mode non interactif, plutôt qu'écrite à la main
-- l'**emplacement du contrat**, tel que le fixe l'architecture. Avec zod, un module vide. Avec OpenAPI ou GraphQL, un fichier source minimal mais valide (une spec OpenAPI sans aucun chemin, un schéma GraphQL réduit à sa racine), pour que la génération puisse être vérifiée dès maintenant. Le skill `contract` le remplira
-- si le format du contrat demande une **génération de types** (OpenAPI, GraphQL) : le générateur que la stack retient pour chaque app, installé et configuré pour lire la source du contrat et écrire dans l'app, et une commande qui le lance. Avec zod, il n'y a rien à générer
+- l'**emplacement du contrat**, tel que le fixe l'architecture. Avec Standard Schema, un module vide. Avec OpenAPI ou GraphQL, un fichier source minimal mais valide (une spec OpenAPI sans aucun chemin, un schéma GraphQL réduit à sa racine), pour que la génération puisse être vérifiée dès maintenant. Le skill `contract` le remplira
+- si le format du contrat demande une **génération de types** (OpenAPI, GraphQL) : le générateur que la stack retient pour chaque app, installé et configuré pour lire la source du contrat et écrire dans l'app, et une commande qui le lance. Avec Standard Schema, il n'y a rien à générer
 - le **`docker-compose.yml`**, si la stack retient Docker : avec les services dont le back a besoin, comme sa base de données. S'il existe déjà, ajoute-y seulement les services qui manquent
 
 ---

@@ -1,6 +1,6 @@
 ---
 name: contract
-description: Définit, gèle ou fait évoluer le contrat d'interface entre les apps d'un projet : la forme des requêtes, des réponses et des erreurs de chaque échange, dans le format retenu par la stack (zod, OpenAPI ou GraphQL). Se déclenche avant de lancer des agents en parallèle sur une story qui touche plusieurs apps, pour qu'ils codent contre une source unique de vérité sans se marcher dessus. Écrit la source du contrat.
+description: Définit, gèle ou fait évoluer le contrat d'interface entre les apps d'un projet : la forme des requêtes, des réponses et des erreurs de chaque échange, dans le format retenu par la stack (Standard Schema, OpenAPI ou GraphQL). Se déclenche avant de lancer des agents en parallèle sur une story qui touche plusieurs apps, pour qu'ils codent contre une source unique de vérité sans se marcher dessus. Écrit la source du contrat.
 ---
 
 # Skill Contract
@@ -33,7 +33,7 @@ Lis dans `project/stack.md` le format du contrat, et dans `project/architecture.
 
 | Format | Quand | Référence |
 |---|---|---|
-| **zod**, ou une autre bibliothèque Standard Schema | toutes les apps concernées sont en TypeScript | `references/zod.md` |
+| **Standard Schema** : Zod, Valibot, ArkType… | toutes les apps concernées sont en TypeScript | `references/standard-schema.md` |
 | **OpenAPI** | une API REST dont au moins une app sort de TypeScript : app iOS, Android ou Flutter, back dans un autre langage | `references/openapi.md` |
 | **GraphQL** | une API GraphQL, la tienne ou celle d'un service tiers comme Shopify | `references/graphql.md` |
 
@@ -55,7 +55,7 @@ Construis le contrat à partir de la story :
 
 Fais valider le contrat par l'utilisateur, puis **gèle-le** : il devient la référence.
 
-Le gel porte sur la source du contrat (le fichier de schémas zod, le fichier OpenAPI, le schéma GraphQL), jamais sur les types générés. C'est ce chemin que l'orchestrateur vérifie avant chaque fusion.
+Le gel porte sur la source du contrat (le module de schémas Standard Schema, le fichier OpenAPI, le schéma GraphQL), jamais sur les types générés. C'est ce chemin que l'orchestrateur vérifie avant chaque fusion.
 
 ---
 
