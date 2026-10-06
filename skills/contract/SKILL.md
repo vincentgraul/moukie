@@ -1,7 +1,6 @@
 ---
 name: contract
-description: Définit, gèle ou fait évoluer le contrat d'interface partagé entre le front et le back : la forme des requêtes, réponses et erreurs de chaque endpoint, en schémas zod. Se déclenche avant de lancer des subagents front et back en parallèle sur une feature qui touche l'API, pour qu'ils codent contre une source unique de vérité sans se marcher dessus.
-model: opus
+description: Définit, gèle ou fait évoluer le contrat d'interface entre les apps d'un projet : la forme des requêtes, des réponses et des erreurs de chaque échange, dans le format retenu par la stack (zod, OpenAPI ou GraphQL). Se déclenche avant de lancer des agents en parallèle sur une story qui touche plusieurs apps, pour qu'ils codent contre une source unique de vérité sans se marcher dessus. Écrit la source du contrat.
 ---
 
 # Skill Contract
@@ -9,50 +8,70 @@ model: opus
 ## Règles
 
 Mène les échanges en **français**.
+N'écris pas de commentaires dans le code.
+Commite en conventional commits, avec des messages en anglais et sans mention de co-auteur.
+N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas des obstacles.
+Applique le skill `naming-conventions` à tout ce que tu nommes : sa section « Contrat entre apps » fixe le nom des schémas et des routes.
 
-Le contrat est la **source unique de vérité** de l'interface cross-couche. Il s'écrit en **schémas zod** : une seule définition donne à la fois les types TypeScript (compile-time, des deux côtés) et la validation runtime (le back valide l'entrée, le front valide la réponse).
-Une story front-only ou back-only n'en a **pas besoin**.
+Le contrat est la **source unique de vérité** de l'interface entre les apps. Chaque app en tire ses types, par inférence ou par génération selon le format, et ne les redéfinit jamais à la main. Une story qui ne touche qu'une app n'en a pas besoin.
 
-Une fois gelé, le contrat est immuable pendant le travail parallèle. Tout changement passe par la section `Évolution contrôlée`, jamais par une édition locale dans un worktree.
+Le **format** est un choix de stack, dans `project/stack.md`. L'**emplacement** est un choix d'architecture, dans `project/architecture.md`. Ce skill ne décide ni l'un ni l'autre.
 
-### Travail parallèle
+Une fois gelé, le contrat est **immuable** pendant le travail parallèle :
 
-Pendant que les subagents front et back tournent dans leurs worktrees isolés, le contrat est **immuable** :
-
-- Aucun subagent ne modifie le contrat dans sa copie locale.
-- Un subagent qui découvre qu'un changement d'interface est nécessaire **ne bricole pas un contournement** : il **remonte la demande** à l'orchestrateur et **s'arrête sur ce point** précis (il peut continuer le reste de son travail).
-
----
-
-### Évolution contrôlée
-
-Pour faire évoluer un contrat gelé :
-
-1. **Suspends** le travail parallèle sur les parties concernées.
-2. Amende la **source unique** sur la branche de base (jamais dans un worktree de subagent).
-3. Les deux lanes **rebasent** sur la base mise à jour.
-4. Relance le travail parallèle.
-
-Documente le changement d'interface pour que les deux lanes sachent ce qui a bougé.
+- aucun agent ne modifie sa source dans sa copie. Régénérer ses types à partir d'elle n'est pas la modifier
+- un agent qui découvre qu'un changement d'interface est nécessaire ne bricole pas de contournement : il s'arrête sur ce point précis, continue le reste de son travail, et remonte la demande à l'orchestrateur
+- tout changement passe par l'**évolution contrôlée**, plus bas, jamais par une modification dans un worktree
 
 ---
 
 ## Phase 1 — Préparation
 
-Détermine où vit le contrat selon le type de repo (lis `project/architecture.md`) :
+Lis dans `project/stack.md` le format du contrat, et dans `project/architecture.md` son emplacement. S'il en manque un, arrête-toi et signale-le plutôt que de le deviner : c'est à `stack` ou à `architecture` de trancher.
 
-- **repo simple** : dans `src/shared/`
-- **monorepo** : un package dédié `packages/shared/`, exposé comme `@<scope>/shared` et importé à l'identique par `apps/web`, `apps/mobile` et `apps/api`
+**Charge la référence du format retenu**, et suis-la pour tout ce qui suit :
 
-Détermine ensuite si on **crée** un nouveau contrat, on l'**étend**, ou on le **fait évoluer** (changement d'un endpoint existant).
+| Format | Quand | Référence |
+|---|---|---|
+| **zod**, ou une autre bibliothèque Standard Schema | toutes les apps concernées sont en TypeScript | `references/zod.md` |
+| **OpenAPI** | une API REST dont au moins une app sort de TypeScript : app iOS, Android ou Flutter, back dans un autre langage | `references/openapi.md` |
+| **GraphQL** | une API GraphQL, la tienne ou celle d'un service tiers comme Shopify | `references/graphql.md` |
+
+Détermine enfin si tu **crées** un contrat, si tu l'**étends** avec de nouveaux échanges, ou si tu le **fais évoluer** en changeant un échange existant.
 
 ---
 
 ## Phase 2 — Construction
 
-Construis le contrat à partir des stories qui touchent l'API :
+Construis le contrat à partir de la story :
 
-- les **énumérations**, les **champs requis** et les **valeurs par défaut** sont déjà dans les critères de la story quand la feature a des maquettes annotées : `figma-annotations` les y a rangés au moment de la spec. Reprends-les, ne les réinvente pas. Si la story porte un `figma:` mais qu'aucun critère n'en vient, invoque `figma-annotations` toi-même
-- pour chaque endpoint, définis en **zod** : la **requête**, la **réponse**, les **erreurs**, ainsi que la **route** et la **méthode**
-- exporte les **types inférés** (`z.infer`) pour que front et back consomment les mêmes types
-- fais valider le contrat par l'utilisateur, puis **gèle-le** : il devient la référence. Les subagents codent contre, sans le modifier
+- **ce que la story fixe déjà** : les énumérations, les champs requis et les valeurs par défaut sont dans ses critères quand la feature a des maquettes annotées, puisque `figma-annotations` les y a rangés au moment de la spec. Reprends-les, ne les réinvente pas. Si la story a un `figma:` mais qu'aucun critère n'en vient, invoque `figma-annotations` toi-même
+- **chaque échange** : sa requête, sa réponse et ses erreurs, ainsi que ce qui l'adresse, la route et la méthode en REST, l'opération en GraphQL
+- **les types de chaque app** : assure-toi que chacune les tire du contrat, comme le prévoit la référence. Si le format demande une génération, lance la commande notée dans la section « Commandes » du `CLAUDE.md` et vérifie qu'elle passe. Si cette commande n'existe pas, par exemple parce que le projet a changé de format de contrat depuis son initialisation, invoque `scaffold` : il installe le générateur que la stack retient et ajoute la commande
+
+---
+
+## Phase 3 — Validation et gel
+
+Fais valider le contrat par l'utilisateur, puis **gèle-le** : il devient la référence.
+
+Le gel porte sur la source du contrat (le fichier de schémas zod, le fichier OpenAPI, le schéma GraphQL), jamais sur les types générés. C'est ce chemin que l'orchestrateur vérifie avant chaque fusion.
+
+---
+
+## Évolution contrôlée
+
+Pour faire évoluer un contrat gelé :
+
+1. **Suspends** le travail parallèle sur les parties concernées.
+2. Amende la **source** du contrat sur la branche de la story, jamais dans un worktree, et **commite-la** : les lanes ne voient le changement qu'à travers ce commit.
+3. Les lanes **rebasent** sur la branche de la story, et régénèrent leurs types si le format le demande.
+4. **Relance** le travail parallèle.
+
+Décris le changement d'interface, pour que chaque lane sache ce qui a bougé.
+
+---
+
+## Fin
+
+Rends la main à l'orchestrateur avec le chemin de la source du contrat : c'est lui qui la commite sur la branche de la story.
