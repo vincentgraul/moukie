@@ -1,6 +1,6 @@
 ---
 name: figma-annotations
-description: Récolte les annotations Dev Mode laissées sur les maquettes avec les règles fonctionnelles attachées aux éléments d'un écran (requis, valeurs possibles, valeurs par défaut, visibilité conditionnelle, règles de bouton) et les normalise pour alimenter les critères d'acceptation d'une story et le contrat entre apps. Se déclenche quand `spec` cadre une story qui a une maquette, ou quand `contract` a besoin des valeurs et contraintes d'un formulaire. Ne fait pas de design-to-code et ne génère aucun composant.
+description: Récolte les annotations Dev Mode laissées sur les maquettes avec les règles fonctionnelles attachées aux éléments d'un écran (requis, valeurs possibles, valeurs par défaut, visibilité conditionnelle, règles de bouton) et les normalise pour alimenter les critères d'acceptation d'une story et le contrat entre apps. Se déclenche quand `spec` cadre une story qui a une maquette. Ne fait pas de design-to-code et ne génère aucun composant.
 ---
 
 # Skill Figma annotations
@@ -12,7 +12,7 @@ Mène les échanges en **français**.
 Ce skill **lit** Figma, il n'écrit jamais dedans.
 Il ne fait **pas** de design-to-code : traduire une maquette en composants reste le travail des agents front, via le skill `figma-design-to-code` du plugin Figma officiel. Ici on ne récolte que des **règles fonctionnelles**.
 
-Il est appelé par `spec`, qui range ses résultats dans la story. `contract` s'en sert ensuite **via la story**, sans rappeler ce skill, sauf si la story n'a jamais été récoltée. Il ne produit jamais de code.
+Il est appelé par `spec`, qui range ses résultats dans la story. `contract` s'en sert ensuite **via la story**, sans jamais rappeler ce skill. Il ne produit jamais de code.
 
 ### Source de vérité
 
@@ -26,7 +26,7 @@ Une annotation devient un critère d'acceptation dans `project/specs/<feature>/<
 
 ## Phase 1 — Récolte
 
-Il te faut le **nœud de l'écran**. En général l'appelant te le transmet : `spec` le demande avant de t'invoquer. Sinon cherche-le dans le frontmatter `figma:` de la story, et en dernier recours demande-le. L'URL doit contenir un `node-id`.
+Il te faut le **nœud de l'écran** : `spec` te le transmet, après l'avoir fait choisir à l'utilisateur. Sinon cherche-le dans le frontmatter `figma:` de la story, et en dernier recours demande-le. L'URL doit contenir un `node-id`.
 
 Le bon nœud est le **plus petit frame contenant tous les éléments annotés**, la modale plutôt que l'écran qui la porte, le formulaire plutôt que la page. Un nœud trop haut ramène toute l'interface autour (sidebar, header, tableau) pour les mêmes quelques règles.
 

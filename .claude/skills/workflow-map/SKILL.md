@@ -42,7 +42,7 @@ Lis ensuite `docs/workflow-map.json` : il te sert à mesurer ce qui a changé, j
 
 Ces conventions ont été fixées avec l'utilisateur. Elles ne se renégocient pas d'une régénération à l'autre :
 
-1. **L'ordre d'exécution réel**, pas l'ordre des fichiers. Une phase par cadence : une fois par projet (`init`), une fois par feature (`spec`), une fois par story (`orchestrator`), puis ce qui se lance à tout moment. Ce qui s'applique partout sans être une étape va dans `always`.
+1. **L'ordre d'exécution réel**, pas l'ordre des fichiers. Une phase par cadence : une fois par projet (`setup`), une fois par feature (`spec`), une fois par story (`orchestrator`), puis ce qui se lance à tout moment. Ce qui s'applique partout sans être une étape va dans `always`.
 2. **Chaque entrée apparaît à l'étape exacte qui la consomme**, chaque sortie à l'étape qui la produit. Dans `spec`, Figma n'entre qu'à l'étape des maquettes, jamais au début : c'est l'utilisateur qui est l'entrée de `spec`.
 3. **Un skill appelé se déroule sur place** : une étape parente dans le fil principal, puis un bloc `call` dont les sous-étapes sont numérotées `N.1`, `N.2`… à partir du numéro de la parente. Deux appels consécutifs après la même parente continuent la même numérotation.
 4. **Tout ce qui dépend d'un cas porte sa condition** (`cond`), formulée comme le fichier la pose : « si front et back », « si écran ». Un appel conditionnel porte la condition sur le bloc.

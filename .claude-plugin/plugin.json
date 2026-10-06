@@ -1,9 +1,9 @@
 {
-  "name": "claude-workflow",
-  "description": "Chaîne de travail spec-driven pour Claude Code : scaffold de projet, rédaction de specs, implémentation parallèle front/back contre un contrat d'interface gelé, et ouverture de PR. Embarque les subagents et le hook universel anti-commit sur main/master.",
-  "version": "0.2.0",
+  "name": "moukie",
+  "description": "Moukie, ton compagnon de développement spec-driven pour Claude Code : initialisation de projet, rédaction de specs, implémentation parallèle front/back contre un contrat d'interface gelé, et ouverture de PR. Embarque les agents, et installe dans chaque projet un hook git qui refuse les commits sur main/master.",
+  "version": "0.3.0",
   "author": {
     "name": "Vincent Graul"
   },
-  "keywords": ["workflow", "spec-driven", "subagents", "scaffold", "contract"]
+  "keywords": ["workflow", "spec-driven", "subagents", "setup", "scaffold", "contract"]
 }

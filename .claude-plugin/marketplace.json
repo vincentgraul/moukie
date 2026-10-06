@@ -3,11 +3,14 @@
   "owner": {
     "name": "Vincent Graul"
   },
+  "metadata": {
+    "description": "La marketplace de Vincent Graul : Moukie, un compagnon de développement spec-driven pour Claude Code."
+  },
   "plugins": [
     {
-      "name": "claude-workflow",
+      "name": "moukie",
       "source": "./",
-      "description": "Chaîne de travail spec-driven : scaffold → spec → orchestrator (contract + front/back en parallèle) → pr. Inclut les subagents et le hook anti-commit sur main/master."
+      "description": "Moukie, ton compagnon de développement spec-driven : setup → spec → orchestrator (contract + front/back en parallèle) → pr. Inclut les agents, et un garde-fou git contre les commits sur main/master."
     }
   ]
 }

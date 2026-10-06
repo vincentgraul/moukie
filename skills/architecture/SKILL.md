@@ -1,6 +1,6 @@
 ---
 name: architecture
-description: Définit, challenge ou amende l'architecture d'un projet à partir de son produit et de sa stack : les apps, la stratégie de dépôt, le découpage du front et du back, les modules, l'emplacement du contrat partagé et la communication entre apps. Se déclenche quand `init` arrive à l'architecture, quand l'utilisateur veut challenger ou faire évoluer l'architecture, ou quand `spec` ou l'orchestrateur rencontrent un module ou une app que l'architecture ne prévoit pas. Écrit `project/architecture.md`.
+description: Définit, challenge ou amende l'architecture d'un projet à partir de son produit et de sa stack : les apps, la stratégie de dépôt, le découpage du front et du back, les modules, l'emplacement du contrat partagé et la communication entre apps. Se déclenche quand `setup` arrive à l'architecture, quand l'utilisateur veut challenger ou faire évoluer l'architecture, ou quand `spec` ou l'orchestrateur rencontrent un module ou une app que l'architecture ne prévoit pas. Écrit `project/architecture.md`.
 ---
 
 # Skill Architecture
@@ -150,7 +150,7 @@ En amendement, la raison cite la feature ou le besoin qui a provoqué l'arbitrag
 
 ## Fin
 
-En **création**, rends la main à `init` : il fait générer le code par `scaffold`, puis installe l'outillage qui correspond à l'architecture retenue, comme `steiger` si elle retient Feature-Sliced Design.
+En **création**, rends la main à `setup` : il fait générer le code par `scaffold`, puis installe l'outillage qui correspond à l'architecture retenue, comme `steiger` si elle retient Feature-Sliced Design.
 
 En **challenge**, liste ce que ça implique pour le code existant : fichiers à déplacer, modules à scinder, passage en monorepo. Ne modifie pas le code toi-même : c'est le travail d'une story.
 

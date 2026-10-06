@@ -1,9 +1,9 @@
 ---
-name: init
-description: Initialise un projet pour le workflow Moukie. Mène l'entretien de cadrage (l'identité, puis le produit, la stack et l'architecture par leurs skills), écrit le vault `project/`, fait générer le code manquant par `scaffold`, puis configure le workflow : permissions, linter, garde-fou git, fichiers open source et `CLAUDE.md`. Se déclenche quand l'utilisateur crée un projet ou veut configurer Claude Code dans un projet existant. S'arrête à la PR d'initialisation.
+name: setup
+description: Initialise un projet pour le workflow Moukie. Mène l'entretien de cadrage (l'identité, puis le produit, la stack et l'architecture par leurs skills), écrit le vault `project/`, fait générer le code manquant par `scaffold`, puis configure le workflow : permissions, linter, garde-fou git, fichiers open source et `CLAUDE.md`. Se déclenche quand l'utilisateur veut démarrer un projet avec Moukie, ou installer le workflow Moukie dans un projet existant. S'arrête à la PR d'initialisation.
 ---
 
-# Skill Init
+# Skill Setup
 
 ## Règles
 
@@ -269,7 +269,7 @@ Sur un projet neuf, `rules/` est vide : **n'écris pas la table**. Une table vid
 
 ### Le workflow
 
-Les skills et leur enchaînement, les agents et leur rôle, et les interdits : jamais de commit sur `main` ou `master`, jamais de merge, pas de commentaires dans le code, aucune mention de co-auteur.
+Les skills et leur enchaînement, les agents et leur rôle, et les interdits : jamais de commit sur `main` ou `master`, jamais de merge sur `main` ni de merge d'une PR, pas de commentaires dans le code, aucune mention de co-auteur. Les fusions des lanes dans la branche d'une story, elles, font partie du travail de l'orchestrateur.
 
 ---
 
@@ -277,7 +277,7 @@ Les skills et leur enchaînement, les agents et leur rôle, et les interdits : j
 
 Sur un dépôt sans aucun commit, il n'existe pas encore de `main` vers laquelle ouvrir une PR. Commence donc par un commit initial vide sur `main`, la seule exception qu'autorise le garde-fou, et pousse-le.
 
-Crée ensuite une branche `init`, commite l'initialisation en conventional commits, pousse la branche, puis ouvre une PR vers `main` (ou `master`) avec la CLI de la forge.
+Crée ensuite une branche `setup`, commite l'initialisation en conventional commits, pousse la branche, puis ouvre une PR vers `main` (ou `master`) avec la CLI de la forge.
 
 ---
 

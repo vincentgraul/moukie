@@ -1,6 +1,6 @@
 ---
 name: stack
-description: Définit, challenge ou met à jour la stack technique d'un projet à partir de son produit, avec une veille web sur les versions, la maintenance et la compatibilité des briques. Se déclenche quand `init` arrive à la stack, ou quand l'utilisateur veut challenger, faire évoluer ou mettre à jour la stack d'un projet. Écrit `project/stack.md` et consigne chaque arbitrage dans `project/decisions.md`.
+description: Définit, challenge ou met à jour la stack technique d'un projet à partir de son produit, avec une veille web sur les versions, la maintenance et la compatibilité des briques. Se déclenche quand `setup` arrive à la stack, ou quand l'utilisateur veut challenger, faire évoluer ou mettre à jour la stack d'un projet. Écrit `project/stack.md` et consigne chaque arbitrage dans `project/decisions.md`.
 ---
 
 # Skill Stack
@@ -164,6 +164,6 @@ Consigne aussi les préférences **confirmées** après challenge : ce sont elle
 
 ## Fin
 
-En **création**, rends la main à `init` : la suite de l'entretien, l'architecture, le code et la configuration s'appuient sur `stack.md`.
+En **création**, rends la main à `setup` : la suite de l'entretien, l'architecture, le code et la configuration s'appuient sur `stack.md`.
 
 En **challenge** ou **mise à jour**, liste ce qui a changé et ce que ça implique pour le code existant : migrations, dépendances à mettre à jour, code à adapter. Ne modifie pas le code toi-même : c'est le travail d'une story.

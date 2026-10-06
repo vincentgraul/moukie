@@ -45,9 +45,9 @@ Détermine enfin si tu **crées** un contrat, si tu l'**étends** avec de nouvea
 
 Construis le contrat à partir de la story :
 
-- **ce que la story fixe déjà** : les énumérations, les champs requis et les valeurs par défaut sont dans ses critères quand la feature a des maquettes annotées, puisque `figma-annotations` les y a rangés au moment de la spec. Reprends-les, ne les réinvente pas. Si la story a un `figma:` mais qu'aucun critère n'en vient, invoque `figma-annotations` toi-même
+- **ce que la story fixe déjà** : les énumérations, les champs requis et les valeurs par défaut sont dans ses critères quand la feature a des maquettes annotées, puisque `figma-annotations` les y a rangés au moment de la spec. Reprends-les, ne les réinvente pas. S'il manque à la story une valeur dont le contrat a besoin, ne la cherche pas dans Figma et ne l'invente pas : signale-le à l'orchestrateur, la story doit repasser par `spec`
 - **chaque échange** : sa requête, sa réponse et ses erreurs, ainsi que ce qui l'adresse, la route et la méthode en REST, l'opération en GraphQL
-- **les types de chaque app** : assure-toi que chacune les tire du contrat, comme le prévoit la référence. Si le format demande une génération, lance la commande notée dans la section « Commandes » du `CLAUDE.md` et vérifie qu'elle passe. Si cette commande n'existe pas, par exemple parce que le projet a changé de format de contrat depuis son initialisation, invoque `scaffold` : il installe le générateur que la stack retient et ajoute la commande
+- **les types de chaque app** : assure-toi que chacune les tire du contrat, comme le prévoit la référence. Si le format demande une génération, lance la commande notée dans la section « Commandes » du `CLAUDE.md` et vérifie qu'elle passe. Si cette commande n'existe pas, par exemple parce que le projet a changé de format de contrat depuis son initialisation, invoque `scaffold` : il installe le générateur que la stack retient et ajoute la commande. Ne commite pas ce qu'il crée : l'orchestrateur le commite avec la source du contrat
 
 ---
 
@@ -74,4 +74,4 @@ Décris le changement d'interface, pour que chaque lane sache ce qui a bougé.
 
 ## Fin
 
-Rends la main à l'orchestrateur avec le chemin de la source du contrat : c'est lui qui la commite sur la branche de la story.
+Rends la main à l'orchestrateur avec le chemin de la source du contrat et, si tu as invoqué `scaffold`, la liste de ce qu'il a créé. C'est l'orchestrateur qui commite le tout sur la branche de la story.

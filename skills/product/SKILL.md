@@ -1,6 +1,6 @@
 ---
 name: product
-description: Cadre, challenge ou amende le produit d'un projet : le problème, la cible, la proposition de valeur, le périmètre, et ce qui existe déjà (concurrents, alternatives, positionnement), avec une veille web adaptée à la nature du projet, commercial, open source ou personnel. Se déclenche quand `init` arrive au cadrage produit, quand l'utilisateur veut challenger son produit ou son positionnement, ou quand `spec` détecte qu'une feature déplace le périmètre ou ouvre un nouveau public. Écrit `project/product.md` et `project/market.md`.
+description: Cadre, challenge ou amende le produit d'un projet : le problème, la cible, la proposition de valeur, le périmètre, et ce qui existe déjà (concurrents, alternatives, positionnement), avec une veille web adaptée à la nature du projet, commercial, open source ou personnel. Se déclenche quand `setup` arrive au cadrage produit, quand l'utilisateur veut challenger son produit ou son positionnement, ou quand `spec` détecte qu'une feature déplace le périmètre ou ouvre un nouveau public. Écrit `project/product.md` et `project/market.md`.
 ---
 
 # Skill Product
@@ -42,7 +42,7 @@ Un projet commercial ou open source a un `market.md`. Un projet personnel n'en a
 
 Lis `project/product.md`, `project/market.md` et `project/decisions.md` s'ils existent, ainsi que le README du dépôt.
 
-La **nature** du projet t'est transmise par `init`, ou se lit dans `product.md`. Si tu ne la connais pas, demande-la avant tout.
+La **nature** du projet t'est transmise par `setup`, ou se lit dans `product.md`. Si tu ne la connais pas, demande-la avant tout.
 
 Détermine le mode :
 
@@ -154,7 +154,7 @@ En challenge ou en amendement, modifie chaque fichier au plus près plutôt que 
 
 ## Fin
 
-En **création**, rends la main à `init`, qui enchaîne sur la stack : elle se décide à partir de ce que tu viens d'écrire.
+En **création**, rends la main à `setup`, qui enchaîne sur la stack : elle se décide à partir de ce que tu viens d'écrire.
 
 En **challenge**, liste ce qui a changé et ce que ça implique : des features déjà spécifiées qui sortent du périmètre, des besoins nouveaux pour `stack`. Ne modifie pas les specs toi-même.
 

@@ -25,7 +25,9 @@ Avant de poser la moindre question, situe-toi :
 - lis `project/product.md`, `project/market.md` s'il existe, `project/stack.md` et `project/architecture.md` : la feature doit tenir dans le produit, et sa réalisation dans la stack et l'architecture. Ils te serviront en 2.5
 - lis `project/design.md` s'il existe : il donne l'URL du fichier des maquettes, qui te servira en 2.3
 - détermine si l'utilisateur **crée** une feature ou **met à jour** une feature existante. En cas de doute, demande-lui
-- en **mise à jour**, si la branche `<feature>/spec` existe encore, bascule dessus avant d'écrire quoi que ce soit : c'est là que vit la dernière version validée de la feature
+- en **mise à jour**, récupère l'état du remote (`git fetch`) et repère sa branche par défaut, `origin/main` ou `origin/master` (`git symbolic-ref --short refs/remotes/origin/HEAD`), notée `origin/<défaut>` dans la suite. Regarde ensuite la branche `<feature>/spec` :
+  - si elle existe et n'est pas encore contenue dans `origin/<défaut>` (`git merge-base --is-ancestor <feature>/spec origin/<défaut>` échoue), bascule dessus avant d'écrire quoi que ce soit : c'est là que vit la dernière version validée de la feature
+  - si elle est déjà contenue dans `origin/<défaut>`, la feature y est arrivée avec une story : supprime la branche (`git branch -D`, qui ne perd rien puisque tout est dans `origin/<défaut>`), et pars de `origin/<défaut>`
 
 Résume en une ou deux lignes ce que tu as détecté.
 
@@ -171,7 +173,7 @@ Les critères d'acceptation restent une checklist. **Jamais** une story par crit
 
 Présente le cadrage et les stories à l'utilisateur. Quand il valide, passe le frontmatter du `README.md` de la feature à `status: validated`, puis **commite la feature** :
 
-- bascule sur la branche `<feature>/spec`, en la créant depuis `main` si elle n'existe pas. Pas `<feature>` tout court : git refuse qu'une branche `panier` coexiste avec les branches de story `panier/ajout-article`
+- bascule sur la branche `<feature>/spec`, en la créant depuis la branche par défaut du remote, à jour (`origin/main` ou `origin/master`), si elle n'existe pas. Pas `<feature>` tout court : git refuse qu'une branche `panier` coexiste avec les branches de story `panier/ajout-article`
 - ajoute le dossier `project/specs/<feature>/` et les fichiers du vault amendés en 2.5 (`product.md`, `market.md`, `stack.md`, `architecture.md`, `decisions.md`), et rien d'autre
 - commite-les (`docs(specs): add panier feature`)
 - ne pousse pas et n'ouvre pas de PR : la spec rejoindra `main` avec la PR de la première story implémentée, dans la même PR que le code

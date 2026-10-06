@@ -24,10 +24,13 @@ Les commandes du projet (installation, linter, tests, tests end-to-end, vérific
 
 ## Phase 1 — Préparation
 
-1. **Identifie la story** par son slug, puis bascule sur la branche `<feature>/spec`, où le skill `spec` a commité la feature validée. Si cette branche n'existe plus, la spec a déjà rejoint `main` avec une story précédente : pars de `main`.
-2. **Lis la story**, `project/specs/<feature>/<story>.md`, et le `README.md` de sa feature, qui porte le contexte et le périmètre. **Refuse de continuer** si son frontmatter n'est pas `status: validated`.
-3. **Détermine les apps concernées**, parmi celles que liste `project/architecture.md` : une seule, ou plusieurs (par exemple l'API, le web et une app iOS).
-4. **Crée la branche de la story**, `<feature>/<story>`, soit le chemin de la story sous `project/specs/` (`panier/ajout-article`), et bascule dessus. Elle part de la branche où tu te trouves : la story y est commitée, et c'est ce qui la rend visible dans les worktrees des agents.
+1. **Identifie la story** par son slug, puis récupère l'état du remote (`git fetch`) : la PR d'une story précédente a pu être mergée depuis. Repère aussi la branche par défaut du remote, `origin/main` ou `origin/master` (`git symbolic-ref --short refs/remotes/origin/HEAD`) : elle est notée `origin/<défaut>` dans la suite.
+2. **Choisis la base de la story**, d'après la branche `<feature>/spec`, où le skill `spec` a commité la feature validée :
+   - si elle existe et n'est pas encore contenue dans `origin/<défaut>` (`git merge-base --is-ancestor <feature>/spec origin/<défaut>` échoue), la spec n'a pas encore rejoint `main` : la base est `<feature>/spec`
+   - sinon, la spec a déjà rejoint `main` avec une story précédente : la base est `origin/<défaut>`, qui porte aussi le code des stories déjà mergées. Si `<feature>/spec` existe encore, supprime-la (`git branch -D`, qui ne perd rien puisque tout est dans `origin/<défaut>`) : la garder ferait repartir les stories suivantes d'une spec dépassée
+3. **Lis la story** telle qu'elle est dans la base (`git show <base>:project/specs/<feature>/<story>.md`), ainsi que le `README.md` de sa feature, qui porte le contexte et le périmètre. **Refuse de continuer** si son frontmatter n'est pas `status: validated`.
+4. **Détermine les apps concernées**, parmi celles que liste `project/architecture.md` : une seule, ou plusieurs (par exemple l'API, le web et une app iOS).
+5. **Crée la branche de la story** depuis la base, et bascule dessus. Elle se nomme `<feature>/<story>`, soit le chemin de la story sous `project/specs/` (`panier/ajout-article`). La story est commitée dans la base : c'est ce qui la rend visible dans les worktrees des agents.
 
 Si une app concernée est prévue par l'architecture mais n'existe pas encore dans le code (ajoutée par un amendement, par exemple), invoque le skill `scaffold` avant d'aller plus loin. Commite ce qu'il génère sur la branche de la story : c'est ce commit qui le rend visible dans les worktrees.
 
@@ -37,7 +40,7 @@ Si une app concernée est prévue par l'architecture mais n'existe pas encore da
 
 Si la story ne touche **qu'une app**, il n'y a pas de contrat à figer : passe à la Phase 3.
 
-Si elle en touche **plusieurs**, invoque le skill `contract` pour **définir et geler** le contrat **avant** de lancer les agents. Une fois le contrat gelé, **commite sa source** sur la branche de la story. C'est ce commit qui le transmet aux lanes : un worktree part du dernier commit, et un contrat écrit mais non commité n'existerait pas dans leurs copies.
+Si elle en touche **plusieurs**, invoque le skill `contract` pour **définir et geler** le contrat **avant** de lancer les agents. Une fois le contrat gelé, **commite sa source** sur la branche de la story, avec ce que `scaffold` a installé pour la génération des types si `contract` l'a invoqué. C'est ce commit qui le transmet aux lanes : un worktree part du dernier commit, et un contrat écrit mais non commité n'existerait pas dans leurs copies.
 
 ---
 
@@ -52,10 +55,10 @@ Chaque app concernée a **sa lane**, confiée à l'agent qui correspond à son t
 Donne à chaque agent :
 
 - **l'app dont il a la charge**, telle que la nomme `architecture.md`
-- **sa part de la story** : les critères d'acceptation qui relèvent de son app
+- **sa part de la story** : les critères d'acceptation qui relèvent de son app. Pour un critère qui traverse plusieurs apps, chaque lane couvre sa part par ses propres tests ; le test end-to-end viendra après l'intégration
 - **le chemin de la story**, `project/specs/<feature>/<story>.md`. Un agent front y trouve, dans le frontmatter `figma:`, le lien de son écran
 - s'il y a un contrat, **le chemin de sa source**, et la consigne de **coder contre lui sans le modifier**
-- la consigne de **terminer par un compte rendu** : sa branche, ses commits, ce qui est fait, ce qui bloque
+- la consigne de **faire passer ses tests et `check`**, puis de **terminer par un compte rendu** : sa branche, ses commits, le résultat des tests, ce qui est fait, ce qui bloque
 
 **Une seule app** : lance un seul agent, **sans isolation**. Il travaille directement sur la branche de la story ; il n'y a rien à intégrer, passe à la Phase 5.
 
@@ -79,18 +82,28 @@ Si la commande signale une différence, la lane a modifié le contrat gelé : ne
 
 Fusionne ensuite les branches des lanes dans la branche de la story, **les apps serveur d'abord, puis chaque app cliente** : les clientes consomment l'API, elles s'intègrent par-dessus.
 
-Résous les conflits ordinaires. Un conflit qui touche le **contrat** n'est pas ordinaire : le contrat était gelé, personne n'aurait dû y toucher. Ne le résous pas, traite-le comme un blocage.
+Résous les conflits ordinaires. Un conflit sur le **lockfile** du gestionnaire de paquets (`bun.lock`, `package-lock.json`, `pnpm-lock.yaml`…) ne se résout pas à la main : garde l'une des deux versions, relance l'installation pour qu'il se régénère avec les dépendances des deux lanes, puis termine la fusion. Un conflit qui touche le **contrat** n'est pas ordinaire : le contrat était gelé, personne n'aurait dû y toucher. Ne le résous pas, traite-le comme un blocage.
 
 Une fois l'intégration réussie, **fais le ménage** : supprime les worktrees des lanes, puis leurs branches avec `git branch -d`. Contrairement à `-D`, il refuse de supprimer une branche non fusionnée, ce qui te protège d'une perte de travail. Il ne reste que la branche de la story.
 
 ---
 
-## Phase 5 — Validation d'intégration
+## Phase 5 — Tests end-to-end
+
+Un critère qui traverse plusieurs apps n'est prouvé que par un test qui les exerce ensemble, jamais par la somme des tests de chaque lane. Ce test ne peut s'écrire qu'ici : c'est sur la branche de la story que toutes les apps sont enfin réunies.
+
+Si la story n'a aucun critère de ce genre, passe à la Phase 6.
+
+Sinon, confie ces critères à l'agent de l'app par laquelle passe l'utilisateur : `front-web` ou `front-mobile`, ou `backend` si le critère ne traverse que des apps serveur. Lance-le **sans isolation**, sur la branche de la story, avec la liste des critères et la consigne d'écrire un test end-to-end par critère. Si plusieurs apps clientes sont concernées, lance leurs agents l'un après l'autre : ils travaillent sur la même branche.
+
+---
+
+## Phase 6 — Validation d'intégration
 
 Le travail réuni sur la branche de la story, vérifie la story **dans son ensemble**, avec les commandes de la section « Commandes » du `CLAUDE.md` :
 
 - la **suite de tests complète** du projet, pas seulement les tests de la story
-- les **tests end-to-end** des critères qui traversent plusieurs apps : un tel critère n'est prouvé que par un test qui les exerce ensemble, jamais par la somme de tests isolés de chaque app
+- les **tests end-to-end** écrits en Phase 5, pour les critères qui traversent plusieurs apps
 - la commande `check`, qui lance le linter
 
 Rédige un **compte rendu d'intégration** : les commandes lancées, leur résultat, et pour chaque critère d'acceptation le test qui le couvre. C'est lui que tu remets au `reviewer`.
@@ -99,7 +112,7 @@ Si quelque chose échoue, ce n'est pas encore l'heure de la revue : renvoie la c
 
 ---
 
-## Phase 6 — Revue
+## Phase 7 — Revue
 
 Lance l'agent `reviewer` en lui donnant les critères d'acceptation de la story et le compte rendu d'intégration. Il rend des constats classés :
 
@@ -112,7 +125,7 @@ Si un constat bloquant relève d'un choix produit ou structurant que tu ne peux 
 
 ---
 
-## Phase 7 — PR
+## Phase 8 — PR
 
 Une fois les constats bloquants levés, invoque le skill `pr`, en lui transmettant les suggestions non appliquées.
 
@@ -132,6 +145,10 @@ Si un agent remonte un besoin de changement de contrat, applique l'évolution co
 4. **Relance** le travail parallèle.
 
 Tu peux appliquer seul un changement mineur. Un changement structurant, ou qui touche un choix produit, attend la décision de l'utilisateur.
+
+### Story incomplète
+
+Si `contract` ou un agent signale qu'il manque à la story une information dont il a besoin (une valeur, une règle, un cas d'erreur), ne la fais pas inventer : notifie l'utilisateur. La story repasse par le skill `spec`, en mise à jour, qui la complète et la commite sur `<feature>/spec`. Fais ensuite rebaser la branche de la story sur `<feature>/spec` avant de reprendre.
 
 ### Bibliothèque absente de la stack
 

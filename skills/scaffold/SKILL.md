@@ -1,6 +1,6 @@
 ---
 name: scaffold
-description: Génère le code que l'architecture d'un projet prévoit et qui n'existe pas encore : le manifeste racine et ses workspaces, les apps par les générateurs officiels de leurs frameworks, l'emplacement du contrat et, si son format en demande un, le générateur de types de chaque app, les services Docker si la stack les retient. Ne génère que ce qui manque et ne touche jamais au code existant. Se déclenche quand `init` arrive au code, quand l'orchestrateur trouve une app prévue par l'architecture mais absente du code, ou quand l'utilisateur veut générer une app que l'architecture prévoit.
+description: Génère le code que l'architecture d'un projet prévoit et qui n'existe pas encore : le manifeste racine et ses workspaces, les apps par les générateurs officiels de leurs frameworks, l'emplacement du contrat et, si son format en demande un, le générateur de types de chaque app, les services Docker si la stack les retient. Ne génère que ce qui manque et ne touche jamais au code existant. Se déclenche quand `setup` arrive au code, quand l'orchestrateur trouve une app prévue par l'architecture mais absente du code, ou quand l'utilisateur veut générer une app que l'architecture prévoit.
 ---
 
 # Skill Scaffold
@@ -17,7 +17,7 @@ Tu **génères**, tu ne décides pas. La structure vient de `project/architectur
 
 **Rien de plus que la structure** : pas de page, pas d'endpoint, pas de logique métier. Le premier code utile arrive avec une story.
 
-Ne commite pas : c'est le rôle de celui qui t'appelle. `init` commite dans sa PR, l'orchestrateur sur la branche de la story, et l'utilisateur lui-même s'il t'a appelé directement.
+Ne commite pas : c'est le rôle de celui qui t'appelle. `setup` commite dans sa PR, l'orchestrateur sur la branche de la story, y compris quand c'est `contract` qui t'a invoqué, et l'utilisateur lui-même s'il t'a appelé directement.
 
 ---
 
@@ -57,4 +57,4 @@ Si une app ne démarre pas, corrige la génération avant de rendre la main. Si 
 
 Rends la main à l'appelant avec trois listes : ce que tu as créé, les commandes que tu as ajoutées (la génération des types, par exemple), et les écarts que tu as signalés sans y toucher.
 
-Si le `CLAUDE.md` existe déjà, ajoute toi-même ces commandes à sa section « Commandes ». À l'initialisation, c'est `init` qui les y reprend, puisqu'il écrit le `CLAUDE.md` en dernier.
+Si le `CLAUDE.md` existe déjà, ajoute toi-même ces commandes à sa section « Commandes ». À l'initialisation, c'est `setup` qui les y reprend, puisqu'il écrit le `CLAUDE.md` en dernier.
