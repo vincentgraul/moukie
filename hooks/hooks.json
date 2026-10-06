@@ -1,22 +1,11 @@
 {
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "input=$(cat); cmd=$(printf '%s' \"$input\" | jq -r '.tool_input.command // \"\"'); case \"$cmd\" in *'git commit'*) branch=$(git branch --show-current 2>/dev/null); if [ \"$branch\" = \"main\" ] || [ \"$branch\" = \"master\" ]; then printf '%s' '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Commit interdit sur main/master — crée une branche dédiée.\"}}'; fi ;; esac"
-          }
-        ]
-      }
-    ],
     "Notification": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Un subagent ou une action a besoin de ton attention\" with title \"Claude Code\" sound name \"Glass\"' >/dev/null 2>&1 || true"
+            "command": "osascript -e 'display notification \"Moukie a besoin de toi\" with title \"Moukie\" sound name \"Glass\"' >/dev/null 2>&1 || true"
           }
         ]
       }
