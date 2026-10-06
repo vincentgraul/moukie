@@ -1,6 +1,6 @@
 ---
 name: figma-annotations
-description: Récolte les annotations Dev Mode laissées sur les maquettes avec les règles fonctionnelles attachées aux éléments d'un écran (requis, valeurs possibles, valeurs par défaut, visibilité conditionnelle, règles de bouton) et les normalise pour alimenter les critères d'acceptation d'une story et le contrat zod. Se déclenche quand `spec` cadre une story qui a une maquette, ou quand `contract` a besoin des valeurs et contraintes d'un formulaire. Ne fait pas de design-to-code et ne génère aucun composant.
+description: Récolte les annotations Dev Mode laissées sur les maquettes avec les règles fonctionnelles attachées aux éléments d'un écran (requis, valeurs possibles, valeurs par défaut, visibilité conditionnelle, règles de bouton) et les normalise pour alimenter les critères d'acceptation d'une story et le contrat entre apps. Se déclenche quand `spec` cadre une story qui a une maquette, ou quand `contract` a besoin des valeurs et contraintes d'un formulaire. Ne fait pas de design-to-code et ne génère aucun composant.
 ---
 
 # Skill Figma annotations
@@ -20,22 +20,22 @@ Figma **alimente**, la story **fait foi**.
 
 Une annotation devient un critère d'acceptation dans `project/specs/<feature>/<story>.md`, et c'est ce fichier qui est ensuite la référence : c'est lui qui est versionné, relu en PR et confronté au code par le `reviewer`. Si la maquette bouge après validation de la feature, on repasse par `spec` pour mettre la story à jour, jamais par un agent qui relit Figma pendant l'implémentation.
 
-N'invente **rien**. Une règle absente de la maquette n'est pas une règle. Un élément sans annotation n'est pas un oubli à combler.
+**N'invente rien.** Une règle absente de la maquette n'est pas une règle. Un élément sans annotation n'est pas un oubli à combler.
 
 ---
 
 ## Phase 1 — Récolte
 
-Il te faut le **noeud de l'écran**. S'il n'est pas dans le frontmatter de la story, demande-le : l'URL doit contenir un `node-id`.
+Il te faut le **nœud de l'écran**. En général l'appelant te le transmet : `spec` le demande avant de t'invoquer. Sinon cherche-le dans le frontmatter `figma:` de la story, et en dernier recours demande-le. L'URL doit contenir un `node-id`.
 
-Le bon noeud est le **plus petit frame contenant tous les éléments annotés**, la modale plutôt que l'écran qui la porte, le formulaire plutôt que la page. Un noeud trop haut ramène toute l'interface autour (sidebar, header, tableau) pour les mêmes quelques règles.
+Le bon nœud est le **plus petit frame contenant tous les éléments annotés**, la modale plutôt que l'écran qui la porte, le formulaire plutôt que la page. Un nœud trop haut ramène toute l'interface autour (sidebar, header, tableau) pour les mêmes quelques règles.
 
-Charge d'abord le skill `figma-design-to-code` (prérequis obligatoire du MCP), puis appelle `get_design_context` sur ce noeud.
+Charge d'abord le skill `figma-design-to-code`, que le MCP Figma exige, puis appelle `get_design_context` sur ce nœud.
 
 Deux points qui font gagner du temps :
 
-- `get_metadata` ne renvoie **pas** les annotations. Seul `get_design_context` les porte.
-- passe `excludeScreenshot: true` : tu cherches du texte, pas des pixels.
+- `get_metadata` ne renvoie **pas** les annotations. Seul `get_design_context` les porte
+- passe `excludeScreenshot: true` : tu cherches du texte, pas des pixels
 
 Dans la réponse, récupère tout élément portant un attribut `data-*-annotations`, avec son `data-node-id` et son `data-name`.
 
@@ -55,9 +55,9 @@ Le segment central du nom d'attribut est la **catégorie** de l'annotation dans 
 
 ### Pièges
 
-- Les séparateurs `---` arrivent **échappés** en `\---`.
-- Les puces sont converties en **listes numérotées**. Le numéro ne porte aucun sens, ne le reprends pas.
-- L'appel est verbeux : tu reçois le code de tout l'écran pour quelques règles. Ne recopie jamais ce code, ne garde que les annotations.
+- les séparateurs `---` arrivent **échappés** en `\---`
+- les puces sont converties en **listes numérotées**. Le numéro ne porte aucun sens, ne le reprends pas
+- l'appel est verbeux : tu reçois le code de tout l'écran pour quelques règles. Ne recopie jamais ce code, ne garde que les annotations
 
 ---
 
@@ -85,7 +85,7 @@ Les catégories rencontrées sont `Input` et `Button`. La liste n'est pas fermé
 
 Chaque règle a une destination, et une seule annotation peut en alimenter plusieurs :
 
-- `Est requis`, `Valeur possible`, `Valeur par défaut` → le **contrat zod** (validation et types partagés), **et** un critère d'acceptation
+- `Est requis`, `Valeur possible`, `Valeur par défaut` → le **contrat** (validation et types partagés), **et** un critère d'acceptation
 - `Visible seulement si` → le **comportement front**, et un critère d'acceptation
 - `Règles:` → un **critère d'acceptation**, toujours
 
@@ -110,4 +110,8 @@ Rends un bloc par élément annoté, dans l'ordre de la maquette :
 
 Reformule chaque règle en **comportement observable**, pour qu'elle soit directement utilisable comme critère d'acceptation : « le bouton est désactivé tant que le formulaire n'est pas valide » est vérifiable, « gérer la validation » ne l'est pas.
 
-Termine en signalant ce que tu n'as **pas** pu router : une annotation ambiguë, une condition qui référence un champ absent de l'écran, une règle qui contredit la story. C'est à l'appelant de trancher, pas à toi.
+---
+
+## Fin
+
+Rends la restitution à l'appelant, en signalant ce que tu n'as **pas** pu router : une annotation ambiguë, une condition qui référence un champ absent de l'écran, une règle qui contredit la story. C'est à l'appelant de trancher, pas à toi.
