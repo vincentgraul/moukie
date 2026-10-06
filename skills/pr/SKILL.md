@@ -1,7 +1,6 @@
 ---
 name: pr
-description: Ouvre une pull request GitHub pour la branche courante une fois la story terminée. Commit et pousse la branche, puis crée la PR via le CLI `gh` avec un titre en conventional commit et un renvoi vers la story dans la spec. Ne merge jamais la PR.
-model: sonnet
+description: Ouvre la PR d'une story terminée (pull request sur GitHub, merge request sur GitLab), sur la forge retenue par la stack. Commite et pousse la branche, puis crée la PR avec la CLI de la forge, un titre en conventional commit et un renvoi vers la story. Se déclenche à la fin de l'orchestrateur, ou quand l'utilisateur veut ouvrir la PR de la branche courante. Ne merge jamais.
 ---
 
 # Skill PR
@@ -9,34 +8,44 @@ model: sonnet
 ## Règles
 
 Mène les échanges en **français**.
-La PR doit être sur une branche dédiée. **Refuse de continuer si la branche courante est `main` ou `master`**.
-Ton travail s'arrête à l'**ouverture de la PR**. Ne merge jamais et ne la passe pas en auto-merge.
-Pas de mention de co-auteur Claude ou autre.
+Commite en conventional commits, avec des messages en anglais et sans mention de co-auteur. La PR ne mentionne aucun co-auteur non plus.
+N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas des obstacles.
+Ne merge jamais sur `main`, et ne merge jamais une PR : c'est l'utilisateur qui merge. Ne passe pas non plus la PR en fusion automatique.
+
+Une PR part toujours d'une branche dédiée : **refuse de continuer** si la branche courante est `main` ou `master`.
 
 ---
 
-## Préparation
+## Phase 1 — Préparation
 
-Le nom de la branche est le chemin de la story sous `project/specs/` : `<feature>/<story>` (ex. `panier/ajout-article` → `project/specs/panier/ajout-article.md`). Si le nom ne suit pas ce format, **demande** la feature et le slug.
-Lis la story. Son titre et ses critères d'acceptation alimentent le corps de la PR.
+Le nom de la branche est le chemin de la story sous `project/specs/` : la branche `panier/ajout-article` correspond à `project/specs/panier/ajout-article.md`. Si le nom ne suit pas ce format, **demande** la feature et le slug.
 
----
+Lis la story : son titre et ses critères d'acceptation alimentent la PR.
 
-## Commits & push
-
-Commit les changements avec des messages en **anglais** et en **conventional commit** puis pousse la branche sur le remote (crée l'upstream si nécessaire avec `git push -u`).
+Lis dans `project/stack.md` la **forge** retenue, et utilise sa CLI officielle : `gh` pour GitHub, `glab` pour GitLab. Si la forge n'en a pas, ou si la CLI n'est pas installée et authentifiée, arrête-toi et dis-le plutôt que de contourner.
 
 ---
 
-## Création de la PR
+## Phase 2 — Commits et push
 
-Crée la PR via `gh pr create`, ciblant la branche par défaut (`main` ou `master`) :
+Commite les changements restants. Pousse ensuite la branche, en créant l'upstream si nécessaire (`git push -u`).
 
-- **Titre** : en conventional commit, résumant le ticket
-- **Corps** :
-  - **What** — ce que fait le changement
-  - **Why** — le besoin/problème adressé
-  - **Story** — son titre et le chemin de son fichier (ex. `project/specs/panier/ajout-article.md`)
-  - **Critères d'acceptation** — la checklist de la story, reprise telle quelle
-  
-Une fois la PR crée, donne le **lien de la PR** ouverte et un résumé d'une ligne de son contenu.
+---
+
+## Phase 3 — Création de la PR
+
+Crée la PR avec la CLI de la forge (`gh pr create` sur GitHub, `glab mr create` sur GitLab), vers la branche par défaut (`main` ou `master`) :
+
+- **titre** : en conventional commit, il résume la story
+- **corps** :
+  - **What** : ce que fait le changement
+  - **Why** : le besoin auquel il répond
+  - **Story** : son titre et le chemin de son fichier (`project/specs/panier/ajout-article.md`)
+  - **Critères d'acceptation** : la checklist de la story, reprise telle quelle
+  - **Suggestions non appliquées** : celles que l'orchestrateur t'a transmises. S'il n'y en a pas, omets la section
+
+---
+
+## Fin
+
+Donne le lien de la PR et un résumé de son contenu en une ligne. C'est l'utilisateur qui la merge.
