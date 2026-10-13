@@ -8,6 +8,7 @@
 		"preview": "vite preview --port 3000",
 		"generate-routes": "tsr generate",
 		"typecheck": "tsc --noEmit",
+		"check:plugin": "bun src/app/check/check-plugin-metadata.ts",
 		"test": "vitest run --passWithNoTests",
 		"test:e2e": "playwright test --pass-with-no-tests",
 		"check:architecture": "steiger ./src"
@@ -16,6 +17,7 @@
 		"@empreint/ui": "^1.9.0",
 		"@tanstack/react-router": "^1.170.44",
 		"@tanstack/react-start": "^1.169.1",
+		"lucide-react": "^1.56.0",
 		"react": "^19.3.0",
 		"react-dom": "^19.3.0"
 	},

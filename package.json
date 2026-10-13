@@ -9,7 +9,7 @@
 		"prepare": "git config core.hooksPath .githooks || true",
 		"dev": "bun run --filter docs dev",
 		"build": "bun run --filter docs build",
-		"check": "biome check && bun run --filter docs typecheck",
+		"check": "biome check && bun run --filter docs typecheck && bun run --filter docs check:plugin",
 		"check:architecture": "bun run --filter docs check:architecture",
 		"test": "bun run --filter docs test",
 		"test:e2e": "bun run --filter docs test:e2e"
