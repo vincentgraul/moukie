@@ -14,6 +14,8 @@ description: >
   Router, Nuxt, Vite, Astro), or implementing common patterns such as
   authentication, API handling, Redux, and TanStack Query (React Query)
   within FSD.
+metadata:
+  moukie-badge: "knowledge"
 ---
 
 # Feature-Sliced Design (FSD) v2.1

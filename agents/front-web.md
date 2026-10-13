@@ -3,6 +3,12 @@ name: front-web
 description: Implémente l'interface web d'une story, selon la stack de `project/stack.md`, l'architecture de `project/architecture.md` et le design system du projet. À utiliser comme lane d'une app web, seule ou en parallèle des autres lanes, contre un contrat d'interface gelé, ou après l'intégration pour les tests end-to-end.
 model: opus
 color: blue
+metadata:
+  moukie-badge: "lane"
+  moukie-icon: "panel-top"
+  moukie-rank: "2"
+  moukie-summary: "Code l'interface web d'une story avec le design system."
+  moukie-produces: "Commite l'interface web et ses tests"
 ---
 
 # Agent Front web

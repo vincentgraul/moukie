@@ -1,6 +1,12 @@
 ---
 name: setup
 description: Initialise un projet pour le workflow Moukie. Mène l'entretien de cadrage (l'identité, puis le produit, la stack et l'architecture par leurs skills), écrit le vault `project/`, fait générer le code manquant par `scaffold`, puis configure le workflow : permissions, linter, garde-fou git, fichiers open source et `CLAUDE.md`. Se déclenche quand l'utilisateur veut démarrer un projet avec Moukie, ou installer le workflow Moukie dans un projet existant. S'arrête à la PR d'initialisation.
+metadata:
+  moukie-badge: "project"
+  moukie-icon: "rocket"
+  moukie-rank: "1"
+  moukie-summary: "Mène l'entretien de départ et configure tout le workflow."
+  moukie-produces: "Crée project/ et CLAUDE.md"
 ---
 
 # Skill Setup

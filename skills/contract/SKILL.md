@@ -1,6 +1,11 @@
 ---
 name: contract
 description: Définit, gèle ou fait évoluer le contrat d'interface entre les apps d'un projet : la forme des requêtes, des réponses et des erreurs de chaque échange, dans le format retenu par la stack (Standard Schema, OpenAPI ou GraphQL). Se déclenche avant de lancer des agents en parallèle sur une story qui touche plusieurs apps, pour qu'ils codent contre une source unique de vérité sans se marcher dessus. Écrit la source du contrat.
+metadata:
+  moukie-badge: "story"
+  moukie-icon: "key-round"
+  moukie-rank: "8"
+  moukie-summary: "Gèle l'interface entre les apps avant le travail parallèle."
 ---
 
 # Skill Contract

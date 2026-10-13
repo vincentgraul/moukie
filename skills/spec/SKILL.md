@@ -1,6 +1,12 @@
 ---
 name: spec
 description: Crée ou met à jour la spec d'une feature par un entretien guidé, puis la commite une fois validée. Se déclenche quand l'utilisateur veut rédiger, affiner ou mettre à jour une spec. Écrit `project/specs/<feature>/` : le cadrage de la feature et un fichier par story, prêtes à être implémentées une par une par le skill `orchestrator`.
+metadata:
+  moukie-badge: "feature"
+  moukie-icon: "file-text"
+  moukie-rank: "6"
+  moukie-summary: "Cadre une feature et la découpe en stories."
+  moukie-produces: "Crée project/specs/"
 ---
 
 # Skill Spec
