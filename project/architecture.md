@@ -26,7 +26,7 @@ Les routes de TanStack Start vivent dans `docs/src/app/routes/` (`routesDirector
 
 | Couche | Slices | Rôle |
 |---|---|---|
-| `app` | `routes/`, `layout/`, `providers/`, `styles/` | routage, mise en page commune (barre latérale et en-tête : lien GitHub, sélecteur de langue), fournisseurs, styles globaux |
+| `app` | `routes/`, `layout/`, `providers/`, `styles/`, `check/` | routage, mise en page commune (barre latérale et en-tête : lien GitHub, sélecteur de langue), fournisseurs, styles globaux, points d'entrée des contrôles lancés par `check`, qui composent les entités |
 | `pages` | `home`, `getting-started`, `skills`, `agents`, `workflow-map` | une page par entrée du site |
 | `features` | `switch-language` | changer de langue en conservant la page courante |
 | `entities` | `skill`, `agent` | lire au build les fichiers du plugin, exposer leur modèle et leur carte, associer chaque texte à sa traduction anglaise |
