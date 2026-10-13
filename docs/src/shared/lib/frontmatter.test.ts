@@ -76,17 +76,56 @@ describe("parseFrontmatter", () => {
 		});
 	});
 
-	it("keeps the lines of a literal block scalar introduced by |-", () => {
+	it("keeps the lines of a literal block scalar introduced by |", () => {
 		const source = [
 			"---",
-			"description: |-",
+			"description: |",
 			"  first line",
 			"  second line",
 			"---",
 		].join("\n");
 
 		expect(parseFrontmatter(source)).toEqual({
-			description: "first line\nsecond line",
+			description: "first line\nsecond line\n",
+		});
+	});
+
+	it("throws on a block scalar header other than > and |", () => {
+		const source = ["---", "description: >-", "  text", "---"].join("\n");
+
+		expect(() => parseFrontmatter(source)).toThrow(/2/);
+	});
+
+	it("throws instead of flattening a map nested on more than one level", () => {
+		const source = [
+			"---",
+			"metadata:",
+			"  moukie:",
+			"    badge: project",
+			"---",
+		].join("\n");
+
+		expect(() => parseFrontmatter(source)).toThrow(/4/);
+	});
+
+	it("strips trailing comments outside quoted values", () => {
+		const source = [
+			"---",
+			"name: setup # the skill",
+			"metadata:",
+			'  moukie-rank: "1" # first',
+			"  moukie-summary: 'Lance # tout' # summary",
+			"  moukie-icon: rocket#launch",
+			"---",
+		].join("\n");
+
+		expect(parseFrontmatter(source)).toEqual({
+			name: "setup",
+			metadata: {
+				"moukie-rank": "1",
+				"moukie-summary": "Lance # tout",
+				"moukie-icon": "rocket#launch",
+			},
 		});
 	});
 

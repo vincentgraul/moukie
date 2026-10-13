@@ -9,7 +9,8 @@ const DELIMITER = "---";
 const TOP_LEVEL_ENTRY = /^([\w-]+):(?:[ \t]+(.*))?$/;
 const NESTED_ENTRY = /^[ \t]+([\w-]+):(?:[ \t]+(.*))?$/;
 const LIST_ITEM = /^[ \t]+-[ \t]+(.*)$/;
-const BLOCK_SCALAR_HEADER = /^([>|])([+-]?)$/;
+const BLOCK_SCALAR_HEADER = /^[>|]/;
+const TRAILING_COMMENT = /[ \t]+#.*$/;
 
 type Line = { readonly text: string; readonly number: number };
 
@@ -24,17 +25,13 @@ export function parseFrontmatter(source: string): Frontmatter {
 		if (isBlankOrComment(line.text)) {
 			continue;
 		}
-		const entry = TOP_LEVEL_ENTRY.exec(line.text);
-		if (entry === null) {
-			throw new Error(`ligne ${line.number} illisible : ${line.text}`);
-		}
-		const [, key, rawValue = ""] = entry;
+		const [, key, rawValue = ""] = matchLine(TOP_LEVEL_ENTRY, line);
 		const indentedLines: Line[] = [];
 		while (index < lines.length && !startsAtColumnZero(lines[index].text)) {
 			indentedLines.push(lines[index]);
 			index += 1;
 		}
-		frontmatter[key] = parseValue(rawValue.trim(), indentedLines);
+		frontmatter[key] = parseValue(line, rawValue, indentedLines);
 	}
 
 	return frontmatter;
@@ -57,62 +54,70 @@ function extractFrontmatterLines(source: string): Line[] {
 }
 
 function parseValue(
+	entryLine: Line,
 	rawValue: string,
 	indentedLines: readonly Line[],
 ): FrontmatterValue {
-	const blockScalarHeader = BLOCK_SCALAR_HEADER.exec(rawValue);
-	if (blockScalarHeader !== null) {
-		const [, style, chomping] = blockScalarHeader;
-		return parseBlockScalar(style, chomping, indentedLines);
+	const value = stripTrailingComment(rawValue.trim());
+	if (BLOCK_SCALAR_HEADER.test(value)) {
+		if (value !== ">" && value !== "|") {
+			throw new Error(
+				`ligne ${entryLine.number} : seuls les blocs > et | sont pris en charge`,
+			);
+		}
+		return parseBlockScalar(value, indentedLines);
 	}
 	const contentLines = indentedLines.filter(
 		(line) => !isBlankOrComment(line.text),
 	);
-	if (rawValue !== "") {
+	if (value !== "") {
 		const continuation = contentLines.map((line) => line.text.trim());
-		return unquote([rawValue, ...continuation].join(" "));
+		return unquote([value, ...continuation].join(" "));
 	}
 	if (contentLines.length === 0) {
 		return "";
 	}
+	assertSingleNestingLevel(contentLines);
 	if (LIST_ITEM.test(contentLines[0].text)) {
 		return contentLines.map((line) =>
-			unquote(matchLine(LIST_ITEM, line)[1].trim()),
+			parseScalar(matchLine(LIST_ITEM, line)[1]),
 		);
 	}
 	return Object.fromEntries(
 		contentLines.map((line) => {
-			const [, key, value = ""] = matchLine(NESTED_ENTRY, line);
-			return [key, unquote(value.trim())];
+			const [, key, nestedValue = ""] = matchLine(NESTED_ENTRY, line);
+			return [key, parseScalar(nestedValue)];
 		}),
 	);
 }
 
-function parseBlockScalar(
-	style: string,
-	chomping: string,
-	indentedLines: readonly Line[],
-) {
+function assertSingleNestingLevel(contentLines: readonly Line[]) {
+	const indentation = indentationOf(contentLines[0].text);
+	const deeperLine = contentLines.find(
+		(line) => indentationOf(line.text) !== indentation,
+	);
+	if (deeperLine !== undefined) {
+		throw new Error(
+			`ligne ${deeperLine.number} : imbrication sur plus d'un niveau non prise en charge`,
+		);
+	}
+}
+
+function parseBlockScalar(style: string, indentedLines: readonly Line[]) {
 	const contentLines = trimTrailingBlankLines(
 		indentedLines.map((line) => line.text),
 	);
+	if (contentLines.length === 0) {
+		return "";
+	}
 	const indentation = Math.min(
-		...contentLines
-			.filter((text) => text.trim() !== "")
-			.map((text) => text.search(/\S/)),
+		...contentLines.filter((text) => text.trim() !== "").map(indentationOf),
 	);
 	const dedentedLines = contentLines.map((text) =>
 		text.slice(indentation).trimEnd(),
 	);
 	const body =
 		style === ">" ? foldLines(dedentedLines) : dedentedLines.join("\n");
-	if (body === "" || chomping === "-") {
-		return body;
-	}
-	if (chomping === "+") {
-		const trailingBlankLines = indentedLines.length - contentLines.length;
-		return `${body}\n${"\n".repeat(trailingBlankLines)}`;
-	}
 	return `${body}\n`;
 }
 
@@ -141,6 +146,45 @@ function trimTrailingBlankLines(lines: readonly string[]) {
 	return lines.slice(0, end);
 }
 
+function parseScalar(rawValue: string) {
+	return unquote(stripTrailingComment(rawValue.trim()));
+}
+
+function stripTrailingComment(value: string) {
+	const quote = value[0];
+	if (quote === '"' || quote === "'") {
+		const closingIndex = findClosingQuote(value, quote);
+		if (closingIndex !== -1) {
+			const rest = value.slice(closingIndex + 1).trim();
+			if (rest === "" || rest.startsWith("#")) {
+				return value.slice(0, closingIndex + 1);
+			}
+		}
+		return value;
+	}
+	return value.replace(TRAILING_COMMENT, "");
+}
+
+function findClosingQuote(value: string, quote: string) {
+	let index = 1;
+	while (index < value.length) {
+		const character = value[index];
+		if (quote === '"' && character === "\\") {
+			index += 2;
+			continue;
+		}
+		if (character === quote) {
+			if (quote === "'" && value[index + 1] === "'") {
+				index += 2;
+				continue;
+			}
+			return index;
+		}
+		index += 1;
+	}
+	return -1;
+}
+
 function unquote(value: string) {
 	if (value.length >= 2 && value.startsWith("'") && value.endsWith("'")) {
 		return value.slice(1, -1).replaceAll("''", "'");
@@ -161,6 +205,10 @@ function matchLine(pattern: RegExp, line: Line) {
 		throw new Error(`ligne ${line.number} illisible : ${line.text}`);
 	}
 	return match;
+}
+
+function indentationOf(text: string) {
+	return text.search(/\S/);
 }
 
 function isBlankOrComment(text: string) {
