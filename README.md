@@ -1,15 +1,15 @@
-# claude-workflow
+# Moukie
 
-Plugin Claude Code pour un développement **spec-driven** de bout en bout : du cadrage d'une feature jusqu'à l'ouverture de la PR, avec une implémentation **front/back en parallèle** disciplinée par un contrat d'interface gelé.
+Seul, de la maquette Figma à la PR : Moukie est un plugin Claude Code qui code ton front et ton back **en parallèle** contre un contrat partagé, puis te rapporte la PR. C'est toi qui merges.
 
-Le plugin embarque les **skills** du workflow, les **subagents** d'implémentation, et un **hook universel** anti-commit sur `main`/`master`.
+Le plugin embarque les **skills** du workflow et les **subagents** d'implémentation. À l'initialisation, il installe dans chaque projet un **hook git** qui refuse les commits sur `main`/`master`.
 
 ---
 
 ## Le pipeline
 
 ```
-scaffold  →  spec  →  ┌─ contract ─┐  →  reviewer  →  pr
+setup     →  spec  →  ┌─ contract ─┐  →  reviewer  →  pr
 (config)    (WHY)     │ orchestrator│    (revue)     (PR)
                       │ front ∥ back│
                       └────────────┘
@@ -17,7 +17,7 @@ scaffold  →  spec  →  ┌─ contract ─┐  →  reviewer  →  pr
 
 | Étape | Skill | Rôle | S'arrête à |
 |-------|-------|------|-----------|
-| 1 | `scaffold` | Entretien guidé → génère le vault `project/`, le `CLAUDE.md` routeur et le `.claude/` (settings, hooks), branche les subagents et skills | Config validée |
+| 1 | `setup` | Entretien de cadrage (produit, stack, architecture) → écrit le vault `project/`, fait générer le code manquant par `scaffold`, configure permissions, linter, garde-fou git et `CLAUDE.md` | PR d'initialisation ouverte |
 | 2 | `spec` | Cadrage d'une feature → `project/specs/<feature>/` (son `README.md` + une story par fichier) | Feature `validated` |
 | 3a | `contract` | Gèle l'interface front/back en schémas **zod** (si la story est multi-couche) | Contrat gelé |
 | 3b | `orchestrator` | Implémente **une story** : lance les lanes front/back en parallèle (worktrees isolés), intègre, fait revoir | PR ouverte (délègue à `pr`) |
@@ -41,9 +41,11 @@ Tout ce qui parle **du projet** plutôt que de son code vit dans un seul dossier
 ```
 project/
 ├── product.md        ← le WHY : problème résolu, pour qui, périmètre
+├── market.md         ← alternatives, positionnement, licence ou modèle économique
 ├── stack.md          ← la stack retenue (source de vérité, pas le CLAUDE.md)
 ├── architecture.md   ← stratégie de dépôt, FSD côté front, Vertical Slice côté back
 ├── decisions.md      ← journal des arbitrages structurants
+├── design.md         ← liens vers les maquettes et le design system
 ├── rules/            ← invariants propres au projet (auth.md, …)
 └── specs/            ← les features et leurs stories
 ```
@@ -73,15 +75,14 @@ Les writers travaillent **contre le contrat zod gelé** : ils ne le modifient ja
 
 ## Les hooks
 
-- **PreToolUse / Bash** — refuse `git commit` quand la branche courante est `main` ou `master`. Garde-fou déterministe (les subagents tournent en autonomie : l'instruction seule ne suffit pas). Nécessite `jq`.
-- **Notification** — notification macOS (`osascript`) quand une action attend l'utilisateur. macOS uniquement, échoue silencieusement ailleurs.
+- **Garde-fou git** — `setup` installe dans chaque projet un hook `pre-commit` (`.githooks/`) qui refuse tout commit sur `main` ou `master`, activé automatiquement à l'installation des dépendances. Garde-fou déterministe : les subagents tournent en autonomie, l'instruction seule ne suffit pas.
+- **Notification** (hook du plugin) — notification macOS (`osascript`) quand une action attend l'utilisateur. macOS uniquement, échoue silencieusement ailleurs.
 
 ---
 
 ## Prérequis
 
 - **`gh` CLI** installé et authentifié (compte GitHub Free suffit).
-- **`jq`** (pour le hook anti-commit).
 - **MCP Figma** connecté (lecture seule ; l'écriture est en `deny`).
 - Front : design system [Empreint](https://github.com/vincentgraul/empreint).
 
@@ -92,8 +93,8 @@ Les writers travaillent **contre le contrat zod gelé** : ils ne le modifient ja
 Le repo est aussi une **marketplace** (`.claude-plugin/marketplace.json`). Depuis Claude Code :
 
 ```
-/plugin marketplace add vincentgraul/claude-workflow
-/plugin install claude-workflow@vincentgraul
+/plugin marketplace add vincentgraul/moukie
+/plugin install moukie@vincentgraul
 ```
 
 (ou pointe la marketplace sur ce dépôt local pendant le développement).
@@ -106,7 +107,7 @@ Après installation, ouvre `/hooks` une fois pour que la config des hooks soit r
 
 Tout est piloté en langage naturel — les skills se déclenchent sur l'intention :
 
-- *« configure Claude Code pour ce projet »* → `scaffold`
+- *« configure Claude Code pour ce projet »* → `setup`
 - *« rédige la spec de la feature panier »* → `spec`
 - *« implémente la story ajout-article »* → `orchestrator` (qui enchaîne `contract`, les lanes, `reviewer`, `pr`)
 
@@ -121,3 +122,13 @@ Les échanges sont menés en **français**.
 - **Une feature est un dossier, une story est un fichier** : `project/specs/<feature>/README.md` porte le cadrage et le `status` ; chaque `project/specs/<feature>/<story>.md` porte une story et ses critères d'acceptation (une checklist — jamais une story par critère).
 - **Le slug est l'identifiant de la story** : c'est le nom de son fichier, donc unique par construction et fixé une fois pour toutes (le titre lisible, lui, peut changer). Sa branche `<feature>/<story>` reprend exactement son chemin sous `project/specs/`.
 - **Contrat** : source unique de vérité en zod, gel strict pendant le travail parallèle.
+
+---
+
+## Contribuer
+
+Les contributions sont bienvenues : lis [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Licence
+
+[MIT](LICENSE)
