@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getPluginMetadata, type PluginMetadata } from "@/shared/api";
-import { PLUGIN_ROOT } from "@/shared/config";
+import { findPluginRoot } from "@/shared/api/index.server";
 import { readAgentFiles } from "../api/agent-files";
 
 const AGENT_CARDS = {
@@ -30,7 +30,7 @@ const CARD_TEXT_MAX_LENGTH = 70;
 
 function readMetadataByName(): Map<string, PluginMetadata> {
 	return new Map(
-		readAgentFiles(PLUGIN_ROOT).map((file) => [
+		readAgentFiles(findPluginRoot()).map((file) => [
 			String(file.frontmatter.name),
 			getPluginMetadata(file) ?? {},
 		]),

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getPluginMetadata } from "@/shared/api";
-import { PLUGIN_ROOT } from "@/shared/config";
+import { findPluginRoot } from "@/shared/api/index.server";
 import { readSkillFiles } from "../api/skill-files";
 
 const DISPLAYED_SKILLS = {
@@ -79,7 +79,7 @@ const KNOWLEDGE_SKILLS = [
 
 function readMoukieMetadataByName() {
 	return new Map(
-		readSkillFiles(PLUGIN_ROOT).map((file) => {
+		readSkillFiles(findPluginRoot()).map((file) => {
 			const metadata = getPluginMetadata(file) ?? {};
 			const moukieEntries = Object.entries(metadata).filter(([key]) =>
 				key.startsWith("moukie-"),

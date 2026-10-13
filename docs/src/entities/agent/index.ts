@@ -1,2 +1,6 @@
-export { readAgentFiles } from "./api/agent-files";
-export { checkAgentsMetadata } from "./model/agent-metadata";
+export {
+	AGENT_BADGES,
+	type AgentBadge,
+	isAgentBadge,
+	validateAgentMetadata,
+} from "./model/agent-metadata";

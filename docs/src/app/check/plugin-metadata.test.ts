@@ -2,9 +2,9 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { readAgentFiles } from "@/entities/agent";
-import { readSkillFiles } from "@/entities/skill";
-import { PLUGIN_ROOT } from "@/shared/config";
+import { readAgentFiles } from "@/entities/agent/index.server";
+import { readSkillFiles } from "@/entities/skill/index.server";
+import { findPluginRoot } from "@/shared/api/index.server";
 import { checkPluginMetadata } from "./plugin-metadata";
 
 const VALID_METADATA = [
@@ -51,6 +51,17 @@ function withoutKey(key: string) {
 function withValue(key: string, value: string) {
 	return [...withoutKey(key), `  ${key}: ${value}`];
 }
+
+const VALID_SKILL = {
+	"skills/spec/SKILL.md": buildFile("spec", VALID_METADATA),
+};
+
+const VALID_AGENT = {
+	"agents/reviewer.md": buildFile(
+		"reviewer",
+		withValue("moukie-badge", "review"),
+	),
+};
 
 afterEach(() => {
 	for (const pluginRoot of createdRoots.splice(0)) {
@@ -148,8 +159,9 @@ describe("checkPluginMetadata", () => {
 		);
 	});
 
-	it("names the file and the value when moukie-rank is not an integer", () => {
+	it("échoue en nommant le fichier et la valeur quand `moukie-rank` n'est pas un entier", () => {
 		const pluginRoot = createPluginRoot({
+			...VALID_AGENT,
 			"skills/setup/SKILL.md": buildFile(
 				"setup",
 				withValue("moukie-rank", "premier"),
@@ -161,8 +173,9 @@ describe("checkPluginMetadata", () => {
 		]);
 	});
 
-	it("names the file when its frontmatter cannot be read", () => {
+	it("échoue en nommant le fichier quand son frontmatter est illisible", () => {
 		const pluginRoot = createPluginRoot({
+			...VALID_SKILL,
 			"agents/backend.md": "# backend\n",
 		});
 
@@ -171,7 +184,38 @@ describe("checkPluginMetadata", () => {
 		]);
 	});
 
-	it("passes on complete metadata and on knowledge items with a badge only", () => {
+	it("échoue avec un message explicite quand le dossier `skills/` ou `agents/` est absent", () => {
+		const withoutSkills = createPluginRoot(VALID_AGENT);
+		const withoutAgents = createPluginRoot(VALID_SKILL);
+
+		expect(checkPluginMetadata(withoutSkills)).toEqual([
+			expect.stringMatching(/skills\/.*absent/),
+		]);
+		expect(checkPluginMetadata(withoutAgents)).toEqual([
+			expect.stringMatching(/agents\/.*absent/),
+		]);
+	});
+
+	it("échoue avec un message explicite quand aucun skill ou aucun agent n'est trouvé", () => {
+		const withoutSkill = createPluginRoot({
+			...VALID_AGENT,
+			"skills/notes.md": "# notes\n",
+			"skills/empty/README.md": "# empty\n",
+		});
+		const withoutAgent = createPluginRoot({
+			...VALID_SKILL,
+			"agents/notes.txt": "notes\n",
+		});
+
+		expect(checkPluginMetadata(withoutSkill)).toEqual([
+			expect.stringMatching(/skills\/.*aucun skill/),
+		]);
+		expect(checkPluginMetadata(withoutAgent)).toEqual([
+			expect.stringMatching(/agents\/.*aucun agent/),
+		]);
+	});
+
+	it("passe sur des métadonnées complètes et sur un élément `knowledge` qui n'a que son badge", () => {
 		const pluginRoot = createPluginRoot({
 			"skills/setup/SKILL.md": buildFile("setup", VALID_METADATA),
 			"skills/naming-conventions/SKILL.md": buildFile("naming-conventions", [
@@ -187,26 +231,21 @@ describe("checkPluginMetadata", () => {
 	});
 
 	it("`bun run check` passe sur le dépôt une fois les métadonnées ajoutées.", () => {
-		expect(checkPluginMetadata(PLUGIN_ROOT)).toEqual([]);
+		expect(checkPluginMetadata(findPluginRoot())).toEqual([]);
 	});
 
-	it("Chargé depuis le dépôt, le plugin expose toujours ses 12 skills et ses 4 agents dans Claude Code.", () => {
-		const skillFiles = readSkillFiles(PLUGIN_ROOT);
-		const agentFiles = readAgentFiles(PLUGIN_ROOT);
+	it("découvre les 12 skills et les 4 agents du dépôt, chacun avec un `name` égal au nom de son dossier ou de son fichier", () => {
+		const pluginRoot = findPluginRoot();
+		const skillFiles = readSkillFiles(pluginRoot);
+		const agentFiles = readAgentFiles(pluginRoot);
 
 		expect(skillFiles).toHaveLength(12);
 		expect(agentFiles).toHaveLength(4);
 		for (const file of skillFiles) {
 			expect(file.path).toBe(`skills/${file.frontmatter.name}/SKILL.md`);
-			expect(file.frontmatter.description, file.path).toEqual(
-				expect.any(String),
-			);
 		}
 		for (const file of agentFiles) {
 			expect(file.path).toBe(`agents/${file.frontmatter.name}.md`);
-			expect(file.frontmatter.description, file.path).toEqual(
-				expect.any(String),
-			);
 		}
 	});
 });

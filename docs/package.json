@@ -8,7 +8,7 @@
 		"preview": "vite preview --port 3000",
 		"generate-routes": "tsr generate",
 		"typecheck": "tsc --noEmit",
-		"check:plugin": "bun src/app/check/check-plugin-metadata.ts",
+		"check:plugin": "bun src/app/check/run-plugin-check.ts",
 		"test": "vitest run --passWithNoTests",
 		"test:e2e": "playwright test --pass-with-no-tests",
 		"check:architecture": "steiger ./src"
