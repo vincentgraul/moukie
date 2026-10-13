@@ -26,3 +26,9 @@ tmp/
 .env
 .env.*
 !.env.example
+
+# Obsidian
+project/.obsidian/workspace.json
+
+# Dépendances
+node_modules/
