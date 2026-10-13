@@ -1,6 +1,6 @@
 ---
 name: workflow-map
-description: Régénère la carte du plugin Moukie. Relit tous ses fichiers, reconstruit le fil complet de l'exécution étape par étape (ce qui entre, l'étape, ce qui sort), relève les écarts entre ce que les fichiers promettent et ce qu'ils font, puis rend la page dans `docs/` et la publie en artifact. Se déclenche quand l'utilisateur veut mettre à jour, régénérer ou revoir la carte du plugin, ou auditer son fonctionnement de bout en bout.
+description: Régénère la carte du plugin Moukie. Relit tous ses fichiers, reconstruit le fil complet de l'exécution étape par étape (ce qui entre, l'étape, ce qui sort), relève les écarts entre ce que les fichiers promettent et ce qu'ils font, puis rend la page publique du site dans `docs/` et la publie en artifact. Les écarts restent dans les données et dans le résumé, jamais sur la page. Se déclenche quand l'utilisateur veut mettre à jour, régénérer ou revoir la carte du plugin, ou auditer son fonctionnement de bout en bout.
 ---
 
 # Skill Workflow map
@@ -13,14 +13,16 @@ La carte décrit le plugin **tel que ses fichiers le demandent**, pas tel que tu
 
 N'y mets que ce qu'un fichier dit. Une étape que tu ne peux pas rattacher à un passage précis d'un fichier n'existe pas.
 
-Ce skill ne modifie **pas** le plugin et ne commite rien. Les écarts que tu relèves vont dans la carte ; c'est à l'utilisateur de décider s'ils doivent être corrigés.
+Ce skill ne modifie **pas** le plugin et ne commite rien. Les écarts que tu relèves vont dans les données de la carte et dans ton résumé final ; c'est à l'utilisateur de décider s'ils doivent être corrigés.
+
+La page est la page publique du site de Moukie : elle ne montre ni les écarts ni d'inventaire, et suit les couleurs du site (rose `#FFCBF0`, noir `#1B1919`), fixées dans `render.py`.
 
 ### Les fichiers
 
 | Fichier | Rôle |
 |---|---|
 | `docs/workflow-map.json` | les données de la carte, versionnées : c'est le seul fichier que tu mets à jour |
-| `docs/workflow-map.html` | la page, générée : ne l'édite jamais à la main |
+| `docs/workflow-map.html` | la page publique, générée : ne l'édite jamais à la main |
 | `.claude/skills/workflow-map/render.py` | le rendu, qui refuse des données incohérentes |
 
 ---
@@ -76,19 +78,15 @@ En reconstruisant le fil, relève chaque **écart** :
 - une étape implicite, que le fil suppose sans qu'aucun fichier ne la demande
 - une contradiction entre deux fichiers
 
-Chaque écart devient un élément de `findings.items`, sans `fix`, du plus grave au plus mineur. Un écart de la carte précédente qui a disparu des fichiers y reste **une fois**, avec son `fix` décrivant la correction et l'étape qui la montre ; à la régénération suivante, il sort de la liste.
+Chaque écart devient un élément de `findings.items`, sans `fix`, du plus grave au plus mineur. Ces écarts ne s'affichent pas sur la page : le script de rendu les liste, et tu les reprends dans ton résumé. Un écart de la carte précédente qui a disparu des fichiers y reste **une fois**, avec son `fix` décrivant la correction et l'étape qui la montre ; à la régénération suivante, il sort de la liste.
 
-Garde-toi d'inventer des écarts pour remplir la section : si le fil tient, la liste est vide, et la section disparaît de la page.
-
----
-
-## Phase 4 — Inventaire
-
-Mets à jour `inventory` à partir des fichiers : skills du pipeline et leur point d'arrêt, skills de connaissance, agents, garde-fous, fichiers du vault, natures de projet, ce qui dépend du cas, invariants.
+Garde-toi d'inventer des écarts pour remplir la liste : si le fil tient, elle est vide.
 
 ---
 
-## Phase 5 — Rendu
+## Phase 4 — Rendu
+
+Mets d'abord à jour `date` et `version` dans les données : la version est celle de `.claude-plugin/plugin.json`, et les deux s'affichent en pied de page. Puis lance :
 
 ```sh
 python3 .claude/skills/workflow-map/render.py docs/workflow-map.json docs/workflow-map.html
@@ -98,7 +96,7 @@ Le script refuse de produire la page si la numérotation saute, si une sous-éta
 
 ---
 
-## Phase 6 — Publication
+## Phase 5 — Publication
 
 Publie `docs/workflow-map.html` avec l'outil Artifact, sur la page existante :
 
@@ -108,4 +106,4 @@ https://claude.ai/artifact/UFshw22hGHQNYRWRzUJWWz
 
 Lis-la d'abord (`action: "read"`), puis publie en passant cette URL dans `url` : sans elle, une nouvelle page serait créée et l'ancienne resterait périmée. Si l'outil Artifact n'est pas disponible dans la session, arrête-toi à `docs/` et dis-le.
 
-Termine par un résumé de ce qui a changé depuis la carte précédente : étapes ajoutées ou retirées, écarts nouveaux ou corrigés. Ne commite pas : c'est l'utilisateur qui le fait.
+Termine par un résumé de ce qui a changé depuis la carte précédente : étapes ajoutées ou retirées, et les écarts, nouveaux, ouverts ou corrigés, tels que le script les liste. Ne commite pas : c'est l'utilisateur qui le fait.
