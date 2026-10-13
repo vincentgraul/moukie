@@ -1,0 +1,9 @@
+#!/bin/sh
+git rev-parse --verify HEAD >/dev/null 2>&1 || exit 0
+branch=$(git branch --show-current)
+case "$branch" in
+  main|master)
+    echo "Commit interdit sur $branch : crée une branche dédiée." >&2
+    exit 1
+    ;;
+esac
