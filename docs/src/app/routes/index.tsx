@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { toSiteUrl } from "@/shared/config";
+import { toPagePath, toSiteUrl } from "@/shared/config";
 import { baseLocale, m } from "@/shared/i18n";
 import { StaticRedirect, staticRedirectMeta } from "@/shared/ui";
 
-const TARGET_URL = toSiteUrl(`${baseLocale}/skills`);
+const TARGET_URL = toSiteUrl(toPagePath(baseLocale, "skills"));
 
 export const Route = createFileRoute("/")({
 	head: () => ({ meta: staticRedirectMeta(TARGET_URL) }),

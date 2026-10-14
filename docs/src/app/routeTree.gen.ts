@@ -12,7 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LocaleRouteImport } from './routes/$locale'
 import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
-import { Route as LocaleSkillsRouteImport } from './routes/$locale/skills'
+import { Route as LocaleLayoutRouteImport } from './routes/$locale/_layout'
+import { Route as LocaleLayoutSkillsRouteImport } from './routes/$locale/_layout/skills'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,36 +30,47 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleSkillsRoute = LocaleSkillsRouteImport.update({
+const LocaleLayoutRoute = LocaleLayoutRouteImport.update({
+  id: '/_layout',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleLayoutSkillsRoute = LocaleLayoutSkillsRouteImport.update({
   id: '/skills',
   path: '/skills',
-  getParentRoute: () => LocaleRoute,
+  getParentRoute: () => LocaleLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/skills': typeof LocaleSkillsRoute
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/skills': typeof LocaleLayoutSkillsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$locale/skills': typeof LocaleSkillsRoute
   '/$locale': typeof LocaleIndexRoute
+  '/$locale/skills': typeof LocaleLayoutSkillsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/skills': typeof LocaleSkillsRoute
+  '/$locale/_layout': typeof LocaleLayoutRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/_layout/skills': typeof LocaleLayoutSkillsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$locale' | '/$locale/skills' | '/$locale/'
+  fullPaths: '/' | '/$locale' | '/$locale/' | '/$locale/skills'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$locale/skills' | '/$locale'
-  id: '__root__' | '/' | '/$locale' | '/$locale/skills' | '/$locale/'
+  to: '/' | '/$locale' | '/$locale/skills'
+  id:
+    | '__root__'
+    | '/'
+    | '/$locale'
+    | '/$locale/_layout'
+    | '/$locale/'
+    | '/$locale/_layout/skills'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -89,23 +101,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/skills': {
-      id: '/$locale/skills'
+    '/$locale/_layout': {
+      id: '/$locale/_layout'
+      path: ''
+      fullPath: '/$locale'
+      preLoaderRoute: typeof LocaleLayoutRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/_layout/skills': {
+      id: '/$locale/_layout/skills'
       path: '/skills'
       fullPath: '/$locale/skills'
-      preLoaderRoute: typeof LocaleSkillsRouteImport
-      parentRoute: typeof LocaleRoute
+      preLoaderRoute: typeof LocaleLayoutSkillsRouteImport
+      parentRoute: typeof LocaleLayoutRoute
     }
   }
 }
 
+interface LocaleLayoutRouteChildren {
+  LocaleLayoutSkillsRoute: typeof LocaleLayoutSkillsRoute
+}
+
+const LocaleLayoutRouteChildren: LocaleLayoutRouteChildren = {
+  LocaleLayoutSkillsRoute: LocaleLayoutSkillsRoute,
+}
+
+const LocaleLayoutRouteWithChildren = LocaleLayoutRoute._addFileChildren(
+  LocaleLayoutRouteChildren,
+)
+
 interface LocaleRouteChildren {
-  LocaleSkillsRoute: typeof LocaleSkillsRoute
+  LocaleLayoutRoute: typeof LocaleLayoutRouteWithChildren
   LocaleIndexRoute: typeof LocaleIndexRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
-  LocaleSkillsRoute: LocaleSkillsRoute,
+  LocaleLayoutRoute: LocaleLayoutRouteWithChildren,
   LocaleIndexRoute: LocaleIndexRoute,
 }
 

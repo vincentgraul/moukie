@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { isSitePage } from "@/shared/config";
 import { NAVIGATION_ENTRIES } from "./navigation";
 
 describe("navigation entries", () => {
@@ -10,14 +11,14 @@ describe("navigation entries", () => {
 			"Workflow map",
 		]);
 		for (const entry of NAVIGATION_ENTRIES) {
-			expect(entry.icon, entry.id).toBeDefined();
+			expect(entry.icon, entry.page).toBeDefined();
 		}
 	});
 
 	it("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : dans cette story, Getting started, Agents et Workflow map.", () => {
 		const entriesWithoutPage = NAVIGATION_ENTRIES.filter(
-			(entry) => entry.to === undefined,
-		).map((entry) => entry.id);
+			(entry) => !isSitePage(entry.page),
+		).map((entry) => entry.page);
 
 		expect(entriesWithoutPage).toEqual([
 			"getting-started",

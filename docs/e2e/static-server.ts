@@ -17,34 +17,50 @@ const CONTENT_TYPES: Readonly<Record<string, string>> = {
 	".xml": "application/xml",
 };
 
-function resolveFile(pathname: string) {
+type Resolution =
+	| { readonly kind: "file"; readonly file: string }
+	| { readonly kind: "directory-without-slash" }
+	| { readonly kind: "missing" };
+
+function resolvePath(pathname: string): Resolution {
 	if (!pathname.startsWith(BASE_PATH)) {
-		return undefined;
+		return { kind: "missing" };
 	}
 	const relativePath = normalize(
 		decodeURIComponent(pathname.slice(BASE_PATH.length)),
 	);
 	const candidate = join(ROOT_DIRECTORY, relativePath);
-	if (!candidate.startsWith(ROOT_DIRECTORY)) {
-		return undefined;
+	if (!candidate.startsWith(ROOT_DIRECTORY) || !existsSync(candidate)) {
+		return { kind: "missing" };
 	}
-	if (existsSync(candidate) && statSync(candidate).isFile()) {
-		return candidate;
+	if (statSync(candidate).isFile()) {
+		return { kind: "file", file: candidate };
+	}
+	if (!pathname.endsWith("/")) {
+		return { kind: "directory-without-slash" };
 	}
 	const index = join(candidate, "index.html");
-	return existsSync(index) ? index : undefined;
+	return existsSync(index)
+		? { kind: "file", file: index }
+		: { kind: "missing" };
 }
 
 createServer((request, response) => {
-	const { pathname } = new URL(request.url ?? "/", "http://localhost");
-	const file = resolveFile(pathname);
-	if (file === undefined) {
+	const { pathname, search } = new URL(request.url ?? "/", "http://localhost");
+	const resolution = resolvePath(pathname);
+	if (resolution.kind === "directory-without-slash") {
+		response.writeHead(301, { location: `${pathname}/${search}` });
+		response.end();
+		return;
+	}
+	if (resolution.kind === "missing") {
 		response.writeHead(404, { "content-type": "text/plain" });
 		response.end("Not found");
 		return;
 	}
 	response.writeHead(200, {
-		"content-type": CONTENT_TYPES[extname(file)] ?? "application/octet-stream",
+		"content-type":
+			CONTENT_TYPES[extname(resolution.file)] ?? "application/octet-stream",
 	});
-	createReadStream(file).pipe(response);
+	createReadStream(resolution.file).pipe(response);
 }).listen(PORT);

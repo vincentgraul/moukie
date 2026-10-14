@@ -1,5 +1,4 @@
-import { createFileRoute, notFound, Outlet } from "@tanstack/react-router";
-import { AppLayout } from "@/app/layout";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { isPublishedLocale } from "@/shared/i18n";
 
 export const Route = createFileRoute("/$locale")({
@@ -12,13 +11,4 @@ export const Route = createFileRoute("/$locale")({
 		},
 		stringify: ({ locale }) => ({ locale }),
 	},
-	component: LocaleRoute,
 });
-
-function LocaleRoute() {
-	return (
-		<AppLayout>
-			<Outlet />
-		</AppLayout>
-	);
-}

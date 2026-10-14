@@ -4,9 +4,8 @@ import { SkillsPage } from "@/pages/skills";
 import { formatDocumentTitle } from "@/shared/config";
 import { m } from "@/shared/i18n";
 
-export const Route = createFileRoute("/$locale/skills")({
+export const Route = createFileRoute("/$locale/_layout/skills")({
 	loader: () => getSkillCards(),
-	staleTime: Number.POSITIVE_INFINITY,
 	head: ({ params }) => ({
 		meta: [
 			{

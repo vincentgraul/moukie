@@ -5,6 +5,7 @@ import { defineConfig } from "vite";
 import {
 	PUBLISHED_LOCALE_CODES,
 	SITE_PAGES,
+	toPagePath,
 } from "./src/shared/config/site-map.ts";
 
 export default defineConfig({
@@ -24,8 +25,8 @@ export default defineConfig({
 			pages: [
 				{ path: "/" },
 				...PUBLISHED_LOCALE_CODES.flatMap((locale) => [
-					{ path: `/${locale}/` },
-					...SITE_PAGES.map((page) => ({ path: `/${locale}/${page}` })),
+					{ path: toPagePath(locale) },
+					...SITE_PAGES.map((page) => ({ path: toPagePath(locale, page) })),
 				]),
 			],
 			prerender: {

@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { toSiteUrl } from "@/shared/config";
+import { toPagePath, toSiteUrl } from "@/shared/config";
 import { m } from "@/shared/i18n";
 import { StaticRedirect, staticRedirectMeta } from "@/shared/ui";
 
 function toSkillsUrl(locale: string) {
-	return toSiteUrl(`${locale}/skills`);
+	return toSiteUrl(toPagePath(locale, "skills"));
 }
 
 export const Route = createFileRoute("/$locale/")({
