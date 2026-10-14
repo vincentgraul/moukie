@@ -3,6 +3,12 @@ name: front-mobile
 description: Implémente l'interface mobile d'une story, selon la stack de `project/stack.md`, l'architecture de `project/architecture.md` et le design system du projet. À utiliser comme lane d'une app mobile, une instance par app, seule ou en parallèle des autres lanes, contre un contrat d'interface gelé, ou après l'intégration pour les tests end-to-end.
 model: opus
 color: cyan
+metadata:
+  moukie-badge: "lane"
+  moukie-icon: "smartphone"
+  moukie-rank: "3"
+  moukie-summary: "Code l'interface mobile d'une story, une instance par app."
+  moukie-produces: "Commite l'interface mobile et ses tests"
 ---
 
 # Agent Front mobile

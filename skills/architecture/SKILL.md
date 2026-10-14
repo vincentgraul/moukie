@@ -1,6 +1,12 @@
 ---
 name: architecture
 description: Définit, challenge ou amende l'architecture d'un projet à partir de son produit et de sa stack : les apps, la stratégie de dépôt, le découpage du front et du back, les modules, l'emplacement du contrat partagé et la communication entre apps. Se déclenche quand `setup` arrive à l'architecture, quand l'utilisateur veut challenger ou faire évoluer l'architecture, ou quand `spec` ou l'orchestrateur rencontrent un module ou une app que l'architecture ne prévoit pas. Écrit `project/architecture.md`.
+metadata:
+  moukie-badge: "project"
+  moukie-icon: "building"
+  moukie-rank: "4"
+  moukie-summary: "Apps, dépôt, découpage du front et du back, modules, contrat."
+  moukie-produces: "Crée architecture.md"
 ---
 
 # Skill Architecture

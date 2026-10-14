@@ -1,6 +1,12 @@
 ---
 name: orchestrator
 description: Implémente une story de bout en bout, avec un agent par app concernée, en parallèle dans des worktrees isolés, autour d'un contrat d'interface gelé. Intègre leur travail, le fait valider et relire, puis délègue l'ouverture de la PR au skill `pr`. Se déclenche quand l'utilisateur veut implémenter une story de `project/specs/<feature>/`, désignée par son slug.
+metadata:
+  moukie-badge: "story"
+  moukie-icon: "clef-treble"
+  moukie-rank: "7"
+  moukie-summary: "Une lane par app, en parallèle, jusqu'à la PR."
+  moukie-produces: "Appelle contract et pr"
 ---
 
 # Skill Orchestrator

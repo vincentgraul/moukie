@@ -1,6 +1,12 @@
 ---
 name: stack
 description: Définit, challenge ou met à jour la stack technique d'un projet à partir de son produit, avec une veille web sur les versions, la maintenance et la compatibilité des briques. Se déclenche quand `setup` arrive à la stack, ou quand l'utilisateur veut challenger, faire évoluer ou mettre à jour la stack d'un projet. Écrit `project/stack.md` et consigne chaque arbitrage dans `project/decisions.md`.
+metadata:
+  moukie-badge: "project"
+  moukie-icon: "layers"
+  moukie-rank: "3"
+  moukie-summary: "Confronte la stack au produit, versions et licences vérifiées."
+  moukie-produces: "Crée stack.md"
 ---
 
 # Skill Stack

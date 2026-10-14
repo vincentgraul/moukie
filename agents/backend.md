@@ -4,6 +4,12 @@ description: Implémente la partie serveur d'une story, selon la stack de `proje
 tools: Read, Edit, Write, Bash, Grep, Glob, Skill
 model: opus
 color: green
+metadata:
+  moukie-badge: "lane"
+  moukie-icon: "server"
+  moukie-rank: "1"
+  moukie-summary: "Code la partie serveur d'une story, contre le contrat gelé."
+  moukie-produces: "Commite le code serveur et ses tests"
 ---
 
 # Agent Backend

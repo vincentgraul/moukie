@@ -1,6 +1,8 @@
 ---
 name: naming-conventions
 description: Fait appliquer les conventions de nommage des fichiers et des symboles. Les conventions officielles du langage et du framework retenus par la stack font foi ; ce skill les complète seulement là où elles se taisent, notamment en JavaScript et TypeScript. Se déclenche dès qu'on crée, nomme ou renomme un fichier ou un symbole, et quand le `reviewer` contrôle les conventions.
+metadata:
+  moukie-badge: "knowledge"
 ---
 
 # Skill Naming conventions

@@ -89,3 +89,13 @@
 - **Choix** : les maquettes Figma du fichier « Moukie » font référence pour l'interface. Le design system est la bibliothèque Empreint, sans fichier Figma dédié.
 - **Écartés** : un design system Figma.
 - **Raison** : les composants existent déjà dans Empreint, qu'utilise le site.
+
+## 2026-10-13 · Clés metadata et URL localisées
+- **Choix** : les clés `metadata` sont préfixées `moukie-` : `moukie-badge` (y compris `knowledge` pour les skills non affichés), `moukie-summary`, `moukie-produces`, `moukie-icon` et `moukie-rank`. Les URL sont `/fr/<page>` et `/en/<page>`, la racine redirige vers `/fr/`, et les redirections sont des pages statiques.
+- **Écartés** : des clés sans préfixe ; l'exclusion des skills de connaissance par une simple absence de `metadata` ; le français sans préfixe d'URL.
+- **Raison** : demandé par la feature `skills-et-agents`. Il faut afficher un badge, une icône et un ordre sur chaque carte, et masquer les skills de connaissance. La spec Agent Skills recommande des clés distinctives. Un badge `knowledge` explicite permet à `check` de distinguer un skill masqué volontairement d'un oubli. Cette entrée amende « Source des textes des cartes ».
+
+## 2026-10-13 · Points d'entrée des contrôles
+- **Choix** : les points d'entrée des contrôles lancés par `check`, comme le contrôle des métadonnées du plugin, vivent dans `docs/src/app/check/`.
+- **Écartés** : un dossier `docs/scripts/` hors des couches FSD.
+- **Raison** : demandé par la story `skills-et-agents/metadonnees-plugin`. Ces contrôles composent les entités `skill` et `agent`, et c'est la couche `app` qui compose. Les garder dans `src/` les soumet aussi à Steiger et au typage.

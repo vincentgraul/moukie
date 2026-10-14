@@ -1,6 +1,12 @@
 ---
 name: product
 description: Cadre, challenge ou amende le produit d'un projet : le problème, la cible, la proposition de valeur, le périmètre, et ce qui existe déjà (concurrents, alternatives, positionnement), avec une veille web adaptée à la nature du projet, commercial, open source ou personnel. Se déclenche quand `setup` arrive au cadrage produit, quand l'utilisateur veut challenger son produit ou son positionnement, ou quand `spec` détecte qu'une feature déplace le périmètre ou ouvre un nouveau public. Écrit `project/product.md` et `project/market.md`.
+metadata:
+  moukie-badge: "project"
+  moukie-icon: "target"
+  moukie-rank: "2"
+  moukie-summary: "Challenge ton produit, avec une veille sur l'existant."
+  moukie-produces: "Crée product.md et market.md"
 ---
 
 # Skill Product

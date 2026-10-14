@@ -1,6 +1,11 @@
 ---
 name: pr
 description: Ouvre la PR d'une story terminée (pull request sur GitHub, merge request sur GitLab), sur la forge retenue par la stack. Commite et pousse la branche, puis crée la PR avec la CLI de la forge, un titre en conventional commit et un renvoi vers la story. Se déclenche à la fin de l'orchestrateur, ou quand l'utilisateur veut ouvrir la PR de la branche courante. Ne merge jamais.
+metadata:
+  moukie-badge: "story"
+  moukie-icon: "git-branch"
+  moukie-rank: "9"
+  moukie-summary: "Commite, pousse et ouvre la PR. Ne merge jamais."
 ---
 
 # Skill PR

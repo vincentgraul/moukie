@@ -1,6 +1,8 @@
 ---
 name: figma-annotations
 description: Récolte les annotations Dev Mode laissées sur les maquettes avec les règles fonctionnelles attachées aux éléments d'un écran (requis, valeurs possibles, valeurs par défaut, visibilité conditionnelle, règles de bouton) et les normalise pour alimenter les critères d'acceptation d'une story et le contrat entre apps. Se déclenche quand `spec` cadre une story qui a une maquette. Ne fait pas de design-to-code et ne génère aucun composant.
+metadata:
+  moukie-badge: "knowledge"
 ---
 
 # Skill Figma annotations

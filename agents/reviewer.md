@@ -4,6 +4,12 @@ description: Relit le code d'une story, toutes apps confondues, et rend des cons
 tools: Read, Grep, Glob, Bash, Skill
 model: opus
 color: yellow
+metadata:
+  moukie-badge: "review"
+  moukie-icon: "eye"
+  moukie-rank: "4"
+  moukie-summary: "Relit toute la story avant la PR, sans rien corriger."
+  moukie-produces: "Rend des constats classés en trois niveaux"
 ---
 
 # Agent Reviewer

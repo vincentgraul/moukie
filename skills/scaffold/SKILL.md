@@ -1,6 +1,11 @@
 ---
 name: scaffold
 description: Génère le code que l'architecture d'un projet prévoit et qui n'existe pas encore : le manifeste racine et ses workspaces, les apps par les générateurs officiels de leurs frameworks, l'emplacement du contrat et, si son format en demande un, le générateur de types de chaque app, les services Docker si la stack les retient. Ne génère que ce qui manque et ne touche jamais au code existant. Se déclenche quand `setup` arrive au code, quand l'orchestrateur trouve une app prévue par l'architecture mais absente du code, ou quand l'utilisateur veut générer une app que l'architecture prévoit.
+metadata:
+  moukie-badge: "project"
+  moukie-icon: "hammer"
+  moukie-rank: "5"
+  moukie-summary: "Génère les apps qui manquent, sans toucher au code existant."
 ---
 
 # Skill Scaffold
