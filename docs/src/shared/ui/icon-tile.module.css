@@ -1,0 +1,16 @@
+.iconTile {
+	display: inline-flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border: 2px solid var(--moukie-color-border);
+	background-color: var(--moukie-color-accent);
+	color: var(--moukie-color-text);
+}
+
+.iconTile svg {
+	width: 24px;
+	height: 24px;
+}

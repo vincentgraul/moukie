@@ -99,3 +99,8 @@
 - **Choix** : les points d'entrée des contrôles lancés par `check`, comme le contrôle des métadonnées du plugin, vivent dans `docs/src/app/check/`.
 - **Écartés** : un dossier `docs/scripts/` hors des couches FSD.
 - **Raison** : demandé par la story `skills-et-agents/metadonnees-plugin`. Ces contrôles composent les entités `skill` et `agent`, et c'est la couche `app` qui compose. Les garder dans `src/` les soumet aussi à Steiger et au typage.
+
+## 2026-10-14 · Police
+- **Choix** : Geist, auto-hébergée par Fontsource (`@fontsource-variable/geist` 5, licence OFL-1.1).
+- **Écartés** : Google Fonts par CDN, le paquet `geist` de Vercel, la police système.
+- **Raison** : demandé par la story `skills-et-agents/page-skills`, puisque les maquettes utilisent Geist et qu'Empreint n'en fournit pas. L'auto-hébergement évite toute requête vers un tiers. Fontsource est la référence pour auto-héberger une police libre via npm, avec environ 3,3 millions de téléchargements par semaine pour ce paquet et un dépôt MIT actif (vérifié le 2026-10-14). Le paquet `geist` de Vercel exige Next.js (`next >= 13.2`), ce qui l'exclut avec TanStack Start. La licence OFL-1.1 permet d'embarquer la police avec un logiciel sous MIT.

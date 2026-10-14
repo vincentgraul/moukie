@@ -1,0 +1,43 @@
+.appLayout {
+	display: flex;
+	align-items: flex-start;
+	gap: 15px;
+	min-height: 100vh;
+	padding: 32px;
+}
+
+.sidebar {
+	flex-shrink: 0;
+	width: 227px;
+}
+
+.column {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.main {
+	padding: 32px;
+}
+
+@media (max-width: 1199px) {
+	.appLayout {
+		padding: 24px;
+	}
+
+	.main {
+		padding: 24px 0;
+	}
+}
+
+@media (max-width: 767px) {
+	.appLayout {
+		padding: 16px;
+	}
+
+	.sidebar {
+		display: none;
+	}
+}
