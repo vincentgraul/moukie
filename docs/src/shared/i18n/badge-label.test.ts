@@ -9,4 +9,12 @@ describe("getBadgeLabel", () => {
 			),
 		).toEqual(["Projet", "Feature", "Story", "Lane", "Review"]);
 	});
+
+	it("gives the English label of each displayed badge", () => {
+		expect(
+			(["project", "feature", "story", "lane", "review"] as const).map(
+				(badge) => getBadgeLabel(badge, "en"),
+			),
+		).toEqual(["Project", "Feature", "Story", "Lane", "Review"]);
+	});
 });
