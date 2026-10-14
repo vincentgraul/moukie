@@ -33,7 +33,7 @@ const ENGLISH_SKILL_CARDS: readonly ExpectedCard[] = [
 		icon: "layers",
 		badge: "Project",
 		summary:
-			"Tests the stack against the product, versions and licenses checked.",
+			"Checks the stack against your product, verifying versions and licenses.",
 		produces: "Creates stack.md",
 	},
 	{
@@ -53,7 +53,7 @@ const ENGLISH_SKILL_CARDS: readonly ExpectedCard[] = [
 		name: "spec",
 		icon: "file-text",
 		badge: "Feature",
-		summary: "Frames a feature and splits it into stories.",
+		summary: "Scopes a feature and splits it into stories.",
 		produces: "Creates project/specs/",
 	},
 	{
@@ -67,7 +67,7 @@ const ENGLISH_SKILL_CARDS: readonly ExpectedCard[] = [
 		name: "contract",
 		icon: "key-round",
 		badge: "Story",
-		summary: "Freezes the interface between apps before the parallel work.",
+		summary: "Freezes the interface between apps before parallel work starts.",
 	},
 	{
 		name: "pr",
@@ -104,7 +104,7 @@ const ENGLISH_AGENT_CARDS: readonly ExpectedCard[] = [
 		icon: "eye",
 		badge: "Review",
 		summary: "Reviews the whole story before the PR, without fixing anything.",
-		produces: "Reports findings ranked in three levels",
+		produces: "Reports findings in three severity levels",
 	},
 ];
 

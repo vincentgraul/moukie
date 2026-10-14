@@ -1,6 +1,6 @@
 {
 	"summary": {
-		"text": "Freezes the interface between apps before the parallel work.",
+		"text": "Freezes the interface between apps before parallel work starts.",
 		"sourceHash": "4a634f3ca68341ed00d6dbe69a994eeeb5e1246cc51b9f3f276d1ea62ed413ba"
 	}
 }

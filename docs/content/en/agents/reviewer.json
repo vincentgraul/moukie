@@ -4,7 +4,7 @@
 		"sourceHash": "915ff411c226c3f8336341d712121ea4454720fbf5c01ede7ebc83d648dd9129"
 	},
 	"produces": {
-		"text": "Reports findings ranked in three levels",
+		"text": "Reports findings in three severity levels",
 		"sourceHash": "bb1653a60e63e92e8fdba7c97df841a1ca135a5ffcda928a92d8ecd0066acd31"
 	}
 }

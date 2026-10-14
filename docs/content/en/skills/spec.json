@@ -1,6 +1,6 @@
 {
 	"summary": {
-		"text": "Frames a feature and splits it into stories.",
+		"text": "Scopes a feature and splits it into stories.",
 		"sourceHash": "8000a10bf4d674111e87b901203d26acc52767b0a2fdaf0145b035a123d5f460"
 	},
 	"produces": {

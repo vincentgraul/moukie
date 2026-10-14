@@ -221,7 +221,7 @@ describe("readPluginItemCards for agents in English", () => {
 			iconName: "eye",
 			summary:
 				"Reviews the whole story before the PR, without fixing anything.",
-			produces: "Reports findings ranked in three levels",
+			produces: "Reports findings in three severity levels",
 		});
 		for (const [index, card] of englishCards.entries()) {
 			expect(card.summary, card.name).not.toBe(frenchCards[index].summary);

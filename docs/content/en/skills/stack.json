@@ -1,6 +1,6 @@
 {
 	"summary": {
-		"text": "Tests the stack against the product, versions and licenses checked.",
+		"text": "Checks the stack against your product, verifying versions and licenses.",
 		"sourceHash": "eccb0bd4b265b11e81ca1449ae75807bb6f926f1e71eb0d1e6af354c755e12b9"
 	},
 	"produces": {
