@@ -14,6 +14,7 @@
 - outil de build : Vite 8
 - composants : Empreint (`@empreint/ui` 1)
 - icônes : Lucide React 1
+- police : Geist, auto-hébergée par Fontsource (`@fontsource-variable/geist` 5)
 - internationalisation : Paraglide JS 2, français et anglais
 - tests : Vitest 5, Playwright 1
 
