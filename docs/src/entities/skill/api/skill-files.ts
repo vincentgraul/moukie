@@ -3,6 +3,7 @@ import { join } from "node:path";
 import type { PluginFile } from "@/shared/api";
 import {
 	checkPluginItemsMetadata,
+	checkPluginTranslations,
 	type PluginItemSource,
 	readPluginItemFiles,
 } from "@/shared/api/index.server";
@@ -21,7 +22,7 @@ function listSkillFilePaths(pluginRoot: string): string[] {
 		.sort();
 }
 
-const SKILL_SOURCE: PluginItemSource<SkillBadge> = {
+export const SKILL_SOURCE: PluginItemSource<SkillBadge> = {
 	...SKILL_KIND,
 	directory: SKILLS_DIRECTORY,
 	pathPattern: `${SKILLS_DIRECTORY}/<nom>/${SKILL_FILE_NAME}`,
@@ -34,4 +35,11 @@ export function readSkillFiles(pluginRoot: string): PluginFile[] {
 
 export function checkSkillsMetadata(pluginRoot: string): string[] {
 	return checkPluginItemsMetadata(pluginRoot, SKILL_SOURCE);
+}
+
+export function checkSkillTranslations(
+	pluginRoot: string,
+	locale: string,
+): string[] {
+	return checkPluginTranslations(pluginRoot, SKILL_SOURCE, locale);
 }

@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "Tests the stack against the product, versions and licenses checked.",
+		"sourceHash": "eccb0bd4b265b11e81ca1449ae75807bb6f926f1e71eb0d1e6af354c755e12b9"
+	},
+	"produces": {
+		"text": "Creates stack.md",
+		"sourceHash": "adbd3c3f2fd2418f937e2905c20d49641c57acd4503c0762b7c62141f5ad2f2f"
+	}
+}

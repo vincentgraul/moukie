@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "Runs the kickoff interview and sets up the whole workflow.",
+		"sourceHash": "55b35db882937e3ee6c0462f499c9d5392df0f031397aad96f2572084029791e"
+	},
+	"produces": {
+		"text": "Creates project/ and CLAUDE.md",
+		"sourceHash": "a4310bd4d50c2567b3e5008c21e39e673ff84fb28b7c7effbb77c3bd940674a4"
+	}
+}

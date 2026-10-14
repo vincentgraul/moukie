@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "One lane per app, in parallel, all the way to the PR.",
+		"sourceHash": "8722a1e19ee89fddf204291ac63636052dbe8ab8616a26b47f54e3cc9b8cceba"
+	},
+	"produces": {
+		"text": "Calls contract and pr",
+		"sourceHash": "9b7ba5f46ff3c874294b884239e9689ab0ec7f010edf591de171b0e1508e9a97"
+	}
+}

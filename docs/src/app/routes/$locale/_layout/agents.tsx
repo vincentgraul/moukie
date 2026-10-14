@@ -5,7 +5,7 @@ import { formatDocumentTitle } from "@/shared/config";
 import { m } from "@/shared/i18n";
 
 export const Route = createFileRoute("/$locale/_layout/agents")({
-	loader: () => getAgentCards(),
+	loader: ({ params }) => getAgentCards({ data: params.locale }),
 	head: ({ params }) => ({
 		meta: [
 			{

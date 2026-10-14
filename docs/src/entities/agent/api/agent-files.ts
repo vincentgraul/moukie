@@ -3,6 +3,7 @@ import { join } from "node:path";
 import type { PluginFile } from "@/shared/api";
 import {
 	checkPluginItemsMetadata,
+	checkPluginTranslations,
 	type PluginItemSource,
 	readPluginItemFiles,
 } from "@/shared/api/index.server";
@@ -22,7 +23,7 @@ function listAgentFilePaths(pluginRoot: string): string[] {
 		.sort();
 }
 
-const AGENT_SOURCE: PluginItemSource<AgentBadge> = {
+export const AGENT_SOURCE: PluginItemSource<AgentBadge> = {
 	...AGENT_KIND,
 	directory: AGENTS_DIRECTORY,
 	pathPattern: `${AGENTS_DIRECTORY}/<nom>${AGENT_FILE_EXTENSION}`,
@@ -35,4 +36,11 @@ export function readAgentFiles(pluginRoot: string): PluginFile[] {
 
 export function checkAgentsMetadata(pluginRoot: string): string[] {
 	return checkPluginItemsMetadata(pluginRoot, AGENT_SOURCE);
+}
+
+export function checkAgentTranslations(
+	pluginRoot: string,
+	locale: string,
+): string[] {
+	return checkPluginTranslations(pluginRoot, AGENT_SOURCE, locale);
 }

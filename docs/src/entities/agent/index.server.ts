@@ -1,1 +1,5 @@
-export { checkAgentsMetadata, readAgentFiles } from "./api/agent-files";
+export {
+	checkAgentsMetadata,
+	checkAgentTranslations,
+	readAgentFiles,
+} from "./api/agent-files";

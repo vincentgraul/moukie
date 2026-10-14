@@ -1,7 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { findPluginRoot } from "@/shared/api/index.server";
+import { type PublishedLocale, parsePublishedLocale } from "@/shared/i18n";
 import { loadAgentCardViews } from "./agent-cards";
 
-export const getAgentCards = createServerFn({ method: "GET" }).handler(() =>
-	loadAgentCardViews(findPluginRoot()),
-);
+export const getAgentCards = createServerFn({ method: "GET" })
+	.validator((locale: PublishedLocale) => parsePublishedLocale(locale))
+	.handler(({ data: locale }) => loadAgentCardViews(findPluginRoot(), locale));

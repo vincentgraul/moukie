@@ -1,1 +1,5 @@
-export { checkSkillsMetadata, readSkillFiles } from "./api/skill-files";
+export {
+	checkSkillsMetadata,
+	checkSkillTranslations,
+	readSkillFiles,
+} from "./api/skill-files";

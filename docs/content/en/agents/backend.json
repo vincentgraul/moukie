@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "Codes the server side of a story, against the frozen contract.",
+		"sourceHash": "c47cbb127528a2971b8c2602d640d96ac30b518c51b37e3fa901157edf529ce7"
+	},
+	"produces": {
+		"text": "Commits the server code and its tests",
+		"sourceHash": "b7dea881d516550a6c3ed94ecbe2fdb52ffc05eda20c9deabaa70945567bdd70"
+	}
+}

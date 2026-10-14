@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "Challenges your product, with research into what already exists.",
+		"sourceHash": "b31916d2df305f191dc9f62b9f05ff2eda29496ee94f233db5431350cb0bd692"
+	},
+	"produces": {
+		"text": "Creates product.md and market.md",
+		"sourceHash": "d48c0be41f2075e9ad9394c91fcaeb8bfb27dbabedbd6377ce110edc8a0048bc"
+	}
+}

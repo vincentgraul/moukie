@@ -18,3 +18,12 @@ export function isPublishedLocale(value: unknown): value is PublishedLocale {
 export function resolveLocale(value: unknown): PublishedLocale {
 	return isPublishedLocale(value) ? value : DEFAULT_LOCALE;
 }
+
+export function parsePublishedLocale(value: unknown): PublishedLocale {
+	if (!isPublishedLocale(value)) {
+		throw new Error(
+			`langue « ${String(value)} » non publiée, attendu l'une de ${PUBLISHED_LOCALES.join(", ")}`,
+		);
+	}
+	return value;
+}
