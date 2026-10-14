@@ -7,7 +7,7 @@ export default defineConfig({
 	},
 	projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
 	webServer: {
-		command: "bun run build && bun run preview",
+		command: "bun run build && bun e2e/static-server.ts",
 		url: "http://localhost:3000/moukie/",
 		reuseExistingServer: !process.env.CI,
 	},
