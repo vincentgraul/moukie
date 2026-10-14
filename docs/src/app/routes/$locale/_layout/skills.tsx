@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getSkillCards } from "@/entities/skill";
+import { getPluginItemCards } from "@/entities/plugin-item";
 import { SkillsPage } from "@/pages/skills";
 import { formatDocumentTitle } from "@/shared/config";
 import { m } from "@/shared/i18n";
 
 export const Route = createFileRoute("/$locale/_layout/skills")({
-	loader: ({ params }) => getSkillCards({ data: params.locale }),
+	loader: ({ params }) =>
+		getPluginItemCards({ data: { source: "skills", locale: params.locale } }),
 	head: ({ params }) => ({
 		meta: [
 			{

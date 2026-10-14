@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { getPluginMetadata, type PluginMetadata } from "@/shared/api";
 import { findPluginRoot } from "@/shared/api/index.server";
-import { readAgentFiles } from "../api/agent-files";
+import { readPluginItemFiles } from "./plugin-item-files";
+import { AGENT_SOURCE } from "./plugin-item-source";
 
 const AGENT_CARDS = {
 	backend: {
@@ -30,7 +31,7 @@ const CARD_TEXT_MAX_LENGTH = 70;
 
 function readMetadataByName(): Map<string, PluginMetadata> {
 	return new Map(
-		readAgentFiles(findPluginRoot()).map((file) => [
+		readPluginItemFiles(findPluginRoot(), AGENT_SOURCE).map((file) => [
 			String(file.frontmatter.name),
 			getPluginMetadata(file) ?? {},
 		]),

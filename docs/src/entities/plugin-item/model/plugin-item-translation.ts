@@ -1,5 +1,4 @@
-import type { PluginCard } from "./plugin-card";
-import type { PluginBadge } from "./plugin-metadata";
+import type { PluginItemCard } from "./plugin-item-card";
 
 export const TRANSLATED_FIELDS = ["summary", "produces"] as const;
 
@@ -17,7 +16,7 @@ export type TranslatedText = {
 	readonly sourceHash: string;
 };
 
-export type PluginTranslation = Readonly<
+export type PluginItemTranslation = Readonly<
 	Partial<Record<TranslatedField, TranslatedText>>
 >;
 
@@ -50,10 +49,10 @@ function parseTranslatedText(
 	return { text: value.text, sourceHash: value.sourceHash };
 }
 
-export function parsePluginTranslation(
+export function parsePluginItemTranslation(
 	path: string,
 	value: unknown,
-): PluginTranslation {
+): PluginItemTranslation {
 	if (!isRecord(value)) {
 		throw new Error(`${path} : la traduction doit être un objet JSON`);
 	}
@@ -69,23 +68,33 @@ export function parsePluginTranslation(
 	return translation;
 }
 
-export function translatePluginCard<Badge extends PluginBadge>(
-	card: PluginCard<Badge>,
-	translation: PluginTranslation,
-	path: string,
-): PluginCard<Badge> {
-	const translateField = (field: TranslatedField) => {
-		const translatedText = translation[field];
-		if (translatedText === undefined) {
-			throw new Error(`${path} : ${field} manquant pour « ${card.name} »`);
-		}
-		return translatedText.text;
-	};
+export function listMissingFields(
+	card: PluginItemCard,
+	translation: PluginItemTranslation,
+): TranslatedField[] {
+	return TRANSLATED_FIELDS.filter(
+		(field) => card[field] !== undefined && translation[field] === undefined,
+	);
+}
+
+export function listExtraFields(
+	card: PluginItemCard,
+	translation: PluginItemTranslation,
+): TranslatedField[] {
+	return TRANSLATED_FIELDS.filter(
+		(field) => card[field] === undefined && translation[field] !== undefined,
+	);
+}
+
+export function translatePluginItemCard(
+	card: PluginItemCard,
+	translation: PluginItemTranslation,
+): PluginItemCard {
 	return {
 		...card,
-		summary: translateField("summary"),
+		summary: translation.summary?.text ?? card.summary,
 		...(card.produces === undefined
 			? {}
-			: { produces: translateField("produces") }),
+			: { produces: translation.produces?.text ?? card.produces }),
 	};
 }

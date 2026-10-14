@@ -1,39 +1,38 @@
 import type { IconName } from "lucide-react/dynamic";
+import { getPluginMetadata, type PluginFile } from "@/shared/api";
 import { isLucideIconName } from "@/shared/lib";
-import { getPluginMetadata, type PluginFile } from "./plugin-file";
+import type { PluginItemLabel } from "./plugin-item-label";
 import {
-	type DisplayedPluginBadge,
-	isDisplayedPluginBadge,
+	type DisplayedPluginItemBadge,
+	isDisplayedPluginItemBadge,
 	isPluginItemBadge,
-	type PluginBadge,
-	type PluginItemKind,
-	validatePluginMetadata,
-} from "./plugin-metadata";
+	validatePluginItemMetadata,
+} from "./plugin-item-metadata";
 
-export type PluginCard<Badge extends PluginBadge> = {
+export type PluginItemCard = {
 	readonly name: string;
-	readonly badge: DisplayedPluginBadge<Badge>;
+	readonly badge: DisplayedPluginItemBadge;
 	readonly iconName: IconName;
 	readonly rank: number;
 	readonly summary: string;
 	readonly produces?: string;
 };
 
-export function toPluginCard<Badge extends PluginBadge>(
+export function toPluginItemCard(
 	file: PluginFile,
-	kind: PluginItemKind<Badge>,
-): PluginCard<Badge> | undefined {
+	label: PluginItemLabel,
+): PluginItemCard | undefined {
 	const metadata = getPluginMetadata(file) ?? {};
-	const errors = validatePluginMetadata(file.path, metadata, kind);
+	const errors = validatePluginItemMetadata(file.path, metadata, label);
 	if (errors.length > 0) {
 		throw new Error(errors.join("\n"));
 	}
 	const badge = metadata["moukie-badge"];
 	const iconName = metadata["moukie-icon"];
-	if (!isPluginItemBadge(kind, badge)) {
+	if (!isPluginItemBadge(badge)) {
 		throw new Error(`${file.path} : moukie-badge invalide`);
 	}
-	if (!isDisplayedPluginBadge(badge)) {
+	if (!isDisplayedPluginItemBadge(badge)) {
 		return undefined;
 	}
 	if (!isLucideIconName(iconName)) {
@@ -50,21 +49,18 @@ export function toPluginCard<Badge extends PluginBadge>(
 	};
 }
 
-function comparePluginCards<Badge extends PluginBadge>(
-	first: PluginCard<Badge>,
-	second: PluginCard<Badge>,
-) {
+function comparePluginItemCards(first: PluginItemCard, second: PluginItemCard) {
 	return first.rank - second.rank || first.name.localeCompare(second.name);
 }
 
-export function selectPluginCards<Badge extends PluginBadge>(
+export function selectPluginItemCards(
 	files: readonly PluginFile[],
-	kind: PluginItemKind<Badge>,
-): PluginCard<Badge>[] {
+	label: PluginItemLabel,
+): PluginItemCard[] {
 	return files
-		.map((file) => toPluginCard(file, kind))
+		.map((file) => toPluginItemCard(file, label))
 		.filter((card) => card !== undefined)
-		.sort(comparePluginCards);
+		.sort(comparePluginItemCards);
 }
 
 function readPluginItemName(file: PluginFile) {

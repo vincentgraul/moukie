@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getAgentCards } from "@/entities/agent";
+import { getPluginItemCards } from "@/entities/plugin-item";
 import { AgentsPage } from "@/pages/agents";
 import { formatDocumentTitle } from "@/shared/config";
 import { m } from "@/shared/i18n";
 
 export const Route = createFileRoute("/$locale/_layout/agents")({
-	loader: ({ params }) => getAgentCards({ data: params.locale }),
+	loader: ({ params }) =>
+		getPluginItemCards({ data: { source: "agents", locale: params.locale } }),
 	head: ({ params }) => ({
 		meta: [
 			{

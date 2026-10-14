@@ -10,8 +10,11 @@ import {
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { readAgentFiles } from "@/entities/agent/index.server";
-import { readSkillFiles } from "@/entities/skill/index.server";
+import {
+	AGENT_SOURCE,
+	readPluginItemFiles,
+	SKILL_SOURCE,
+} from "@/entities/plugin-item/index.server";
 import { getPluginMetadata, type PluginFile } from "@/shared/api";
 import { findPluginRoot } from "@/shared/api/index.server";
 import { hashSourceText } from "@/shared/lib/index.server";
@@ -70,7 +73,7 @@ function buildTranslation(
 
 const UP_TO_DATE_SKILL_TRANSLATION = buildTranslation({
 	summary: {
-		text: "Frames a feature and splits it into stories.",
+		text: "Scopes a feature and splits it into stories.",
 		source: SKILL_SUMMARY,
 	},
 	produces: { text: "Creates project/specs/", source: SKILL_PRODUCES },
@@ -153,8 +156,14 @@ describe("checkContentTranslations", () => {
 	it("Chaque skill et agent affiché a sa traduction anglaise versionnée dans le dépôt, avec l'empreinte du texte français qu'elle traduit.", () => {
 		const pluginRoot = findPluginRoot();
 		const items = [
-			...readDisplayedItems(readSkillFiles(pluginRoot), "skills"),
-			...readDisplayedItems(readAgentFiles(pluginRoot), "agents"),
+			...readDisplayedItems(
+				readPluginItemFiles(pluginRoot, SKILL_SOURCE),
+				"skills",
+			),
+			...readDisplayedItems(
+				readPluginItemFiles(pluginRoot, AGENT_SOURCE),
+				"agents",
+			),
 		];
 
 		expect(items).toHaveLength(13);
@@ -226,7 +235,7 @@ describe("checkContentTranslations", () => {
 	it("`bun run check` échoue en nommant l'élément quand une traduction a un champ en trop ou en moins par rapport au français", () => {
 		const missingField = createPluginRoot({
 			skillTranslation: buildTranslation({
-				summary: { text: "Frames a feature.", source: SKILL_SUMMARY },
+				summary: { text: "Scopes a feature.", source: SKILL_SUMMARY },
 			}),
 		});
 		const extraField = createPluginRoot({

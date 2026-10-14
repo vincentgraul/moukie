@@ -1,9 +1,9 @@
-import type { SkillCardView } from "@/entities/skill";
+import type { PluginItemCardView } from "@/entities/plugin-item";
 import { getBadgeLabel, m, useLocale } from "@/shared/i18n";
 import { OverviewCard, OverviewCardGrid, OverviewLayout } from "@/shared/ui";
 
 export type SkillsPageProps = {
-	readonly cards: readonly SkillCardView[];
+	readonly cards: readonly PluginItemCardView[];
 };
 
 export function SkillsPage({ cards }: SkillsPageProps) {
