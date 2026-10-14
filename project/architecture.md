@@ -60,6 +60,8 @@ Pas de couche `widgets`.
 - la racine redirige vers `/fr/`
 - tant que l'accueil n'existe pas, `/fr/` et `/en/` mènent à la page Skills de leur langue
 - GitHub Pages ne redirige pas côté serveur : les redirections sont des pages statiques pré-rendues
+- les URL internes se terminent par une barre oblique (`/moukie/fr/skills/`), comme les sert GitHub Pages
+- la navigation entre pages et entre langues se fait par rechargement complet : des liens classiques vers des pages pré-rendues, sans navigation côté client
 
 ## Déploiement
 - un workflow GitHub Actions construit `docs/` et le publie sur GitHub Pages
