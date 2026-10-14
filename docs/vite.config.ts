@@ -34,8 +34,6 @@ export default defineConfig({
 				enabled: true,
 				crawlLinks: true,
 				failOnError: true,
-				retryCount: 2,
-				retryDelay: 500,
 			},
 		}),
 		viteReact(),
