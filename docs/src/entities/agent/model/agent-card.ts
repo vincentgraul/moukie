@@ -7,7 +7,7 @@ import {
 	validateAgentMetadata,
 } from "./agent-metadata";
 
-export type DisplayedAgentBadge = Exclude<AgentBadge, "knowledge">;
+type DisplayedAgentBadge = Exclude<AgentBadge, "knowledge">;
 
 export type AgentCard = {
 	readonly name: string;
@@ -46,7 +46,7 @@ export function toAgentCard(file: PluginFile): AgentCard | undefined {
 	};
 }
 
-export function compareAgentCards(first: AgentCard, second: AgentCard) {
+function compareAgentCards(first: AgentCard, second: AgentCard) {
 	return first.rank - second.rank || first.name.localeCompare(second.name);
 }
 
