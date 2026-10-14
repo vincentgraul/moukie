@@ -5,7 +5,7 @@ import {
 } from "@empreint/ui";
 import type { SkillCardView } from "@/entities/skill";
 import { m, useLocale } from "@/shared/i18n";
-import { SkillCard } from "./skill-card";
+import { SkillOverviewCard } from "./skill-overview-card";
 import styles from "./skills-page.module.css";
 
 export type SkillsPageProps = {
@@ -25,7 +25,7 @@ export function SkillsPage({ cards }: SkillsPageProps) {
 			</EmpreintText>
 			<EmpreintGrid className={styles.grid} role="list">
 				{cards.map((card) => (
-					<SkillCard key={card.name} card={card} locale={locale} />
+					<SkillOverviewCard key={card.name} card={card} locale={locale} />
 				))}
 			</EmpreintGrid>
 		</div>

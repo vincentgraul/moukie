@@ -7,30 +7,29 @@ import {
 	Text as EmpreintText,
 	Title as EmpreintTitle,
 } from "@empreint/ui";
-import { ArrowBigRight } from "lucide-react";
+import { ArrowBigRightIcon } from "lucide-react";
 import type { SkillCardView } from "@/entities/skill";
-import type { Locale } from "@/shared/i18n";
+import { getBadgeLabel, type Locale } from "@/shared/i18n";
 import { IconTile, ShapeIcon } from "@/shared/ui";
-import { getSkillBadgeLabel } from "./skill-badge-label";
-import styles from "./skill-card.module.css";
+import styles from "./skill-overview-card.module.css";
 
-export type SkillCardProps = {
+export type SkillOverviewCardProps = {
 	readonly card: SkillCardView;
 	readonly locale: Locale;
 };
 
-export function SkillCard({ card, locale }: SkillCardProps) {
+export function SkillOverviewCard({ card, locale }: SkillOverviewCardProps) {
 	return (
-		<EmpreintCard className={styles.skillCard} role="listitem">
+		<EmpreintCard className={styles.skillOverviewCard} role="listitem">
 			<EmpreintCardHeader className={styles.header}>
 				<IconTile>
-					<ShapeIcon shape={card.iconShape} />
+					<ShapeIcon name={card.iconName} shape={card.iconShape} />
 				</IconTile>
 				<EmpreintTitle as="h2" size="2" weight="bold" className={styles.name}>
 					{card.name}
 				</EmpreintTitle>
 				<EmpreintBadge variant="solid" className={styles.badge}>
-					{getSkillBadgeLabel(card.badge, locale)}
+					{getBadgeLabel(card.badge, locale)}
 				</EmpreintBadge>
 			</EmpreintCardHeader>
 			<EmpreintCardBody>
@@ -40,7 +39,7 @@ export function SkillCard({ card, locale }: SkillCardProps) {
 			</EmpreintCardBody>
 			{card.produces ? (
 				<EmpreintCardFooter className={styles.footer}>
-					<ArrowBigRight className={styles.arrow} aria-hidden="true" />
+					<ArrowBigRightIcon className={styles.arrow} aria-hidden="true" />
 					<EmpreintText as="span" size="2" weight="medium">
 						{card.produces}
 					</EmpreintText>
