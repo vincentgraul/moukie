@@ -24,6 +24,8 @@ Tu ne codes pas toi-même : tu **prépares, lances et coordonnes** les agents, t
 
 Les agents sont **autonomes** : ils avancent sans solliciter l'utilisateur.
 
+**Sois économe.** Chaque vérification, chaque tour de revue et chaque message long se paie en tokens. Tes messages à l'utilisateur sont brefs, et tu ne lui récapitules pas ce que les comptes rendus disent déjà.
+
 Les commandes du projet (installation, linter, tests, tests end-to-end, vérification de l'architecture, génération des types du contrat) sont dans la section « Commandes » du `CLAUDE.md`. N'en suppose jamais une autre.
 
 ---
@@ -66,6 +68,8 @@ Donne à chaque agent :
 - s'il y a un contrat, **le chemin de sa source**, et la consigne de **coder contre lui sans le modifier**
 - la consigne de **faire passer ses tests et `check`**, puis de **terminer par un compte rendu** : sa branche, ses commits, le résultat des tests, ce qui est fait, ce qui bloque
 
+Les agents tournent sur **Sonnet** par défaut. Passe une lane en **Opus** (option `model: "opus"` de l'outil Agent) seulement si sa part de la story est complexe : logique délicate, refactor transversal, intégration inhabituelle. Dis-le alors à l'utilisateur.
+
 **Une seule app** : lance un seul agent, **sans isolation**. Il travaille directement sur la branche de la story ; il n'y a rien à intégrer, passe à la Phase 5.
 
 **Plusieurs apps** : vérifie d'abord que la source du contrat est commitée sur la branche de la story. Lance ensuite **un agent par app, en parallèle**, chacun avec l'option `isolation: "worktree"` de l'outil Agent. Claude Code donne à chacun sa propre copie du dépôt, créée à partir du dernier commit de la branche de la story : tu n'as aucun `git worktree` à gérer toi-même.
@@ -106,13 +110,13 @@ Sinon, confie ces critères à l'agent de l'app par laquelle passe l'utilisateur
 
 ## Phase 6 — Validation d'intégration
 
-Le travail réuni sur la branche de la story, vérifie la story **dans son ensemble**, avec les commandes de la section « Commandes » du `CLAUDE.md` :
+La lane a déjà lancé toute la suite : **ne la relance pas en entier**. Avec les commandes de la section « Commandes » du `CLAUDE.md` :
 
-- la **suite de tests complète** du projet, pas seulement les tests de la story
-- les **tests end-to-end** écrits en Phase 5, pour les critères qui traversent plusieurs apps
-- la commande `check`, qui lance le linter
+- relance `check` et les **tests unitaires**, rapides, pour confirmer que la branche est saine
+- relance les **tests end-to-end** et le build **une fois** seulement si plusieurs lanes ont été fusionnées en Phase 4, si des tests end-to-end ont été écrits en Phase 5, ou si un compte rendu signale un doute
+- ne répète jamais une commande pour « confirmer » : seulement pour diagnostiquer un échec
 
-Rédige un **compte rendu d'intégration** : les commandes lancées, leur résultat, et pour chaque critère d'acceptation le test qui le couvre. C'est lui que tu remets au `reviewer`.
+Rédige un **compte rendu d'intégration** court : les commandes lancées, leur résultat, et pour chaque critère d'acceptation le test qui le couvre. C'est lui que tu remets au `reviewer`.
 
 Si quelque chose échoue, ce n'est pas encore l'heure de la revue : renvoie la correction à l'agent concerné, puis relance la validation.
 
@@ -122,8 +126,10 @@ Si quelque chose échoue, ce n'est pas encore l'heure de la revue : renvoie la c
 
 Lance l'agent `reviewer` en lui donnant les critères d'acceptation de la story et le compte rendu d'intégration. Il rend des constats classés :
 
-- **bloquant** ou **à corriger** : fais-les corriger par l'agent de l'app concernée, sur la branche de la story, puis relance une revue ciblée si le changement est conséquent
-- **suggestion** : applique-la si elle est rapide et sûre ; sinon, transmets-la au skill `pr`, qui la reporte dans la PR
+- **bloquant** ou **à corriger** : fais-les corriger par l'agent de l'app concernée, sur la branche de la story, en un seul envoi. Vérifie ensuite toi-même ses corrections, par son compte rendu, `check` et les tests unitaires
+- **suggestion** : ne lance jamais un tour de correction pour elle seule. Joins-la à l'envoi des corrections si elle est rapide et sûre ; sinon, transmets-la au skill `pr`, qui la reporte dans la PR
+
+**Une seule revue par story.** Une revue ciblée, sur le seul diff des corrections, n'a lieu que dans deux cas : il y avait un constat **bloquant**, ou une correction **change du comportement** (logique, configuration, build). Les renommages, les tests, le ménage et les textes n'en demandent pas.
 
 Un critère d'acceptation non couvert est **bloquant**.
 
@@ -183,3 +189,5 @@ Tiens l'utilisateur informé avec l'outil `PushNotification`, à **trois moments
 ## Fin
 
 Une fois la PR ouverte par le skill `pr`, envoie la dernière notification, puis donne à l'utilisateur le lien de la PR. C'est lui qui la merge.
+
+C'est une **frontière de session** : tout le contexte utile est dans `project/` et dans git. Donne la commande de l'étape suivante (par exemple `/moukie:orchestrator <feature>/<story suivante>`, à lancer une fois la PR mergée), puis propose de vider la conversation : dans l'app desktop, avec l'outil qui vide la session, après accord de l'utilisateur ; ailleurs, en l'invitant à taper `/clear`. Le vidage vient en dernier : rien de ce qui précède n'est conservé.
