@@ -1,8 +1,9 @@
-import { renderLucideIconMarkup } from "@/shared/lib/index.server";
+import { addIconMarkup, type PluginCardView } from "@/shared/api/index.server";
 import { type SkillCard, selectSkillCards } from "../model/skill-card";
+import type { SkillBadge } from "../model/skill-metadata";
 import { readSkillFiles } from "./skill-files";
 
-export type SkillCardView = SkillCard & { readonly iconMarkup: string };
+export type SkillCardView = PluginCardView<SkillBadge>;
 
 export function readSkillCards(pluginRoot: string): SkillCard[] {
 	return selectSkillCards(readSkillFiles(pluginRoot));
@@ -11,10 +12,5 @@ export function readSkillCards(pluginRoot: string): SkillCard[] {
 export function loadSkillCardViews(
 	pluginRoot: string,
 ): Promise<SkillCardView[]> {
-	return Promise.all(
-		readSkillCards(pluginRoot).map(async (card) => ({
-			...card,
-			iconMarkup: await renderLucideIconMarkup(card.iconName),
-		})),
-	);
+	return addIconMarkup(readSkillCards(pluginRoot));
 }

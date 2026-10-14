@@ -1,13 +1,17 @@
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { getPluginMetadata, type PluginFile } from "@/shared/api";
-import { readPluginFile } from "@/shared/api/index.server";
-import { validateSkillMetadata } from "../model/skill-metadata";
+import type { PluginFile } from "@/shared/api";
+import {
+	checkPluginItemsMetadata,
+	type PluginItemSource,
+	readPluginItemFiles,
+} from "@/shared/api/index.server";
+import { SKILL_KIND, type SkillBadge } from "../model/skill-metadata";
 
 const SKILLS_DIRECTORY = "skills";
 const SKILL_FILE_NAME = "SKILL.md";
 
-export function listSkillFilePaths(pluginRoot: string): string[] {
+function listSkillFilePaths(pluginRoot: string): string[] {
 	return readdirSync(join(pluginRoot, SKILLS_DIRECTORY), {
 		withFileTypes: true,
 	})
@@ -17,28 +21,17 @@ export function listSkillFilePaths(pluginRoot: string): string[] {
 		.sort();
 }
 
+const SKILL_SOURCE: PluginItemSource<SkillBadge> = {
+	...SKILL_KIND,
+	directory: SKILLS_DIRECTORY,
+	pathPattern: `${SKILLS_DIRECTORY}/<nom>/${SKILL_FILE_NAME}`,
+	listFilePaths: listSkillFilePaths,
+};
+
 export function readSkillFiles(pluginRoot: string): PluginFile[] {
-	return listSkillFilePaths(pluginRoot).map((path) =>
-		readPluginFile(pluginRoot, path),
-	);
+	return readPluginItemFiles(pluginRoot, SKILL_SOURCE);
 }
 
 export function checkSkillsMetadata(pluginRoot: string): string[] {
-	if (!existsSync(join(pluginRoot, SKILLS_DIRECTORY))) {
-		return [`${SKILLS_DIRECTORY}/ : dossier absent à la racine du plugin`];
-	}
-	const paths = listSkillFilePaths(pluginRoot);
-	if (paths.length === 0) {
-		return [
-			`${SKILLS_DIRECTORY}/ : aucun skill trouvé, aucun ${SKILLS_DIRECTORY}/<nom>/${SKILL_FILE_NAME}`,
-		];
-	}
-	return paths.flatMap((path) => {
-		try {
-			const file = readPluginFile(pluginRoot, path);
-			return validateSkillMetadata(path, getPluginMetadata(file) ?? {});
-		} catch (error) {
-			return [`${path} : ${error instanceof Error ? error.message : error}`];
-		}
-	});
+	return checkPluginItemsMetadata(pluginRoot, SKILL_SOURCE);
 }
