@@ -8,40 +8,48 @@ import {
 	Title as EmpreintTitle,
 } from "@empreint/ui";
 import { ArrowBigRightIcon } from "lucide-react";
-import type { SkillCardView } from "@/entities/skill";
-import { getBadgeLabel, type Locale } from "@/shared/i18n";
-import { IconTile, InlineSvg } from "@/shared/ui";
-import styles from "./skill-overview-card.module.css";
+import { IconTile } from "./icon-tile";
+import { InlineSvg } from "./inline-svg";
+import styles from "./overview-card.module.css";
 
-export type SkillOverviewCardProps = {
-	readonly card: SkillCardView;
-	readonly locale: Locale;
+export type OverviewCardProps = {
+	readonly iconMarkup: string;
+	readonly name: string;
+	readonly badgeLabel: string;
+	readonly summary: string;
+	readonly produces?: string;
 };
 
-export function SkillOverviewCard({ card, locale }: SkillOverviewCardProps) {
+export function OverviewCard({
+	iconMarkup,
+	name,
+	badgeLabel,
+	summary,
+	produces,
+}: OverviewCardProps) {
 	return (
-		<EmpreintCard className={styles.skillOverviewCard} role="listitem">
+		<EmpreintCard className={styles.overviewCard} role="listitem">
 			<EmpreintCardHeader className={styles.header}>
 				<IconTile>
-					<InlineSvg markup={card.iconMarkup} />
+					<InlineSvg markup={iconMarkup} />
 				</IconTile>
 				<EmpreintTitle as="h2" size="2" weight="bold" className={styles.name}>
-					{card.name}
+					{name}
 				</EmpreintTitle>
 				<EmpreintBadge variant="solid" className={styles.badge}>
-					{getBadgeLabel(card.badge, locale)}
+					{badgeLabel}
 				</EmpreintBadge>
 			</EmpreintCardHeader>
 			<EmpreintCardBody>
 				<EmpreintText size="3" weight="medium">
-					{card.summary}
+					{summary}
 				</EmpreintText>
 			</EmpreintCardBody>
-			{card.produces ? (
+			{produces ? (
 				<EmpreintCardFooter className={styles.footer}>
 					<ArrowBigRightIcon className={styles.arrow} aria-hidden="true" />
 					<EmpreintText as="span" size="2" weight="medium">
-						{card.produces}
+						{produces}
 					</EmpreintText>
 				</EmpreintCardFooter>
 			) : null}

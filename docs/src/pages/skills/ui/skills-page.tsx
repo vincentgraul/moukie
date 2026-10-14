@@ -1,11 +1,7 @@
-import {
-	Grid as EmpreintGrid,
-	Text as EmpreintText,
-	Title as EmpreintTitle,
-} from "@empreint/ui";
+import { Text as EmpreintText, Title as EmpreintTitle } from "@empreint/ui";
 import type { SkillCardView } from "@/entities/skill";
-import { m, useLocale } from "@/shared/i18n";
-import { SkillOverviewCard } from "./skill-overview-card";
+import { getBadgeLabel, m, useLocale } from "@/shared/i18n";
+import { OverviewCard, OverviewCardGrid } from "@/shared/ui";
 import styles from "./skills-page.module.css";
 
 export type SkillsPageProps = {
@@ -23,11 +19,18 @@ export function SkillsPage({ cards }: SkillsPageProps) {
 			<EmpreintText size="3" weight="medium">
 				{m.skills_intro({}, { locale })}
 			</EmpreintText>
-			<EmpreintGrid className={styles.grid} role="list">
+			<OverviewCardGrid>
 				{cards.map((card) => (
-					<SkillOverviewCard key={card.name} card={card} locale={locale} />
+					<OverviewCard
+						key={card.name}
+						iconMarkup={card.iconMarkup}
+						name={card.name}
+						badgeLabel={getBadgeLabel(card.badge, locale)}
+						summary={card.summary}
+						produces={card.produces}
+					/>
 				))}
-			</EmpreintGrid>
+			</OverviewCardGrid>
 		</div>
 	);
 }
