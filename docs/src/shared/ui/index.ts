@@ -5,6 +5,7 @@ export {
 	OverviewCardGrid,
 	type OverviewCardGridProps,
 } from "./overview-card-grid";
+export { OverviewLayout, type OverviewLayoutProps } from "./overview-layout";
 export {
 	StaticRedirect,
 	type StaticRedirectProps,
