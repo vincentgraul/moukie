@@ -1,6 +1,6 @@
 export const PUBLISHED_LOCALE_CODES = ["fr"] as const;
 
-export const SITE_PAGES = ["skills"] as const;
+export const SITE_PAGES = ["skills", "agents"] as const;
 
 export type SitePage = (typeof SITE_PAGES)[number];
 

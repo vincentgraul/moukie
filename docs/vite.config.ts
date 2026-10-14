@@ -11,6 +11,7 @@ import {
 export default defineConfig({
 	base: "/moukie/",
 	resolve: { tsconfigPaths: true },
+	preview: { host: "127.0.0.1" },
 	plugins: [
 		paraglideVitePlugin({
 			project: "./project.inlang",

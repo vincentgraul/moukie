@@ -7,7 +7,7 @@ import {
 	validateSkillMetadata,
 } from "./skill-metadata";
 
-export type DisplayedSkillBadge = Exclude<SkillBadge, "knowledge">;
+type DisplayedSkillBadge = Exclude<SkillBadge, "knowledge">;
 
 export type SkillCard = {
 	readonly name: string;
@@ -46,7 +46,7 @@ export function toSkillCard(file: PluginFile): SkillCard | undefined {
 	};
 }
 
-export function compareSkillCards(first: SkillCard, second: SkillCard) {
+function compareSkillCards(first: SkillCard, second: SkillCard) {
 	return first.rank - second.rank || first.name.localeCompare(second.name);
 }
 
