@@ -3,6 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { findPluginRoot } from "@/shared/api/index.server";
+import { loadLucideIconShape } from "@/shared/lib/index.server";
 import { loadSkillCardViews, readSkillCards } from "./skill-cards";
 
 const createdDirectories: string[] = [];
@@ -79,7 +80,7 @@ describe("loadSkillCardViews", () => {
 		const [view] = await loadSkillCardViews(pluginRoot);
 
 		expect(view).toMatchObject({ name: "setup", iconName: "rocket" });
-		expect(view.iconShape.length).toBeGreaterThan(0);
-		expect(view.iconShape.every(([tag]) => tag === "path")).toBe(true);
+		expect(view.iconShape).toEqual(await loadLucideIconShape("rocket"));
+		expect(view.iconShape).not.toEqual(await loadLucideIconShape("target"));
 	});
 });

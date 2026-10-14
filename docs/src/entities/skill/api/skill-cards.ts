@@ -1,4 +1,5 @@
-import { type IconShape, loadLucideIconShape } from "@/shared/lib";
+import type { IconShape } from "@/shared/lib";
+import { loadLucideIconShape } from "@/shared/lib/index.server";
 import { type SkillCard, selectSkillCards } from "../model/skill-card";
 import { readSkillFiles } from "./skill-files";
 
