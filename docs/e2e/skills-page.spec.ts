@@ -2,57 +2,66 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { expect, type Page, test } from "@playwright/test";
 
-const SKILLS_URL = "fr/skills";
+const SKILLS_URL = "fr/skills/";
 
 const EXPECTED_CARDS = [
 	{
 		name: "setup",
+		icon: "rocket",
 		badge: "Projet",
 		summary: "Mène l'entretien de départ et configure tout le workflow.",
 		produces: "Crée project/ et CLAUDE.md",
 	},
 	{
 		name: "product",
+		icon: "target",
 		badge: "Projet",
 		summary: "Challenge ton produit, avec une veille sur l'existant.",
 		produces: "Crée product.md et market.md",
 	},
 	{
 		name: "stack",
+		icon: "layers",
 		badge: "Projet",
 		summary: "Confronte la stack au produit, versions et licences vérifiées.",
 		produces: "Crée stack.md",
 	},
 	{
 		name: "architecture",
+		icon: "building",
 		badge: "Projet",
 		summary: "Apps, dépôt, découpage du front et du back, modules, contrat.",
 		produces: "Crée architecture.md",
 	},
 	{
 		name: "scaffold",
+		icon: "hammer",
 		badge: "Projet",
 		summary: "Génère les apps qui manquent, sans toucher au code existant.",
 	},
 	{
 		name: "spec",
+		icon: "file-text",
 		badge: "Feature",
 		summary: "Cadre une feature et la découpe en stories.",
 		produces: "Crée project/specs/",
 	},
 	{
 		name: "orchestrator",
+		icon: "clef-treble",
 		badge: "Story",
 		summary: "Une lane par app, en parallèle, jusqu'à la PR.",
 		produces: "Appelle contract et pr",
 	},
 	{
 		name: "contract",
+		icon: "key-round",
 		badge: "Story",
 		summary: "Gèle l'interface entre les apps avant le travail parallèle.",
 	},
 	{
 		name: "pr",
+		icon: "git-branch",
 		badge: "Story",
 		summary: "Commite, pousse et ouvre la PR. Ne merge jamais.",
 	},
@@ -81,7 +90,7 @@ test.beforeEach(async ({ page }) => {
 test("`/moukie/fr/skills` affiche le titre « Skills », puis l'introduction : « Un skill est une compétence de Moukie. Tu n'as pas besoin de les appeler par leur nom : ils se déclenchent sur ce que tu dis. Tu peux aussi les invoquer directement, avec /moukie:<skill>. »", async ({
 	page,
 }) => {
-	await expect(page).toHaveURL(/\/moukie\/fr\/skills$/);
+	await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
 	const title = page.getByRole("heading", { level: 1 });
 	await expect(title).toHaveText("Skills");
 	const introduction = title.locator("xpath=following-sibling::*[1]");
@@ -107,7 +116,12 @@ test("Chaque carte affiche l'icône Lucide du skill, son nom, le libellé de son
 }) => {
 	for (const [index, expected] of EXPECTED_CARDS.entries()) {
 		const card = cards(page).nth(index);
-		await expect(card.locator("svg").first()).toBeVisible();
+		const icon = card.locator(`svg.lucide-${expected.icon}`);
+		await expect(icon).toHaveCount(1);
+		await expect(icon).toBeVisible();
+		await expect(card.locator("svg[class*='lucide-']").first()).toHaveClass(
+			new RegExp(`\\blucide-${expected.icon}\\b`),
+		);
 		await expect(card.getByRole("heading", { level: 2 })).toHaveText(
 			expected.name,
 		);
@@ -125,6 +139,16 @@ test("Chaque carte affiche l'icône Lucide du skill, son nom, le libellé de son
 			await expect(producesLine).toHaveCount(0);
 		}
 	}
+});
+
+test("draws a distinct Lucide icon on each card", async ({ page }) => {
+	const drawings = await cards(page)
+		.locator("svg[class*='lucide-']:not(.lucide-arrow-big-right)")
+		.evaluateAll((icons) => icons.map((icon) => icon.innerHTML));
+
+	expect(drawings).toHaveLength(9);
+	expect(new Set(drawings).size).toBe(9);
+	expect(drawings.every((drawing) => drawing.length > 0)).toBe(true);
 });
 
 test("Les skills `knowledge` n'apparaissent pas.", async ({ page }) => {
@@ -178,7 +202,7 @@ test("Une carte n'est ni un lien ni un élément focalisable, et le curseur rest
 	await expect(card).toHaveCSS("cursor", "default");
 
 	await card.click();
-	await expect(page).toHaveURL(/\/moukie\/fr\/skills$/);
+	await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
 	for (let step = 0; step < 12; step += 1) {
 		await page.keyboard.press("Tab");
 		const isInsideCard = await page.evaluate(

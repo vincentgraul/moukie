@@ -1,6 +1,6 @@
 import { expect, type Page, test } from "@playwright/test";
 
-const SKILLS_URL = "fr/skills";
+const SKILLS_URL = "fr/skills/";
 const REPOSITORY_URL = "https://github.com/vincentgraul/moukie";
 const NAVIGATION_ENTRIES = [
 	"Getting started",
@@ -76,7 +76,7 @@ test("Une entrée dont la page n'existe pas encore est affichée désactivée et
 		await expect(entry).toHaveCSS("opacity", "0.5");
 		await expect(sidebar(page).getByRole("link", { name })).toHaveCount(0);
 		await entry.click({ force: true });
-		await expect(page).toHaveURL(/\/moukie\/fr\/skills$/);
+		await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
 	}
 	await expect(
 		sidebar(page).getByRole("link", { name: "Skills" }),
@@ -116,7 +116,49 @@ test("L'en-tête affiche l'icône GitHub, qui ouvre https://github.com/vincentgr
 	await githubLink.click();
 	const popup = await popupPromise;
 	await expect(popup).toHaveURL(REPOSITORY_URL);
-	await expect(page).toHaveURL(/\/moukie\/fr\/skills$/);
+	await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
+});
+
+test("labels the language selector and keeps the header still while the page hydrates", async ({
+	page,
+	browser,
+}) => {
+	const trigger = page.getByRole("button", { name: /^Langue/ });
+	await expect(trigger).toBeVisible();
+	await expect(trigger).toHaveAccessibleName(/^Langue/);
+
+	const measureHeader = async (target: Page) => {
+		const languageTrigger = target.locator("header button[aria-labelledby]");
+		const githubLink = target.getByRole("link", { name: "Moukie sur GitHub" });
+		const triggerBox = await languageTrigger.boundingBox();
+		const githubBox = await githubLink.boundingBox();
+		return {
+			triggerWidth: triggerBox?.width,
+			triggerHeight: triggerBox?.height,
+			githubX: githubBox?.x,
+			githubY: githubBox?.y,
+		};
+	};
+
+	await page.setViewportSize({ width: 1512, height: 1000 });
+	const hydrated = await measureHeader(page);
+
+	const context = await browser.newContext({
+		javaScriptEnabled: false,
+		viewport: { width: 1512, height: 1000 },
+	});
+	const staticPage = await context.newPage();
+	await staticPage.goto(SKILLS_URL);
+	const prerendered = await measureHeader(staticPage);
+	const prerenderedFlag = await staticPage
+		.locator("header button[aria-labelledby] > span")
+		.first()
+		.evaluate((span) => getComputedStyle(span).backgroundImage);
+	await context.close();
+
+	expect(hydrated.triggerWidth).toBe(78);
+	expect(prerendered).toEqual(hydrated);
+	expect(prerenderedFlag).toMatch(/^url\(/);
 });
 
 test("À partir de 1200 px de large, la grille a 3 colonnes. Entre 768 et 1199 px, elle en a 2. En dessous de 768 px, elle en a 1.", async ({
