@@ -1,0 +1,7 @@
+.label {
+	font-size: 1.25rem;
+	font-weight: var(--empreint-font-weight-bold);
+	line-height: normal;
+	text-align: start;
+	white-space: nowrap;
+}

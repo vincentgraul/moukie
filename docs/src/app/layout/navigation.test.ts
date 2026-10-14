@@ -1,0 +1,28 @@
+import { describe, expect, it } from "vitest";
+import { NAVIGATION_ENTRIES } from "./navigation";
+
+describe("navigation entries", () => {
+	it("La barre latérale affiche le logo, « Moukie », puis les entrées Getting started, Skills, Agents et Workflow map, avec leurs icônes.", () => {
+		expect(NAVIGATION_ENTRIES.map((entry) => entry.label("fr"))).toEqual([
+			"Getting started",
+			"Skills",
+			"Agents",
+			"Workflow map",
+		]);
+		for (const entry of NAVIGATION_ENTRIES) {
+			expect(entry.icon, entry.id).toBeDefined();
+		}
+	});
+
+	it("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : dans cette story, Getting started, Agents et Workflow map.", () => {
+		const entriesWithoutPage = NAVIGATION_ENTRIES.filter(
+			(entry) => entry.to === undefined,
+		).map((entry) => entry.id);
+
+		expect(entriesWithoutPage).toEqual([
+			"getting-started",
+			"agents",
+			"workflow-map",
+		]);
+	});
+});

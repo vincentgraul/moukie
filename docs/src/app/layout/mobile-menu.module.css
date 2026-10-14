@@ -1,0 +1,23 @@
+.mobileMenu {
+	display: none;
+	position: relative;
+	margin-right: auto;
+}
+
+.panel {
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	z-index: var(--empreint-z-dropdown);
+	width: min(320px, calc(100vw - 32px));
+	padding: 8px 0;
+	border: 2px solid var(--moukie-color-border);
+	border-radius: 8px;
+	background-color: var(--moukie-color-surface);
+}
+
+@media (max-width: 767px) {
+	.mobileMenu {
+		display: block;
+	}
+}

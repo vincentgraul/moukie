@@ -1,7 +1,28 @@
-import { type IconName, iconNames } from "lucide-react/dynamic";
+import {
+	dynamicIconImports,
+	type IconName,
+	iconNames,
+} from "lucide-react/dynamic";
 
-const LUCIDE_ICON_NAMES: ReadonlySet<string> = new Set(iconNames);
+export type IconElement = readonly [
+	tag: string,
+	attributes: Readonly<Record<string, string>>,
+];
+
+export type IconShape = readonly IconElement[];
 
 export function isLucideIconName(name: string): name is IconName {
-	return LUCIDE_ICON_NAMES.has(name);
+	return (iconNames as readonly string[]).includes(name);
+}
+
+export async function loadLucideIconShape(name: IconName): Promise<IconShape> {
+	const { __iconData } = await dynamicIconImports[name]();
+	return __iconData.node.map(([tag, attributes]) => [
+		tag,
+		Object.fromEntries(
+			Object.entries(attributes)
+				.filter(([attribute]) => attribute !== "key")
+				.map(([attribute, value]) => [attribute, String(value)]),
+		),
+	]);
 }

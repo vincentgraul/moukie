@@ -1,3 +1,20 @@
 {
-	"$schema": "https://inlang.com/schema/inlang-message-format"
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"navigation_label": "Navigation principale",
+	"navigation_getting_started": "Getting started",
+	"navigation_skills": "Skills",
+	"navigation_agents": "Agents",
+	"navigation_workflow_map": "Workflow map",
+	"menu_open": "Ouvrir le menu",
+	"menu_close": "Fermer le menu",
+	"header_github": "Moukie sur GitHub",
+	"header_language": "Langue",
+	"redirect_link": "Continuer vers la page Skills",
+	"badge_project": "Projet",
+	"badge_feature": "Feature",
+	"badge_story": "Story",
+	"badge_lane": "Lane",
+	"badge_review": "Review",
+	"skills_title": "Skills",
+	"skills_intro": "Un skill est une compétence de Moukie. Tu n'as pas besoin de les appeler par leur nom : ils se déclenchent sur ce que tu dis. Tu peux aussi les invoquer directement, avec /moukie:<skill>."
 }

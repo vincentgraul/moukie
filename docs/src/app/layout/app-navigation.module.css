@@ -1,0 +1,15 @@
+.appNavigation {
+	padding: 0 8px;
+	gap: 16px;
+}
+
+.entry,
+.disabledEntry {
+	padding: 12px;
+	gap: 8px;
+}
+
+.disabledEntry {
+	cursor: not-allowed;
+	opacity: var(--empreint-opacity-disabled);
+}

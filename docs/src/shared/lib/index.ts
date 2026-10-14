@@ -3,4 +3,9 @@ export {
 	type FrontmatterValue,
 	parseFrontmatter,
 } from "./frontmatter";
-export { isLucideIconName } from "./lucide-icon";
+export {
+	type IconElement,
+	type IconShape,
+	isLucideIconName,
+	loadLucideIconShape,
+} from "./lucide-icon";

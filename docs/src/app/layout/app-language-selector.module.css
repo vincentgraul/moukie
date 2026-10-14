@@ -1,0 +1,16 @@
+.appLanguageSelector {
+	--empreint-language-selector-flag-width: 30px;
+}
+
+.appLanguageSelector [role="img"] {
+	aspect-ratio: 3 / 2;
+}
+
+.appLanguageSelector [role="img"] img {
+	object-fit: cover;
+}
+
+.appLanguageSelector button > svg {
+	width: 16px;
+	height: 16px;
+}

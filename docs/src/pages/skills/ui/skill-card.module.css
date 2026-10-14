@@ -1,0 +1,42 @@
+.skillCard {
+	--empreint-card-padding: calc(24px - 2px);
+	--empreint-card-gap: 32px;
+	--empreint-card-border: 2px dashed var(--moukie-color-border);
+	--empreint-card-border-radius: 8px;
+	cursor: default;
+	transition: box-shadow 120ms ease;
+}
+
+.skillCard:hover {
+	border-style: solid;
+	box-shadow: 4px 4px 0 0 var(--moukie-color-border);
+}
+
+.header {
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+}
+
+.name {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.badge {
+	flex-shrink: 0;
+	line-height: normal;
+}
+
+.footer {
+	align-items: center;
+	gap: 8px;
+}
+
+.arrow {
+	flex-shrink: 0;
+	width: 24px;
+	height: 24px;
+	fill: var(--moukie-color-accent);
+	color: var(--moukie-color-text);
+}

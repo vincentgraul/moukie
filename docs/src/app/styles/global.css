@@ -1,3 +1,32 @@
+@import "@fontsource-variable/geist";
+
+:root {
+	--moukie-color-text: #1b1919;
+	--moukie-color-text-inverse: #ffffff;
+	--moukie-color-border: #1b1919;
+	--moukie-color-accent: #ffcbf0;
+	--moukie-color-surface: #ffffff;
+	--moukie-color-surface-inverse: #1b1919;
+	--moukie-font-family: "Geist Variable", system-ui, sans-serif;
+
+	--empreint-text-line-height: normal;
+	--empreint-title-line-height-2: normal;
+	--empreint-title-line-height-7: normal;
+	--empreint-sidebar-color: var(--moukie-color-text);
+	--empreint-sidebar-background-color: var(--moukie-color-surface);
+	--empreint-sidebar-link-background-color-active: var(--empreint-neutral-900);
+	--empreint-sidebar-link-color-active: var(--moukie-color-text-inverse);
+	--empreint-badge-font-size: 0.875rem;
+	--empreint-badge-background-color-solid: var(--moukie-color-surface-inverse);
+	--empreint-badge-color-solid: var(--moukie-color-text-inverse);
+	--empreint-card-background-color: var(--moukie-color-surface);
+	--empreint-separator-color: var(--moukie-color-border);
+	--empreint-select-border-width: 3px;
+	--empreint-select-border-color: var(--moukie-color-border);
+	--empreint-select-trigger-padding: 9px;
+	--empreint-icon-button-color-ghost: var(--moukie-color-text);
+}
+
 *,
 *::before,
 *::after {
@@ -6,4 +35,7 @@
 
 body {
 	margin: 0;
+	font-family: var(--moukie-font-family);
+	color: var(--moukie-color-text);
+	background-color: var(--moukie-color-surface);
 }
