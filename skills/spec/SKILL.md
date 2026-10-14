@@ -91,6 +91,8 @@ Les trous qui **doivent** être comblés avant d'écrire :
 - **les contraintes** : l'existant à ne pas casser, les dépendances, la volumétrie
 - **le critère de réussite** : « à quoi verra-t-on que c'est réussi ? » fait sortir des critères qui ne seraient pas venus autrement
 
+**Proportionne la rigueur** : vise huit critères au plus par story. Regroupe les détails visuels en un seul critère de conformité à la maquette, et réserve les critères qui demandent un test end-to-end aux parcours de l'utilisateur. Au-delà de dix critères, la story est sans doute à découper.
+
 Chaque critère d'acceptation doit être **vérifiable** : un comportement observable, pas une intention. « Le panier est performant » n'est pas un critère ; « l'ajout répond en moins de 300 ms » en est un. C'est ce qui permet ensuite d'écrire le test d'abord, et au `reviewer` de bloquer un critère non couvert.
 
 ### 2.5 — Cohérence avec le produit, la stack et l'architecture
@@ -191,3 +193,5 @@ C'est ce commit qui rend la spec, et les amendements qui vont avec, visibles dan
 ## Fin
 
 Propose de passer la main au skill `orchestrator` pour implémenter une première story, désignée par son slug.
+
+C'est une **frontière de session** : la spec est commitée, tout le contexte utile est dans `project/` et dans git. Donne la commande à lancer (`/moukie:orchestrator <feature>/<story>`), puis propose de vider la conversation : dans l'app desktop, avec l'outil qui vide la session, après accord de l'utilisateur ; ailleurs, en l'invitant à taper `/clear`. Le vidage vient en dernier.

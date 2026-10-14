@@ -2,7 +2,7 @@
 name: backend
 description: Implémente la partie serveur d'une story, selon la stack de `project/stack.md` et l'architecture de `project/architecture.md`. À utiliser comme lane d'une app serveur, seule ou en parallèle des autres lanes, contre un contrat d'interface gelé, ou après l'intégration pour les tests end-to-end entre apps serveur.
 tools: Read, Edit, Write, Bash, Grep, Glob, Skill
-model: opus
+model: sonnet
 color: green
 metadata:
   moukie-badge: "lane"
@@ -44,7 +44,7 @@ Lis :
 
 Un test qui ne teste rien est pire que pas de test.
 
-Avant ton compte rendu, lance les tests de ton app et la commande `check`, avec les commandes de la section « Commandes » du `CLAUDE.md`, et fais-les passer. Dans un worktree, installe d'abord les dépendances : ta copie du dépôt n'en a pas. Un échec que tu ne sais pas corriger va dans ton compte rendu, comme un blocage.
+Lance les commandes de vérification **une fois**, quand tout est prêt, pas après chaque modification. Ne répète une suite ou un build que pour diagnostiquer un échec. Avant ton compte rendu, lance les tests de ton app et la commande `check`, avec les commandes de la section « Commandes » du `CLAUDE.md`, et fais-les passer. Dans un worktree, installe d'abord les dépendances : ta copie du dépôt n'en a pas. Un échec que tu ne sais pas corriger va dans ton compte rendu, comme un blocage.
 
 ---
 
@@ -78,4 +78,11 @@ N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas d
 
 ## Compte rendu
 
-Termine par un compte rendu à l'orchestrateur : ta branche, tes commits, le résultat des tests et de `check`, ce qui est fait, et ce qui bloque.
+Termine par un compte rendu **court** à l'orchestrateur, une trentaine de lignes au plus, dans ce format :
+
+- **Commits** : un par ligne
+- **Commandes** : une ligne par commande lancée, avec son résultat (passé ou échoué, nombre de tests)
+- **Couverture** : pour chaque critère d'acceptation, le fichier de test qui le couvre
+- **Blocages et incertitudes** : seulement s'il y en a
+
+Pas de récit, pas de liste de fichiers, pas de recopie du code ni des critères : l'orchestrateur lit le diff s'il en a besoin.
