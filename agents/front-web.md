@@ -1,7 +1,7 @@
 ---
 name: front-web
 description: Implémente l'interface web d'une story, selon la stack de `project/stack.md`, l'architecture de `project/architecture.md` et le design system du projet. À utiliser comme lane d'une app web, seule ou en parallèle des autres lanes, contre un contrat d'interface gelé, ou après l'intégration pour les tests end-to-end.
-model: opus
+model: sonnet
 color: blue
 metadata:
   moukie-badge: "lane"
@@ -43,7 +43,7 @@ Lis :
 
 Un test qui ne teste rien est pire que pas de test.
 
-Avant ton compte rendu, lance les tests de ton app et la commande `check`, avec les commandes de la section « Commandes » du `CLAUDE.md`, et fais-les passer. Dans un worktree, installe d'abord les dépendances : ta copie du dépôt n'en a pas. Un échec que tu ne sais pas corriger va dans ton compte rendu, comme un blocage.
+Lance les commandes de vérification **une fois**, quand tout est prêt, pas après chaque modification. Ne répète une suite ou un build que pour diagnostiquer un échec. Avant ton compte rendu, lance les tests de ton app et la commande `check`, avec les commandes de la section « Commandes » du `CLAUDE.md`, et fais-les passer. Dans un worktree, installe d'abord les dépendances : ta copie du dépôt n'en a pas. Un échec que tu ne sais pas corriger va dans ton compte rendu, comme un blocage.
 
 ---
 
@@ -73,6 +73,7 @@ Ta story a un écran si son frontmatter porte un `figma:`. Dans ce cas :
 - vérifie que le **MCP Figma est connecté**. Sinon, signale-le et arrête-toi
 - consulte les maquettes **en lecture seule** : l'écran est le nœud indiqué par `figma:`, et l'URL du design system est dans `project/design.md`
 - applique le skill `figma-design-to-code` du plugin Figma, que le MCP exige avant de lire un écran
+- lis **le plus petit nœud utile** : repère la structure de l'écran avec `get_metadata`, puis appelle `get_design_context` sur les sous-nœuds dont tu as besoin (une carte, un en-tête) plutôt que sur l'écran entier. Un même nœud ne se relit pas deux fois
 - une fois les composants du design system prêts, implémente la maquette avec eux
 
 Sans `figma:`, n'attends pas de maquette : appuie-toi sur le design system et les conventions du projet.
@@ -96,4 +97,11 @@ N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas d
 
 ## Compte rendu
 
-Termine par un compte rendu à l'orchestrateur : ta branche, tes commits, le résultat des tests et de `check`, ce qui est fait, et ce qui bloque.
+Termine par un compte rendu **court** à l'orchestrateur, une trentaine de lignes au plus, dans ce format :
+
+- **Commits** : un par ligne
+- **Commandes** : une ligne par commande lancée, avec son résultat (passé ou échoué, nombre de tests)
+- **Couverture** : pour chaque critère d'acceptation, le fichier de test qui le couvre
+- **Blocages et incertitudes** : seulement s'il y en a
+
+Pas de récit, pas de liste de fichiers, pas de recopie du code ni des critères : l'orchestrateur lit le diff s'il en a besoin.

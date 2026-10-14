@@ -64,10 +64,12 @@ Trois outils suffisent donc pour mener un projet : **Figma** (les maquettes), **
 
 | Agent | Modèle | Outils | Usage |
 |-------|--------|--------|-------|
-| `front-web` | opus | tous | Lane front web — React + TS, design system [Empreint](https://github.com/vincentgraul/empreint), maquettes Figma (lecture) |
-| `front-mobile` | opus | tous | Lane front mobile — React Native + TS, Empreint, Figma (lecture) |
-| `backend` | opus | Read/Edit/Write/Bash/Grep/Glob | Lane back — endpoints, logique métier, accès données |
-| `reviewer` | opus | Read/Grep/Glob/Bash/Skill | Revue lecture seule avant PR — findings priorisés |
+| `front-web` | sonnet | tous | Lane front web — React + TS, design system [Empreint](https://github.com/vincentgraul/empreint), maquettes Figma (lecture) |
+| `front-mobile` | sonnet | tous | Lane front mobile — React Native + TS, Empreint, Figma (lecture) |
+| `backend` | sonnet | Read/Edit/Write/Bash/Grep/Glob | Lane back — endpoints, logique métier, accès données |
+| `reviewer` | sonnet | Read/Grep/Glob/Bash/Skill | Revue lecture seule avant PR — findings priorisés |
+
+Les agents tournent sur **Sonnet** par défaut ; l'orchestrateur passe une lane en Opus seulement pour une story complexe.
 
 Les writers travaillent **contre le contrat zod gelé** : ils ne le modifient jamais et remontent tout besoin de changement à l'orchestrateur.
 
