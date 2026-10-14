@@ -8,6 +8,6 @@ export function isSitePage(page: string): page is SitePage {
 	return (SITE_PAGES as readonly string[]).includes(page);
 }
 
-export function toPagePath(locale: string, page?: string): string {
+export function toPagePath(locale: string, page?: SitePage): string {
 	return page === undefined ? `/${locale}/` : `/${locale}/${page}/`;
 }

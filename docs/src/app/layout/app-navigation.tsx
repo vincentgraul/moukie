@@ -39,7 +39,7 @@ export function AppNavigation({ onNavigate }: AppNavigationProps) {
 					);
 				}
 				const pagePath = toPagePath(locale, entry.page);
-				const isActive = currentPath.endsWith(withoutTrailingSlash(pagePath));
+				const isActive = currentPath === withoutTrailingSlash(pagePath);
 				return (
 					<EmpreintSidebarLink
 						key={entry.page}

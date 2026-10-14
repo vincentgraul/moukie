@@ -12,12 +12,12 @@
 	white-space: nowrap;
 }
 
-.appLanguageSelector button {
+.appLanguageSelector button[aria-labelledby] {
 	min-width: 78px;
 	min-height: 44px;
 }
 
-.appLanguageSelector button > span:empty {
+.appLanguageSelector button[aria-labelledby] > span:empty {
 	width: 30px;
 	height: 20px;
 	background: var(--app-language-current-flag) center / cover no-repeat;
@@ -31,7 +31,7 @@
 	object-fit: cover;
 }
 
-.appLanguageSelector button > svg {
+.appLanguageSelector button[aria-labelledby] > svg {
 	width: 16px;
 	height: 16px;
 }

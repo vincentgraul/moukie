@@ -83,3 +83,14 @@ test("renders a single main landmark on each built page", () => {
 		expect(html.match(/<main[\s>]/g), path || "/").toHaveLength(1);
 	}
 });
+
+test("redirects the site root asked without its trailing slash, as GitHub Pages does", async ({
+	page,
+}) => {
+	const response = await page.request.get("/moukie", { maxRedirects: 0 });
+	expect(response.status()).toBe(301);
+	expect(response.headers().location).toBe("/moukie/");
+
+	await page.goto("/moukie");
+	await expect(page).toHaveURL(SKILLS_URL);
+});

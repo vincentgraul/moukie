@@ -23,6 +23,9 @@ type Resolution =
 	| { readonly kind: "missing" };
 
 function resolvePath(pathname: string): Resolution {
+	if (`${pathname}/` === BASE_PATH) {
+		return { kind: "directory-without-slash" };
+	}
 	if (!pathname.startsWith(BASE_PATH)) {
 		return { kind: "missing" };
 	}

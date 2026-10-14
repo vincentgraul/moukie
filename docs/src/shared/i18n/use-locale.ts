@@ -1,8 +1,7 @@
 import { useParams } from "@tanstack/react-router";
-import { resolveLocale } from "./locale";
-import type { Locale } from "./paraglide/runtime.js";
+import { type PublishedLocale, resolveLocale } from "./locale";
 
-export function useLocale(): Locale {
+export function useLocale(): PublishedLocale {
 	const { locale } = useParams({ strict: false });
 	return resolveLocale(locale);
 }
