@@ -29,8 +29,8 @@ Les routes de TanStack Start vivent dans `docs/src/app/routes/` (`routesDirector
 | `app` | `routes/`, `layout/`, `providers/`, `styles/`, `check/` | routage, mise en page commune (barre latérale et en-tête : lien GitHub, sélecteur de langue), fournisseurs, styles globaux, points d'entrée des contrôles lancés par `check`, qui composent les entités |
 | `pages` | `home`, `getting-started`, `skills`, `agents`, `workflow-map` | une page par entrée du site |
 | `features` | `switch-language` | changer de langue en conservant la page courante |
-| `entities` | `skill`, `agent` | lire au build les fichiers du plugin, exposer leur modèle et leur carte, associer chaque texte à sa traduction anglaise |
-| `shared` | `ui`, `config`, `i18n`, `lib` | composition au-dessus d'Empreint, configuration du site (chemin de base, URL du dépôt), branchement de Paraglide, utilitaires |
+| `entities` | `plugin-item` | les éléments affichables du plugin, avec deux sources : les skills et les agents. Lire au build leurs fichiers, valider leurs métadonnées, exposer leur modèle et leur carte, associer chaque texte à sa traduction anglaise |
+| `shared` | `ui`, `config`, `i18n`, `lib`, `api` | composition au-dessus d'Empreint, configuration du site (chemin de base, URL du dépôt), branchement de Paraglide, utilitaires, lecture générique des fichiers du plugin (racine, frontmatter), sans aucune règle métier |
 
 Pas de couche `widgets`.
 
@@ -61,7 +61,7 @@ Pas de couche `widgets`.
 - tant que l'accueil n'existe pas, `/fr/` et `/en/` mènent à la page Skills de leur langue
 - GitHub Pages ne redirige pas côté serveur : les redirections sont des pages statiques pré-rendues
 - les URL internes se terminent par une barre oblique (`/moukie/fr/skills/`), comme les sert GitHub Pages
-- la navigation entre pages et entre langues se fait par rechargement complet : des liens classiques vers des pages pré-rendues, sans navigation côté client
+- la navigation entre pages et entre langues se fait par rechargement complet, sans navigation côté client : les pages naviguent par des liens classiques vers des pages pré-rendues, et le sélecteur de langue déclenche le rechargement de la même page dans l'autre langue
 
 ## Déploiement
 - un workflow GitHub Actions construit `docs/` et le publie sur GitHub Pages
