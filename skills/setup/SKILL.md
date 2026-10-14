@@ -290,3 +290,5 @@ Crée ensuite une branche `setup`, commite l'initialisation en conventional comm
 ## Fin
 
 Donne le lien de la PR et invite l'utilisateur à la merger lui-même. La suite se passe avec le skill `spec`, pour cadrer une première feature.
+
+C'est une **frontière de session** : tout le contexte utile est dans `project/` et dans git. Donne la commande à lancer une fois la PR mergée (`/moukie:spec`), puis propose de vider la conversation : dans l'app desktop, avec l'outil qui vide la session, après accord de l'utilisateur ; ailleurs, en l'invitant à taper `/clear`. Le vidage vient en dernier.
