@@ -2,8 +2,11 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { readAgentFiles } from "@/entities/agent/index.server";
-import { readSkillFiles } from "@/entities/skill/index.server";
+import {
+	AGENT_SOURCE,
+	readPluginItemFiles,
+	SKILL_SOURCE,
+} from "@/entities/plugin-item/index.server";
 import { findPluginRoot } from "@/shared/api/index.server";
 import { checkPluginMetadata } from "./plugin-metadata";
 
@@ -236,8 +239,8 @@ describe("checkPluginMetadata", () => {
 
 	it("découvre les 12 skills et les 4 agents du dépôt, chacun avec un `name` égal au nom de son dossier ou de son fichier", () => {
 		const pluginRoot = findPluginRoot();
-		const skillFiles = readSkillFiles(pluginRoot);
-		const agentFiles = readAgentFiles(pluginRoot);
+		const skillFiles = readPluginItemFiles(pluginRoot, SKILL_SOURCE);
+		const agentFiles = readPluginItemFiles(pluginRoot, AGENT_SOURCE);
 
 		expect(skillFiles).toHaveLength(12);
 		expect(agentFiles).toHaveLength(4);

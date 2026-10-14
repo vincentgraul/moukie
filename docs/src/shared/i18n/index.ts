@@ -3,6 +3,7 @@ export {
 	isPublishedLocale,
 	PUBLISHED_LOCALES,
 	type PublishedLocale,
+	parsePublishedLocale,
 	resolveLocale,
 } from "./locale";
 export { m } from "./paraglide/messages.js";

@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "Apps, repository, front and back split, modules, contract.",
+		"sourceHash": "ab3ced224a52113e3380067f49af7c6924cb640fcb5b008ca606fd71f884a023"
+	},
+	"produces": {
+		"text": "Creates architecture.md",
+		"sourceHash": "588c562aef0f5d0d738ea43615929daa37f971af16e1e0310f56e81798fb14da"
+	}
+}

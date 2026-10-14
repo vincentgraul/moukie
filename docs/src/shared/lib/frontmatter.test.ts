@@ -36,7 +36,7 @@ describe("parseFrontmatter", () => {
 			"---",
 			"name: setup",
 			"metadata:",
-			"  moukie-badge: project",
+			"  moukie-icon: rocket",
 			'  moukie-rank: "1"',
 			"  moukie-summary: Mène l'entretien : tout.",
 			"model: opus",
@@ -46,7 +46,7 @@ describe("parseFrontmatter", () => {
 		expect(parseFrontmatter(source)).toEqual({
 			name: "setup",
 			metadata: {
-				"moukie-badge": "project",
+				"moukie-icon": "rocket",
 				"moukie-rank": "1",
 				"moukie-summary": "Mène l'entretien : tout.",
 			},

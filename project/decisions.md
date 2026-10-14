@@ -104,3 +104,15 @@
 - **Choix** : Geist, auto-hébergée par Fontsource (`@fontsource-variable/geist` 5, licence OFL-1.1).
 - **Écartés** : Google Fonts par CDN, le paquet `geist` de Vercel, la police système.
 - **Raison** : demandé par la story `skills-et-agents/page-skills`, puisque les maquettes utilisent Geist et qu'Empreint n'en fournit pas. L'auto-hébergement évite toute requête vers un tiers. Fontsource est la référence pour auto-héberger une police libre via npm, avec environ 3,3 millions de téléchargements par semaine pour ce paquet et un dépôt MIT actif (vérifié le 2026-10-14). Le paquet `geist` de Vercel exige Next.js (`next >= 13.2`), ce qui l'exclut avec TanStack Start. La licence OFL-1.1 permet d'embarquer la police avec un logiciel sous MIT.
+
+## 2026-10-14 · Navigation par rechargement complet
+- **Choix** : la navigation entre pages et entre langues se fait par rechargement complet, avec des liens classiques vers les pages pré-rendues. Le sélecteur de langue mène à la même page dans l'autre langue.
+- **Écartés** :
+  - un module virtuel Vite qui embarque au build les données du plugin dans le bundle client ;
+  - les fonctions serveur statiques de TanStack Start (`@tanstack/start-static-server-functions`), marquées expérimentales.
+- **Raison** : arbitré avant la story `skills-et-agents/version-anglaise`. Le site est statique et pré-rendu sur GitHub Pages, et le rechargement d'une page pré-rendue est rapide. C'est la navigation déjà en place depuis `page-skills`, et elle n'ajoute ni mécanique ni API expérimentale.
+
+## 2026-10-14 · Une entité unique pour les éléments du plugin
+- **Choix** : une seule entité `plugin-item` porte le modèle, la carte, la validation des métadonnées et l'association aux traductions des skills et des agents, qui en deviennent deux sources. `shared/api` ne garde que la lecture générique des fichiers du plugin (racine, frontmatter). Le sélecteur de langue déclenche le rechargement par JavaScript ; les autres liens restent des liens classiques.
+- **Écartés** : deux entités `skill` et `agent` dupliquées ; une mise en commun dans `shared/api`, qui y mettait du métier.
+- **Raison** : demandé par la revue de la story `skills-et-agents/version-anglaise`. La mise en commun avait mis dans `shared` les badges, la règle `knowledge`, la carte et les traductions, ce que FSD interdit (« shared must never contain business logic »). Et les deux entités ne gardaient plus en propre que la façon de lister leurs fichiers. FSD recommande alors de fusionner les frontières plutôt que de descendre dans `shared`.

@@ -1,4 +1,4 @@
-export const PUBLISHED_LOCALE_CODES = ["fr"] as const;
+export const PUBLISHED_LOCALE_CODES = ["fr", "en"] as const;
 
 export const SITE_PAGES = ["skills", "agents"] as const;
 

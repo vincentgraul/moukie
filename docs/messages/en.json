@@ -1,3 +1,22 @@
 {
-	"$schema": "https://inlang.com/schema/inlang-message-format"
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"navigation_label": "Main navigation",
+	"navigation_getting_started": "Getting started",
+	"navigation_skills": "Skills",
+	"navigation_agents": "Agents",
+	"navigation_workflow_map": "Workflow map",
+	"menu_open": "Open the menu",
+	"menu_close": "Close the menu",
+	"header_github": "Moukie on GitHub",
+	"header_language": "Language",
+	"redirect_link": "Continue to the Skills page",
+	"badge_project": "Project",
+	"badge_feature": "Feature",
+	"badge_story": "Story",
+	"badge_lane": "Lane",
+	"badge_review": "Review",
+	"skills_title": "Skills",
+	"skills_intro": "A skill is one of Moukie's abilities. You don't need to call them by name: they trigger on what you say. You can also invoke them directly, with /moukie:<skill>.",
+	"agents_title": "Agents",
+	"agents_intro": "Agents are the ones who write the code. You never call them: the orchestrator launches them for each story, one per app involved, in parallel, each in its own copy of the repository. They follow your stack, your architecture and the contract between apps, write their tests first, and never merge anything."
 }

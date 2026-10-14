@@ -33,6 +33,31 @@ test("`/moukie/` et `/moukie/fr/` redirigent vers `/moukie/fr/skills`.", async (
 	}
 });
 
+test("`/moukie/en/` redirige vers `/moukie/en/skills`.", async ({
+	page,
+	browser,
+}) => {
+	expect(readPrerenderedPage("en/")).toContain(
+		'<meta http-equiv="refresh" content="0; url=/moukie/en/skills/"/>',
+	);
+
+	await page.goto("en/");
+	await expect(page).toHaveURL(/\/moukie\/en\/skills\/$/);
+	await expect(page.getByRole("heading", { level: 1 })).toHaveText("Skills");
+	await expect(page.locator("html")).toHaveAttribute("lang", "en");
+
+	const context = await browser.newContext({ javaScriptEnabled: false });
+	const staticPage = await context.newPage();
+	await staticPage.goto("en/");
+	await expect(staticPage).toHaveURL(/\/moukie\/en\/skills\/$/);
+	await expect(staticPage.locator("html")).toHaveAttribute("lang", "en");
+	await context.close();
+
+	const response = await page.request.get("en", { maxRedirects: 0 });
+	expect(response.status()).toBe(301);
+	expect(response.headers().location).toBe("/moukie/en/");
+});
+
 test("redirects a page asked without its trailing slash, as GitHub Pages does, and renders it", async ({
 	page,
 }) => {
@@ -53,6 +78,18 @@ test("redirects a page asked without its trailing slash, as GitHub Pages does, a
 	const pages = [
 		{ path: "fr/skills", url: SKILLS_URL, title: "Skills", cardCount: 9 },
 		{ path: "fr/agents", url: AGENTS_URL, title: "Agents", cardCount: 4 },
+		{
+			path: "en/skills",
+			url: /\/moukie\/en\/skills\/$/,
+			title: "Skills",
+			cardCount: 9,
+		},
+		{
+			path: "en/agents",
+			url: /\/moukie\/en\/agents\/$/,
+			title: "Agents",
+			cardCount: 4,
+		},
 	];
 	for (const { path, url, title, cardCount } of pages) {
 		const response = await page.goto(path);
@@ -73,7 +110,7 @@ test("redirects a page asked without its trailing slash, as GitHub Pages does, a
 test("links to internal pages with a trailing slash, so that no click goes through a redirect", async ({
 	page,
 }) => {
-	for (const path of ["fr/skills/", "fr/agents/"]) {
+	for (const path of ["fr/skills/", "fr/agents/", "en/skills/", "en/agents/"]) {
 		await page.goto(path);
 		const internalLinks = await page
 			.locator("a[href^='/moukie/']")
@@ -81,7 +118,9 @@ test("links to internal pages with a trailing slash, so that no click goes throu
 				links.map((link) => link.getAttribute("href") ?? ""),
 			);
 
-		expect(internalLinks, path).toContain("/moukie/fr/agents/");
+		expect(internalLinks, path).toContain(
+			`/moukie/${path.slice(0, 2)}/agents/`,
+		);
 		for (const href of internalLinks) {
 			expect(href).toMatch(/\/$/);
 		}
@@ -89,7 +128,15 @@ test("links to internal pages with a trailing slash, so that no click goes throu
 });
 
 test("renders a single main landmark on each built page", () => {
-	for (const path of ["", "fr/", "fr/skills/", "fr/agents/"]) {
+	for (const path of [
+		"",
+		"fr/",
+		"fr/skills/",
+		"fr/agents/",
+		"en/",
+		"en/skills/",
+		"en/agents/",
+	]) {
 		const html = readPrerenderedPage(path);
 		expect(html.match(/<main[\s>]/g), path || "/").toHaveLength(1);
 	}

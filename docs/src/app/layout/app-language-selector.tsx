@@ -1,26 +1,40 @@
 import {
 	Field as EmpreintField,
 	FieldLabel as EmpreintFieldLabel,
+	FlagGb as EmpreintFlagGb,
 	LanguageSelector as EmpreintLanguageSelector,
 } from "@empreint/ui";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import { useSwitchLanguage } from "@/features/switch-language";
 import {
+	isPublishedLocale,
 	m,
 	PUBLISHED_LOCALES,
 	type PublishedLocale,
 	useLocale,
 } from "@/shared/i18n";
 import styles from "./app-language-selector.module.css";
+import britishFlag from "./british-flag.svg";
 import frenchFlag from "./french-flag.png";
 
-const LANGUAGE_FLAGS: Readonly<Record<PublishedLocale, string>> = {
-	fr: frenchFlag,
+type LanguageFlag = {
+	readonly icon: ReactNode;
+	readonly imageUrl: string;
+};
+
+const LANGUAGE_FLAGS: Readonly<Record<PublishedLocale, LanguageFlag>> = {
+	fr: { icon: <img src={frenchFlag} alt="" />, imageUrl: frenchFlag },
+	en: {
+		icon: <EmpreintFlagGb preserveAspectRatio="xMidYMid slice" />,
+		imageUrl: britishFlag,
+	},
 };
 
 export function AppLanguageSelector() {
 	const locale = useLocale();
+	const switchLanguage = useSwitchLanguage();
 	const currentFlagStyle = {
-		"--app-language-current-flag": `url("${LANGUAGE_FLAGS[locale]}")`,
+		"--app-language-current-flag": `url("${LANGUAGE_FLAGS[locale].imageUrl}")`,
 	} as CSSProperties;
 
 	return (
@@ -31,9 +45,14 @@ export function AppLanguageSelector() {
 			<EmpreintLanguageSelector
 				style={currentFlagStyle}
 				value={locale}
+				onChange={({ value }) => {
+					if (value !== locale && isPublishedLocale(value)) {
+						switchLanguage(value);
+					}
+				}}
 				languages={PUBLISHED_LOCALES.map((publishedLocale) => ({
 					value: publishedLocale,
-					icon: <img src={LANGUAGE_FLAGS[publishedLocale]} alt="" />,
+					icon: LANGUAGE_FLAGS[publishedLocale].icon,
 				}))}
 			/>
 		</EmpreintField>

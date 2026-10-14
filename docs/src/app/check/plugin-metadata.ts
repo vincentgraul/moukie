@@ -1,9 +1,12 @@
-import { checkAgentsMetadata } from "@/entities/agent/index.server";
-import { checkSkillsMetadata } from "@/entities/skill/index.server";
+import {
+	AGENT_SOURCE,
+	checkPluginItemsMetadata,
+	SKILL_SOURCE,
+} from "@/entities/plugin-item/index.server";
 
 export function checkPluginMetadata(pluginRoot: string): string[] {
 	return [
-		...checkSkillsMetadata(pluginRoot),
-		...checkAgentsMetadata(pluginRoot),
+		...checkPluginItemsMetadata(pluginRoot, SKILL_SOURCE),
+		...checkPluginItemsMetadata(pluginRoot, AGENT_SOURCE),
 	];
 }

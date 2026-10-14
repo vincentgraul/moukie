@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "Scopes a feature and splits it into stories.",
+		"sourceHash": "8000a10bf4d674111e87b901203d26acc52767b0a2fdaf0145b035a123d5f460"
+	},
+	"produces": {
+		"text": "Creates project/specs/",
+		"sourceHash": "d631e2e42b01b4196118c31196981b066b883a311252e418926ed51bcfef1235"
+	}
+}

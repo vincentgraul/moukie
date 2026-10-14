@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "Codes the mobile interface of a story, one instance per app.",
+		"sourceHash": "98c37d222e22f37a016ab383ea40f7c494e5c380c368aa3d18a79799c40c7a38"
+	},
+	"produces": {
+		"text": "Commits the mobile interface and its tests",
+		"sourceHash": "a76c93a30110cc6544f42bda4c862c8f6c3c172b46d613857a0597332e3bb207"
+	}
+}

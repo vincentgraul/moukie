@@ -1,9 +1,9 @@
-import type { AgentCardView } from "@/entities/agent";
+import type { PluginItemCardView } from "@/entities/plugin-item";
 import { getBadgeLabel, m, useLocale } from "@/shared/i18n";
 import { OverviewCard, OverviewCardGrid, OverviewLayout } from "@/shared/ui";
 
 export type AgentsPageProps = {
-	readonly cards: readonly AgentCardView[];
+	readonly cards: readonly PluginItemCardView[];
 };
 
 export function AgentsPage({ cards }: AgentsPageProps) {

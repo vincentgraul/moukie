@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "Codes the web interface of a story with the design system.",
+		"sourceHash": "615caeb853ca835e2790ed8b6b55959f04029674e07441f16b69db64341a2b52"
+	},
+	"produces": {
+		"text": "Commits the web interface and its tests",
+		"sourceHash": "8a2819bff96e7f913efe0237a4fdddf346163b7d4911258fc15f53ff6be4c9c0"
+	}
+}
