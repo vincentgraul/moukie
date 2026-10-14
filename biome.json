@@ -12,8 +12,7 @@
 			"docs/**",
 			"!docs/src/app/routeTree.gen.ts",
 			"!docs/src/shared/i18n/paraglide",
-			"!docs/.vscode",
-			"!docs/**/*.svg"
+			"!docs/.vscode"
 		]
 	},
 	"assist": {
@@ -47,6 +46,16 @@
 		}
 	},
 	"overrides": [
+		{
+			"includes": ["docs/src/**/*.svg"],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"noSvgWithoutTitle": "off"
+					}
+				}
+			}
+		},
 		{
 			"includes": ["docs/*.config.ts"],
 			"linter": {
