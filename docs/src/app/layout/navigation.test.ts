@@ -23,7 +23,7 @@ describe("navigation entries", () => {
 		expect(entriesWithoutPage).toEqual(["getting-started", "workflow-map"]);
 	});
 
-	it("L'entrée Agents de la barre latérale est cliquable depuis toutes les pages, et mise en évidence sur la page Agents.", () => {
+	it("gives the Agents entry its label and a page of the site", () => {
 		const agentsEntry = NAVIGATION_ENTRIES.find(
 			(entry) => entry.page === "agents",
 		);
