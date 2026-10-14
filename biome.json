@@ -12,7 +12,8 @@
 			"docs/**",
 			"!docs/src/app/routeTree.gen.ts",
 			"!docs/src/shared/i18n/paraglide",
-			"!docs/.vscode"
+			"!docs/.vscode",
+			"!docs/**/*.svg"
 		]
 	},
 	"assist": {
