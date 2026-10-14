@@ -1,1 +1,1 @@
-export { loadLucideIconShape } from "./lucide-icon-shape";
+export { renderLucideIconMarkup } from "./lucide-icon-markup";

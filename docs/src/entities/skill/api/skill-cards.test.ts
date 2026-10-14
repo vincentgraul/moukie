@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { findPluginRoot } from "@/shared/api/index.server";
-import { loadLucideIconShape } from "@/shared/lib/index.server";
+import { renderLucideIconMarkup } from "@/shared/lib/index.server";
 import { loadSkillCardViews, readSkillCards } from "./skill-cards";
 
 const createdDirectories: string[] = [];
@@ -73,14 +73,14 @@ describe("readSkillCards", () => {
 });
 
 describe("loadSkillCardViews", () => {
-	it("adds the Lucide drawing of its icon to each card", async () => {
+	it("adds the rendered svg of its Lucide icon to each card", async () => {
 		const pluginRoot = createPluginRoot();
 		writeSkill(pluginRoot, "setup", "Un résumé.");
 
 		const [view] = await loadSkillCardViews(pluginRoot);
 
 		expect(view).toMatchObject({ name: "setup", iconName: "rocket" });
-		expect(view.iconShape).toEqual(await loadLucideIconShape("rocket"));
-		expect(view.iconShape).not.toEqual(await loadLucideIconShape("target"));
+		expect(view.iconMarkup).toBe(await renderLucideIconMarkup("rocket"));
+		expect(view.iconMarkup).toContain('class="lucide lucide-rocket"');
 	});
 });

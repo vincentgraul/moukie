@@ -47,6 +47,16 @@
 	},
 	"overrides": [
 		{
+			"includes": ["docs/src/shared/ui/inline-svg.tsx"],
+			"linter": {
+				"rules": {
+					"security": {
+						"noDangerouslySetInnerHtml": "off"
+					}
+				}
+			}
+		},
+		{
 			"includes": ["docs/src/**/*.svg"],
 			"linter": {
 				"rules": {

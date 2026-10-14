@@ -10,7 +10,7 @@ import {
 import { ArrowBigRightIcon } from "lucide-react";
 import type { SkillCardView } from "@/entities/skill";
 import { getBadgeLabel, type Locale } from "@/shared/i18n";
-import { IconTile, ShapeIcon } from "@/shared/ui";
+import { IconTile, InlineSvg } from "@/shared/ui";
 import styles from "./skill-overview-card.module.css";
 
 export type SkillOverviewCardProps = {
@@ -23,7 +23,7 @@ export function SkillOverviewCard({ card, locale }: SkillOverviewCardProps) {
 		<EmpreintCard className={styles.skillOverviewCard} role="listitem">
 			<EmpreintCardHeader className={styles.header}>
 				<IconTile>
-					<ShapeIcon name={card.iconName} shape={card.iconShape} />
+					<InlineSvg markup={card.iconMarkup} />
 				</IconTile>
 				<EmpreintTitle as="h2" size="2" weight="bold" className={styles.name}>
 					{card.name}
