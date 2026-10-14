@@ -15,15 +15,20 @@ describe("navigation entries", () => {
 		}
 	});
 
-	it("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : dans cette story, Getting started, Agents et Workflow map.", () => {
+	it("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : Getting started et Workflow map.", () => {
 		const entriesWithoutPage = NAVIGATION_ENTRIES.filter(
 			(entry) => !isSitePage(entry.page),
 		).map((entry) => entry.page);
 
-		expect(entriesWithoutPage).toEqual([
-			"getting-started",
-			"agents",
-			"workflow-map",
-		]);
+		expect(entriesWithoutPage).toEqual(["getting-started", "workflow-map"]);
+	});
+
+	it("L'entrée Agents de la barre latérale est cliquable depuis toutes les pages, et mise en évidence sur la page Agents.", () => {
+		const agentsEntry = NAVIGATION_ENTRIES.find(
+			(entry) => entry.page === "agents",
+		);
+
+		expect(agentsEntry?.label("fr")).toBe("Agents");
+		expect(isSitePage("agents")).toBe(true);
 	});
 });

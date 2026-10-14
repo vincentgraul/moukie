@@ -8,7 +8,7 @@ const NAVIGATION_ENTRIES = [
 	"Agents",
 	"Workflow map",
 ];
-const DISABLED_ENTRIES = ["Getting started", "Agents", "Workflow map"];
+const DISABLED_ENTRIES = ["Getting started", "Workflow map"];
 
 function sidebar(page: Page) {
 	return page.getByRole("navigation", { name: "Navigation principale" });
@@ -67,7 +67,7 @@ test("L'entrée de la page courante est mise en évidence comme dans la maquette
 	}
 });
 
-test("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : dans cette story, Getting started, Agents et Workflow map.", async ({
+test("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : Getting started et Workflow map.", async ({
 	page,
 }) => {
 	for (const name of DISABLED_ENTRIES) {
@@ -78,9 +78,9 @@ test("Une entrée dont la page n'existe pas encore est affichée désactivée et
 		await entry.click({ force: true });
 		await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
 	}
-	await expect(
-		sidebar(page).getByRole("link", { name: "Skills" }),
-	).toBeEnabled();
+	for (const name of ["Skills", "Agents"]) {
+		await expect(sidebar(page).getByRole("link", { name })).toBeEnabled();
+	}
 });
 
 test("L'en-tête affiche l'icône GitHub, qui ouvre https://github.com/vincentgraul/moukie dans un nouvel onglet, puis un séparateur et le sélecteur de langue au drapeau français.", async ({
