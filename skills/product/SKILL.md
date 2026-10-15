@@ -74,6 +74,8 @@ Les trous qui **doivent** être comblés :
 - **commercial** : le modèle économique
 - **open source** : la licence, et qui maintient le projet dans la durée. Une licence permissive (MIT, Apache-2.0) favorise l'adoption ; une licence copyleft (GPL, AGPL) garantit que les dérivés restent libres. C'est un choix de positionnement, pas une formalité. Consigne son identifiant SPDX exact, `GPL-3.0-only` n'étant pas `GPL-3.0-or-later`
 
+Si `setup` te transmet l'**inventaire des maquettes**, pars de lui : ses écrans donnent le périmètre, et souvent la cible. Propose-les comme candidats, et ne pose aucune question sur les pages, la navigation ou le contenu qu'ils montrent. Questionne seulement sur ce que des maquettes ne disent pas : le problème, la proposition de valeur, les critères de succès, le modèle économique ou la licence.
+
 En **amendement**, pas d'entretien complet : pars de la feature transmise par `spec`, et passe directement à la Phase 4.
 
 ---
