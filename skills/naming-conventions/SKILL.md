@@ -9,17 +9,15 @@ metadata:
 
 ## Règles
 
-Les **conventions officielles du langage et du framework** retenus par `project/stack.md` font foi : les Swift API Design Guidelines, les Kotlin coding conventions, Effective Dart, PEP 8, et ainsi de suite. Ce skill ne les recopie pas : il les fait appliquer.
+Les **conventions officielles du langage et du framework** retenus par `project/stack.md` font foi : les Swift API Design Guidelines, les Kotlin coding conventions, Effective Dart, PEP 8… Ce skill ne fixe que ce qu'elles laissent ouvert, et chaque section ne vaut que si la stack retient la technologie qu'elle nomme.
 
-Il ne fixe que ce que le langage laisse ouvert. Les sections ci-dessous ne s'appliquent que si la stack retient la technologie qu'elles nomment.
-
-Ces compléments vivent dans le plugin et ne sont jamais recopiés dans un projet : une correction ici profite à tous les projets d'un coup.
+Ne recopie jamais ces conventions dans un projet : elles vivent dans le plugin.
 
 ---
 
 ## Tous langages
 
-Les noms sont en **anglais**, quelle que soit la langue du projet : fichiers, dossiers, symboles, slugs de feature et de story, branches, messages de commit et clés de frontmatter. Le contenu des fichiers Markdown, lui, est dans la langue du projet, notée dans le `CLAUDE.md`, sauf les fichiers publics du dépôt, ceux qui s'adressent à ses visiteurs et contributeurs (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `CHANGELOG.md`, `SECURITY.md`…), toujours en anglais.
+Les noms sont en **anglais**, quelle que soit la langue du projet : fichiers, dossiers, symboles, slugs de feature et de story, branches, messages de commit et clés de frontmatter.
 
 | Élément | Convention | Exemple |
 |---|---|---|
@@ -30,7 +28,7 @@ Les noms sont en **anglais**, quelle que soit la langue du projet : fichiers, do
 
 ## JavaScript et TypeScript
 
-TypeScript ne fixe ni le nommage des fichiers ni la forme des exports. Ce qui fait foi :
+TypeScript laisse ouverts le nommage des fichiers et la forme des exports :
 
 | Élément | Convention | Exemple |
 |---|---|---|

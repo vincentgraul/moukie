@@ -21,7 +21,7 @@ La stack se décide **à partir du produit**, jamais dans l'abstrait. `project/p
 
 Tu proposes, l'utilisateur tranche. **N'invente rien** : une version, une compatibilité ou un état de maintenance que tu n'as pas vérifié n'est pas une information.
 
-Lis `project/decisions.md` avant de proposer quoi que ce soit : un choix consigné ne se rouvre qu'avec un **élément nouveau** (une version majeure sortie, une bibliothèque abandonnée, un besoin produit qui a changé).
+Lis `project/decisions.md` avant de proposer quoi que ce soit : un choix consigné ne se rouvre qu'avec un **élément nouveau** (une version majeure sortie, une bibliothèque abandonnée, un besoin produit qui a changé). Consigne chaque arbitrage à la fin de ce fichier, en le créant s'il manque : un titre `## AAAA-MM-JJ · <sujet>`, puis trois puces, **Choix**, **Écartés** et **Raison**.
 
 ---
 
@@ -42,7 +42,7 @@ En **création**, **challenge** et **mise à jour**, lis `project/product.md`, `
 2. Si une brique déjà retenue couvre le besoin, dis-le à l'appelant et n'écris rien.
 3. Retiens deux ou trois candidats pour ce domaine. Si `references/preferences.md` en propose un, il en fait partie. Fais la veille ci-dessous sur eux seuls.
 4. Soumets-les en **une seule** question `AskUserQuestion`, ta recommandation en premier, avec l'option de refuser.
-5. Accepté : ajoute la brique à `stack.md` au plus près, sans toucher au reste, et une entrée à `decisions.md` dont la raison cite la feature ou le besoin. Refusé : n'écris rien.
+5. Accepté : ajoute la brique à `stack.md` au plus près, sur une ligne `<rôle> : <nom> <version majeure>` dans son domaine, sans toucher au reste, et une entrée à `decisions.md` dont la raison cite la feature ou le besoin. Refusé : n'écris rien.
 6. Rends la main à l'appelant : brique retenue, ce qu'il faudra installer, ou besoin refusé. Ne modifie pas le code toi-même.
 
 ---
@@ -56,34 +56,4 @@ Pour chaque brique candidate, vérifie par `WebSearch` :
 - la **compatibilité** avec les briques déjà retenues
 - la **licence** : compatible avec celle du projet s'il est open source (une dépendance copyleft dans un projet sous licence permissive est un problème), et avec une distribution propriétaire s'il est commercial
 
-Cite tes sources. Une affirmation de veille sans source n'en est pas une.
-
----
-
-## Écriture
-
-### `project/stack.md`
-
-Groupe par domaine, une ligne par brique : son rôle, son nom, sa version majeure. N'y mets que les briques **retenues** : les alternatives écartées et les raisons vont dans `decisions.md`.
-
-```markdown
-# Stack
-
-## Commun
-- langage : TypeScript 5
-- runtime et gestionnaire de paquets : Bun 1
-
-## Back
-- framework : Hono 4
-```
-
-### `project/decisions.md`
-
-Une entrée par arbitrage, ajoutée à la fin du fichier. Crée le fichier s'il n'existe pas.
-
-```markdown
-## AAAA-MM-JJ · <sujet>
-- **Choix** : …
-- **Écartés** : …
-- **Raison** : …
-```
+Cite tes sources.

@@ -19,7 +19,7 @@ Ce skill est le seul à écrire `project/architecture.md`. Les agents rangent le
 
 **La frontière avec `stack`** : la stack dit **avec quoi** (langages, frameworks, bibliothèques, versions), l'architecture dit **comment c'est organisé** (apps, dépôt, découpage, modules, contrat, communication). Si une question relève de la stack, renvoie vers `stack`.
 
-Tu proposes, l'utilisateur tranche. Lis `project/decisions.md` avant de proposer quoi que ce soit : un choix consigné ne se rouvre qu'avec un **élément nouveau** (une app ajoutée, un module devenu trop gros, un changement de stack).
+Tu proposes, l'utilisateur tranche. Lis `project/decisions.md` avant de proposer quoi que ce soit : un choix consigné ne se rouvre qu'avec un **élément nouveau** (une app ajoutée, un module devenu trop gros, un changement de stack). Consigne chaque arbitrage à la fin de ce fichier, en le créant s'il manque : un titre `## AAAA-MM-JJ · <sujet>`, puis trois puces, **Choix**, **Écartés** et **Raison**.
 
 ---
 
@@ -41,16 +41,3 @@ En **création** et en **challenge**, `project/product.md` et `project/stack.md`
 4. Soumets-le en **une seule** question `AskUserQuestion`, ta recommandation en premier, avec l'option de refuser.
 5. Accepté : modifie `architecture.md` au plus près, sans toucher au reste, et ajoute une entrée à `decisions.md` dont la raison cite la feature ou le besoin. Refusé : n'écris rien.
 6. Rends la main à l'appelant : architecture amendée, ou besoin refusé, qui doit alors tenir dans l'architecture existante. Si l'amendement ajoute une app, signale-le : elle sera générée par `scaffold` au démarrage de la story qui en a besoin.
-
----
-
-## `project/decisions.md`
-
-Une entrée par arbitrage, ajoutée à la fin du fichier. Crée le fichier s'il n'existe pas.
-
-```markdown
-## AAAA-MM-JJ · <sujet>
-- **Choix** : …
-- **Écartés** : …
-- **Raison** : …
-```

@@ -13,12 +13,9 @@ metadata:
 
 ## Règles
 
-Échange dans la langue dans laquelle l'utilisateur t'écrit, puis dans la **langue du projet** une fois choisie en 2.1. Tout le Markdown que tu écris est dans cette langue, titres des gabarits compris, sauf les fichiers publics du dépôt, ceux qui s'adressent à ses visiteurs et contributeurs (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `CHANGELOG.md`, `SECURITY.md`…), toujours en anglais.
-N'écris pas de commentaires dans le code.
-Commite en conventional commits, avec des messages en anglais et sans mention de co-auteur.
-N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas des obstacles.
-Ne merge jamais sur `main`, et ne merge jamais une PR : c'est l'utilisateur qui merge.
-Applique le skill `naming-conventions` à tout ce que tu nommes : les fichiers, les dossiers, les branches, les commits et le code sont en anglais.
+Échange dans la langue dans laquelle l'utilisateur t'écrit, puis dans la **langue du projet** une fois choisie en 2.1. Tout le Markdown que tu écris est dans cette langue, titres des gabarits compris, sauf les fichiers publics du dépôt (`README.md`, `CONTRIBUTING.md`…), toujours en anglais.
+Les interdits du `CLAUDE.md`, que tu n'écris qu'en Phase 8, valent dès maintenant. N'écris pas de commentaires dans le code. Commite en conventional commits, en anglais, sans mention de co-auteur, et n'utilise jamais `--no-verify`. Ne merge jamais : c'est l'utilisateur qui merge.
+Applique le skill `naming-conventions` à tout ce que tu nommes : fichiers, dossiers, branches, commits et code sont en anglais.
 
 ---
 
@@ -50,7 +47,7 @@ Les skills `product` et `stack` écrivent leurs fichiers pendant l'entretien. Po
 
 ### 2.2 — Maquettes
 
-Les maquettes répondent à la plupart des questions sur les pages, la navigation et le contenu : lis-les **avant** l'entretien produit, plutôt que de poser ces questions à l'utilisateur.
+Lis les maquettes **avant** l'entretien produit : elles répondent déjà aux questions sur les pages, la navigation et le contenu.
 
 Lis la structure du fichier des maquettes avec `get_metadata` : les pages et les frames de premier niveau, leurs noms et leurs dimensions. Sur un gros fichier, cherche dans la réponse plutôt que de tout lire. N'utilise pas `get_design_context`, bien trop lourd ici. Si les noms des frames ne suffisent pas à comprendre un écran, regarde-en au plus trois avec `get_screenshot`.
 
@@ -64,7 +61,7 @@ Restitue-le à l'utilisateur, qui le corrige. Il n'est écrit nulle part : tu le
 
 ### 2.3 — Produit
 
-Invoque le skill `product` en lui transmettant le nom, le type, la nature et la langue du projet, et l'inventaire des maquettes s'il existe. Il écrit `project/product.md`, et `project/market.md` si le projet est commercial ou open source. Le produit passe avant la stack, parce que la stack se décide à partir de lui.
+Invoque le skill `product` en lui transmettant le nom, le type, la nature et la langue du projet, et l'inventaire des maquettes s'il existe. Il écrit `project/product.md`, et `project/market.md` si le projet est commercial ou open source.
 
 ### 2.4 — Stack
 
@@ -85,7 +82,7 @@ Invoque le skill `architecture`. Il écrit `project/architecture.md` et complèt
 
 ## Phase 4 — Vault `project/`
 
-Le dossier `project/` porte tout ce qui parle **du projet** plutôt que de son code. C'est à la fois le **vault Obsidian** de l'utilisateur et le **contexte** que les agents chargent. Une spec et le code qui l'implémente y changent dans la même PR.
+Le dossier `project/` porte ce qui parle **du projet** plutôt que de son code : c'est le **vault Obsidian** de l'utilisateur et le **contexte** des agents.
 
 Écris chaque fichier à partir de ce que l'entretien a produit. **N'invente rien** : s'il manque un élément, retourne le demander. Si un fichier existe déjà, **modifie-le au plus près**.
 
@@ -159,14 +156,9 @@ Seulement si la nature du projet est **open source** : **lis `references/open-so
 
 ---
 
-## Phase 7 — Agents et skills
+## Phase 7 — Skills Figma
 
-Vérifie que tu as accès à tout ce que le workflow utilise, et signale ce qui manque :
-
-- les **agents** du plugin : `backend`, `front-web`, `front-mobile`, `reviewer`
-- les **skills du workflow** : `product`, `stack`, `architecture`, `scaffold`, `spec`, `contract`, `orchestrator`, `pr`
-- les **skills de connaissance** : `naming-conventions`, `feature-sliced-design`, `figma-annotations`
-- si le projet a des maquettes, les skills du plugin Figma officiel : `figma-design-to-code`, et `figma-swiftui` pour une app en SwiftUI
+Si le projet a des maquettes, vérifie que les skills du plugin Figma officiel sont disponibles : `figma-design-to-code`, que `figma-annotations` et les agents front exigent, et `figma-swiftui` pour une app en SwiftUI. Signale ce qui manque.
 
 ---
 

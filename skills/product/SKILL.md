@@ -25,7 +25,7 @@ Ce skill est le seul à écrire `project/product.md` et `project/market.md`.
 
 `product.md` est **importé à chaque session** par le `CLAUDE.md` : il tient en un écran, et ce qui déborde va dans `market.md`.
 
-Lis `project/decisions.md` avant de proposer quoi que ce soit : un choix consigné ne se rouvre qu'avec un **élément nouveau** (un concurrent apparu, un retour utilisateur, une feature qui déplace le périmètre).
+Lis `project/decisions.md` avant de proposer quoi que ce soit : un choix consigné ne se rouvre qu'avec un **élément nouveau** (un concurrent apparu, un retour utilisateur, une feature qui déplace le périmètre). Consigne chaque arbitrage (positionnement, licence, changement de périmètre) à la fin de ce fichier, en le créant s'il manque : un titre `## AAAA-MM-JJ · <sujet>`, puis trois puces, **Choix**, **Écartés** et **Raison**.
 
 ---
 
@@ -47,16 +47,3 @@ En **création** et en **challenge**, lis `project/product.md` et `project/marke
 4. Soumets-le en **une seule** question `AskUserQuestion`, ta recommandation en premier, avec l'option de refuser.
 5. Accepté : modifie les fichiers au plus près, et ajoute une entrée à `decisions.md` dont la raison cite la feature. Refusé : n'écris rien.
 6. Rends la main à `spec` : périmètre amendé, ou feature hors périmètre.
-
----
-
-## `project/decisions.md`
-
-Une entrée par arbitrage (positionnement, licence, changement de périmètre), ajoutée à la fin du fichier. Crée le fichier s'il n'existe pas.
-
-```markdown
-## AAAA-MM-JJ · <sujet>
-- **Choix** : …
-- **Écartés** : …
-- **Raison** : …
-```

@@ -14,7 +14,7 @@ case "$branch" in
 esac
 ```
 
-Il refuse tout commit sur `main` ou `master`, sauf le tout premier d'un dépôt vide. Il s'exécute dans le dépôt où le commit a lieu : il protège aussi les worktrees de l'orchestrateur.
+Il refuse tout commit sur `main` ou `master`, sauf le tout premier d'un dépôt vide.
 
 Git n'exécute pas les hooks versionnés tant qu'on ne le lui demande pas. Fais donc lancer `git config core.hooksPath .githooks` à chaque installation des dépendances, par le mécanisme du gestionnaire de paquets. Pour un projet JavaScript, c'est un script `prepare` dans le `package.json` racine :
 
