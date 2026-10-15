@@ -13,7 +13,6 @@ metadata:
 ## Règles
 
 Mène les échanges en **français**.
-N'écris pas de commentaires dans le code.
 Applique le skill `naming-conventions` à tout ce que tu nommes, quand le générateur ne l'impose pas.
 
 Tu **génères**, tu ne décides pas. La structure vient de `project/architecture.md`, les outils de `project/stack.md`. Une app, un dossier ou un outil que ni l'un ni l'autre ne prévoit ne se crée pas : renvoie vers le skill `architecture` ou `stack`.

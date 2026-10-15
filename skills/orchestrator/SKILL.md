@@ -13,10 +13,7 @@ metadata:
 
 ## Règles
 
-Mène les échanges en **français**.
-Commite en conventional commits, avec des messages en anglais et sans mention de co-auteur.
-N'utilise jamais `--no-verify`, et ne laisse aucun agent le faire.
-Ne merge jamais sur `main`, et ne merge jamais une PR : c'est l'utilisateur qui merge.
+Mène les échanges en **français**. Tu ne merges jamais une PR : c'est l'utilisateur qui merge.
 
 Une story à la fois. Tu ne codes pas toi-même : tu **prépares, lances et coordonnes** les agents, tu intègres leur travail, puis tu le fais relire par l'agent `reviewer`. Les agents sont **autonomes** : ils avancent sans solliciter l'utilisateur.
 
@@ -98,4 +95,4 @@ Tiens l'utilisateur informé avec l'outil `PushNotification`, à **trois moments
 
 Une fois la PR ouverte, envoie la dernière notification, puis donne à l'utilisateur le lien de la PR. C'est lui qui la merge.
 
-C'est une **frontière de session** : tout le contexte utile est dans `project/` et dans git. Donne la commande de l'étape suivante (par exemple `/moukie:orchestrator <feature>/<story suivante>`, à lancer une fois la PR mergée), puis propose de vider la conversation : dans l'app desktop, avec l'outil qui vide la session, après accord de l'utilisateur ; ailleurs, en l'invitant à taper `/clear`. Le vidage vient en dernier.
+**Frontière de session** : donne la commande de l'étape suivante (par exemple `/moukie:orchestrator <feature>/<story suivante>`, à lancer une fois la PR mergée), puis, en dernier, propose de vider la conversation (l'outil qui vide la session dans l'app desktop, après accord ; sinon `/clear`).

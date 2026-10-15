@@ -14,8 +14,6 @@ metadata:
 ## Règles
 
 Mène les échanges en **français**.
-Commite en conventional commits, avec des messages en anglais et sans mention de co-auteur.
-N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas des obstacles.
 
 Une feature est un dossier de `project/specs/`, chacune de ses stories un fichier.
 
@@ -33,7 +31,7 @@ Avant de poser la moindre question, situe-toi :
 - détermine si l'utilisateur **crée** une feature ou **met à jour** une feature existante. En cas de doute, demande-lui
 - en **mise à jour**, récupère l'état du remote (`git fetch`) et repère sa branche par défaut, `origin/main` ou `origin/master` (`git symbolic-ref --short refs/remotes/origin/HEAD`), notée `origin/<défaut>` dans la suite. Regarde ensuite la branche `<feature>/spec` :
   - si elle existe et n'est pas encore contenue dans `origin/<défaut>` (`git merge-base --is-ancestor <feature>/spec origin/<défaut>` échoue), bascule dessus avant d'écrire quoi que ce soit : c'est là que vit la dernière version validée de la feature
-  - si elle est déjà contenue dans `origin/<défaut>`, la feature y est arrivée avec une story : supprime la branche (`git branch -D`, qui ne perd rien puisque tout est dans `origin/<défaut>`), et pars de `origin/<défaut>`
+  - si elle est déjà contenue dans `origin/<défaut>`, supprime-la (`git branch -D`) et pars de `origin/<défaut>`
 
 Résume en une ou deux lignes ce que tu as détecté.
 
@@ -45,13 +43,13 @@ Le principe : l'utilisateur décrit librement, tu structures, puis tu ne le ques
 
 ### 2.1 — Jet brut
 
-Demande le **nom de la feature**, puis laisse l'utilisateur décrire ce qu'il veut, librement et dans le désordre. Ne l'interromps pas avec des questions à ce stade : le but est de récupérer tout ce qu'il a en tête, sans lui imposer de format.
+Demande le **nom de la feature**, puis laisse l'utilisateur décrire ce qu'il veut, librement et dans le désordre, sans l'interrompre par des questions.
 
 ### 2.2 — Structuration et découpage
 
 Range ce qu'il a dit dans les sections du gabarit de la Phase 3, sans rien inventer. Ce qui manque reste **vide** : c'est cette liste de vides qui pilote la suite.
 
-Restitue ta compréhension en quelques lignes et laisse-le corriger. Un malentendu attrapé ici ne se propage ni dans les stories, ni dans le contrat, ni dans les tests.
+Restitue ta compréhension en quelques lignes et laisse-le corriger.
 
 **Propose ensuite le découpage en stories**, et fais-le valider avant d'aller plus loin : toute la suite se fait story par story. Une story est un comportement qu'un utilisateur peut constater, livrable et testable seul, et qui tient dans une PR qu'on relit sans peine. Pour chacune, propose un titre et un **slug**. Le slug est fixé une fois pour toutes : c'est donc ici qu'il se discute.
 
@@ -59,7 +57,7 @@ Ne fais jamais une story par critère d'acceptation.
 
 ### 2.3 — Maquettes
 
-Pour **chaque** story, détermine si elle a un écran dans Figma. Ne le déduis pas du jet brut : quand l'utilisateur décrit une feature, il parle du besoin, rarement de ses maquettes.
+Pour **chaque** story, détermine si elle a un écran dans Figma, sans le déduire du jet brut.
 
 **Avec `project/design.md`**, propose plutôt que de demander. Lis la structure du fichier des maquettes avec `get_metadata`, repère les frames dont le nom correspond à chaque story, et soumets-les avec `AskUserQuestion` : une option par frame candidat, plus « pas d'écran ». Sur un gros fichier, la réponse est volumineuse : cherche dedans par nom de frame plutôt que de tout lire. N'utilise pas `get_design_context` à ce stade, bien trop lourd pour un fichier entier.
 
@@ -75,9 +73,9 @@ Une story sans écran passe directement aux questions ciblées.
 
 Ne pose de questions que sur ce qui manque encore, par lots, avec `AskUserQuestion`.
 
-**Ne pose jamais de question ouverte sur ce qui s'énumère : propose une liste de candidats, que l'utilisateur coche, écarte ou complète.** « Y a-t-il des cas limites ? » obtient toujours « non », et « non » est toujours faux : on réagit plus facilement qu'on ne produit. Pré-remplis tes options à partir de ce que tu as sous la main :
+**Ne pose jamais de question ouverte sur ce qui s'énumère : propose une liste de candidats, que l'utilisateur coche, écarte ou complète.** « Y a-t-il des cas limites ? » obtient toujours un « non » faux. Pré-remplis tes options à partir de ce que tu as sous la main :
 
-- les **règles récoltées en 2.3** par `figma-annotations` : les champs requis, les valeurs possibles, les visibilités conditionnelles et les règles de bouton y sont souvent déjà écrits. Les redemander, c'est faire ressaisir à l'utilisateur ce qu'il a déjà produit
+- les **règles récoltées en 2.3** par `figma-annotations` : les champs requis, les valeurs possibles, les visibilités conditionnelles et les règles de bouton y sont souvent déjà écrits : ne les redemande pas
 - le **code existant** : les rôles et entités déjà modélisés, les erreurs déjà en place, le contrat déjà écrit, pour que tes propositions collent au projet plutôt qu'au générique
 - les **specs validées précédentes** : elles montrent le niveau de détail et les critères que l'utilisateur attend d'habitude
 - `WebSearch` sur le domaine de la feature (panier, authentification, paiement, upload…) : les cas limites courants sont documentés, sers-t'en pour bâtir la liste à filtrer
@@ -86,14 +84,14 @@ Les trous qui **doivent** être comblés avant d'écrire :
 
 - **le problème résolu** : tu dois le comprendre. Challenge tant que ce n'est pas clair
 - **les rôles utilisateurs** : le gabarit impose « En tant que `<rôle>` », ne l'invente pas
-- **le hors-périmètre** : propose les extensions naturelles que tu vois venir, l'utilisateur écarte ce qui n'appartient pas à cette feature. Personne ne le fournit spontanément, et c'est ce qui empêche une story de gonfler
+- **le hors-périmètre** : propose les extensions naturelles que tu vois venir, l'utilisateur écarte ce qui n'appartient pas à cette feature
 - **les cas limites et les erreurs attendues** : ils alimentent à la fois les critères d'acceptation et la forme des erreurs du contrat
 - **les contraintes** : l'existant à ne pas casser, les dépendances, la volumétrie
 - **le critère de réussite** : « à quoi verra-t-on que c'est réussi ? » fait sortir des critères qui ne seraient pas venus autrement
 
 **Proportionne la rigueur** : vise huit critères au plus par story. Regroupe les détails visuels en un seul critère de conformité à la maquette, et réserve les critères qui demandent un test end-to-end aux parcours de l'utilisateur. Au-delà de dix critères, la story est sans doute à découper.
 
-Chaque critère d'acceptation doit être **vérifiable** : un comportement observable, pas une intention. « Le panier est performant » n'est pas un critère ; « l'ajout répond en moins de 300 ms » en est un. C'est ce qui permet ensuite d'écrire le test d'abord, et au `reviewer` de bloquer un critère non couvert.
+Chaque critère d'acceptation doit être **vérifiable** : un comportement observable, pas une intention. « Le panier est performant » n'est pas un critère ; « l'ajout répond en moins de 300 ms » en est un.
 
 ### 2.5 — Cohérence avec le produit, la stack et l'architecture
 
@@ -103,7 +101,7 @@ Avant d'écrire, confronte la feature à ce qui est déjà décidé :
 - **la stack** : demande-t-elle une capacité que `stack.md` ne couvre pas, comme un paiement, du temps réel, du stockage de fichiers, des emails ou de la recherche ? Si oui, invoque le skill `stack` en mode amendement, en lui transmettant le besoin
 - **l'architecture** : demande-t-elle un module, une app ou une communication entre apps que `architecture.md` ne prévoit pas ? Si oui, invoque le skill `architecture` en mode amendement, en lui transmettant le besoin
 
-C'est ici que ces écarts coûtent le moins cher. Une fois la feature validée, le contrat, les critères et le travail des agents reposent sur le produit, la stack et l'architecture : les changer après coup est le chemin le plus coûteux du workflow.
+C'est ici que ces écarts coûtent le moins cher : après la validation, tout le travail des agents repose dessus.
 
 À la fin, récapitule, puis demande une confirmation avant d'écrire.
 
@@ -145,11 +143,11 @@ status: draft
 …
 ```
 
-Les **notes techniques** renvoient à `stack.md` et `architecture.md` plutôt que de nommer des bibliothèques : une spec dit quoi, jamais avec quoi. C'est ce qui lui permet de survivre à un changement de stack.
+Les **notes techniques** renvoient à `stack.md` et `architecture.md` plutôt que de nommer des bibliothèques : une spec dit quoi, jamais avec quoi.
 
 Une nouvelle feature naît toujours en `status: draft`. Le `status` vit **ici et nulle part ailleurs** : on valide un cadrage entier, jamais une story isolée.
 
-N'ajoute pas d'index des stories : le contenu du dossier le donne déjà, et un index se désynchronise.
+N'ajoute pas d'index des stories : le dossier le donne déjà.
 
 ### Une story
 
@@ -169,9 +167,9 @@ En tant que <rôle>, je veux <…> afin de <…>.
 - [ ] …
 ```
 
-Le **slug** est en kebab-case (`ajout-article`) et **fixé une fois pour toutes**, même si le titre lisible change. C'est **l'identifiant de la story** dans tout le workflow : il nomme son fichier, ce qui garantit son unicité, et sa branche `<feature>/<story>`, qui reprend exactement son chemin sous `project/specs/`. Le renommer casse le lien avec la branche et la PR.
+Le **slug** est en kebab-case (`ajout-article`) et **fixé une fois pour toutes**, même si le titre lisible change. C'est **l'identifiant de la story** : il nomme son fichier et sa branche `<feature>/<story>`. Le renommer casse le lien avec la branche et la PR.
 
-Le champ `figma:` porte l'URL du **nœud** de l'écran (elle contient un `node-id`), pas celle du fichier. Il rend la récolte des annotations rejouable : sans lui, il faudrait retrouver le bon frame à la main. Laisse-le vide si la story n'a pas d'écran.
+Le champ `figma:` porte l'URL du **nœud** de l'écran (elle contient un `node-id`), pas celle du fichier. Laisse-le vide si la story n'a pas d'écran.
 
 Les critères d'acceptation restent une checklist. **Jamais** une story par critère.
 
@@ -186,7 +184,7 @@ Présente le cadrage et les stories à l'utilisateur. Quand il valide, passe le 
 - commite-les (`docs(specs): add panier feature`)
 - ne pousse pas et n'ouvre pas de PR : la spec rejoindra `main` avec la PR de la première story implémentée, dans la même PR que le code
 
-C'est ce commit qui rend la spec, et les amendements qui vont avec, visibles dans les worktrees des agents. C'est aussi lui qui permet de lancer plusieurs stories de la feature sans attendre le merge de la première.
+Ce commit rend la spec visible dans les worktrees des agents, et permet de lancer plusieurs stories sans attendre le merge de la première.
 
 ---
 
@@ -194,4 +192,4 @@ C'est ce commit qui rend la spec, et les amendements qui vont avec, visibles dan
 
 Propose de passer la main au skill `orchestrator` pour implémenter une première story, désignée par son slug.
 
-C'est une **frontière de session** : la spec est commitée, tout le contexte utile est dans `project/` et dans git. Donne la commande à lancer (`/moukie:orchestrator <feature>/<story>`), puis propose de vider la conversation : dans l'app desktop, avec l'outil qui vide la session, après accord de l'utilisateur ; ailleurs, en l'invitant à taper `/clear`. Le vidage vient en dernier.
+**Frontière de session** : donne la commande à lancer (`/moukie:orchestrator <feature>/<story>`), puis, en dernier, propose de vider la conversation (l'outil qui vide la session dans l'app desktop, après accord ; sinon `/clear`).

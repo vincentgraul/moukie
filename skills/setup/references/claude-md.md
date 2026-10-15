@@ -60,4 +60,6 @@ Sur un projet neuf, `rules/` est vide : **n'écris pas la table**. Elle apparaî
 
 ## Le workflow
 
-Les skills et leur enchaînement, les agents et leur rôle, et les interdits : jamais de commit sur `main` ou `master`, jamais de merge sur `main` ni de merge d'une PR, pas de commentaires dans le code, aucune mention de co-auteur. Les fusions des lanes dans la branche d'une story, elles, font partie du travail de l'orchestrateur.
+Les skills et leur enchaînement, les agents et leur rôle, et les interdits : jamais de commit sur `main` ou `master` ni de `--no-verify`, jamais de merge sur `main` ni de merge d'une PR, pas de commentaires dans le code, des commits en conventional commits, en anglais, sans mention de co-auteur.
+
+Écris-les tous : les skills ne les répètent pas, ils comptent sur le `CLAUDE.md`. Les fusions des lanes dans la branche d'une story, elles, font partie du travail de l'orchestrateur.
