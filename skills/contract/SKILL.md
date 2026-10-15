@@ -12,7 +12,7 @@ metadata:
 
 ## Règles
 
-Mène les échanges en **français**.
+Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`).
 Applique le skill `naming-conventions` à tout ce que tu nommes : sa section « Contrat entre apps » fixe le nom des schémas et des routes.
 
 Le contrat est la **source unique de vérité** de l'interface entre les apps. Chaque app en tire ses types, par inférence ou par génération selon le format, et ne les redéfinit jamais à la main. Une story qui ne touche qu'une app n'en a pas besoin.

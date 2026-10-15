@@ -12,7 +12,7 @@ metadata:
 
 ## Règles
 
-Mène les échanges en **français**.
+Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`).
 Applique le skill `naming-conventions` à tout ce que tu nommes, quand le générateur ne l'impose pas.
 
 Tu **génères**, tu ne décides pas. La structure vient de `project/architecture.md`, les outils de `project/stack.md`. Une app, un dossier ou un outil que ni l'un ni l'autre ne prévoit ne se crée pas : renvoie vers le skill `architecture` ou `stack`.

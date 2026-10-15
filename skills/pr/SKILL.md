@@ -12,7 +12,7 @@ metadata:
 
 ## Règles
 
-Mène les échanges en **français**.
+Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`).
 Commite en conventional commits, avec des messages en anglais et sans mention de co-auteur. La PR ne mentionne aucun co-auteur non plus.
 N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas des obstacles.
 Ne merge jamais sur `main`, et ne merge jamais une PR : c'est l'utilisateur qui merge. Ne passe pas non plus la PR en fusion automatique.
@@ -41,8 +41,8 @@ Commite les changements restants. Pousse ensuite la branche, en créant l'upstre
 
 Crée la PR avec la CLI de la forge (`gh pr create` sur GitHub, `glab mr create` sur GitLab), vers la branche par défaut (`main` ou `master`) :
 
-- **titre** : en conventional commit, il résume la story
-- **corps** :
+- **titre** : en conventional commit, en anglais comme les commits, il résume la story
+- **corps**, dans la langue du projet, titres de section compris :
   - **What** : ce que fait le changement
   - **Why** : le besoin auquel il répond
   - **Story** : son titre et le chemin de son fichier (`project/specs/cart/add-item.md`)

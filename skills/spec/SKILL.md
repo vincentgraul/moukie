@@ -13,7 +13,7 @@ metadata:
 
 ## Règles
 
-Mène les échanges en **français**.
+Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`). Traduis les titres et libellés des gabarits dans cette langue ; les clés et les valeurs du frontmatter (`status: validated`, `figma:`) restent telles quelles.
 
 Une feature est un dossier de `project/specs/`, chacune de ses stories un fichier.
 

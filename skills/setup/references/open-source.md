@@ -1,6 +1,6 @@
 # Projet open source
 
-Un projet libre s'adresse à des inconnus : il lui faut ce qu'ils s'attendent à trouver.
+Un projet libre s'adresse à des inconnus : il lui faut ce qu'ils s'attendent à trouver. Écris ces fichiers en **anglais**, quelle que soit la langue du projet : ce sont eux que lit un contributeur qui découvre le dépôt.
 
 - **`LICENSE`** : la licence choisie avec le skill `product`, consignée dans `decisions.md` avec son identifiant SPDX (`MIT`, `Apache-2.0`, `GPL-3.0-or-later`…). N'écris **jamais** un texte de licence de mémoire : une variante approximative n'est plus la licence qu'on croit appliquer. Récupère le texte officiel dans la liste SPDX : `https://raw.githubusercontent.com/spdx/license-list-data/main/text/<identifiant>.txt`. Pour MIT, remplace `<year>` et `<copyright holders>`. Les autres licences se versionnent **telles quelles** : les espaces réservés de leurs annexes, chez Apache comme chez les GPL, sont des modèles d'en-tête pour les fichiers source, pas des champs à remplir
 - **`README.md`** : écrit pour les **utilisateurs**, pas pour l'équipe. Ce que fait le projet et pour qui, d'après `product.md`, l'installation, un premier exemple d'usage, un lien vers `CONTRIBUTING.md` et la licence. S'il existe déjà, modifie-le au plus près
