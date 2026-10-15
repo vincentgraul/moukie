@@ -17,7 +17,7 @@ Tu décides seul d'un changement mineur. Un changement structurant, ou qui touch
 
 ## Story incomplète
 
-Si `contract` ou un agent signale qu'il manque à la story une information (une valeur, une règle, un cas d'erreur), ne la fais pas inventer : notifie l'utilisateur. La story repasse par le skill `spec`, en mise à jour, qui la complète et la commite sur `<feature>/spec`. Fais ensuite rebaser la branche de la story sur `<feature>/spec` avant de reprendre.
+Si `contract` ou un agent signale qu'il manque à la story une information (une valeur, une règle, un cas d'erreur), ne la fais pas inventer : notifie l'utilisateur. La story repasse par le skill `spec`, en mise à jour, qui la complète et la commite sur `<feature>/spec`. Fusionne ensuite `<feature>/spec` dans la branche de la story avant de reprendre : un rebase réécrirait les commits des stories sur lesquelles elle s'empile.
 
 ---
 

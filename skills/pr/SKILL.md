@@ -36,7 +36,7 @@ Commite les changements restants. Pousse ensuite la branche, en créant l'upstre
 
 ## Phase 3 — Création de la PR
 
-Crée la PR avec la CLI de la forge (`gh pr create` sur GitHub, `glab mr create` sur GitLab), vers la branche par défaut (`main` ou `master`) :
+Crée la PR avec la CLI de la forge (`gh pr create` sur GitHub, `glab mr create` sur GitLab), vers la branche cible que l'orchestrateur t'a transmise, à défaut vers la branche par défaut (`main` ou `master`) :
 
 - **titre** : en conventional commit, en anglais comme les commits, il résume la story
 - **corps**, dans la langue du projet, titres de section compris :
@@ -45,6 +45,8 @@ Crée la PR avec la CLI de la forge (`gh pr create` sur GitHub, `glab mr create`
   - **Story** : son titre et le chemin de son fichier (`project/specs/cart/add-item.md`)
   - **Critères d'acceptation** : la checklist de la story, reprise telle quelle
   - **Suggestions non appliquées** : celles que l'orchestrateur t'a transmises. S'il n'y en a pas, omets la section
+
+Si la PR vise la branche d'une autre story, ouvre son corps par une ligne qui renvoie à la PR de cette story : « Empilée sur <lien> : à merger après elle, une fois que cette PR vise `<défaut>`. »
 
 ---
 

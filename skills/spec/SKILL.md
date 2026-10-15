@@ -47,7 +47,7 @@ Si la mise à jour vient d'un écran modifié dans Figma, suis cette section à 
 3. Regarde l'écran avec `get_screenshot`, puis invoque `figma-annotations` sur son nœud. Compare-les aux critères de la story et restitue les écarts en quelques lignes.
 4. Détermine si la story est **déjà codée** : sa branche `<feature>/<story>` a une PR, ouverte ou mergée (avec la CLI de la forge de `stack.md`), ou existe sur le remote.
    - **pas codée** : amende ses critères sur place. Si l'écart n'est que visuel, la story ne change pas, car l'agent front lit la maquette au moment de l'implémenter : dis-le et arrête-toi
-   - **codée** : laisse-la intacte, elle décrit le code livré. Ajoute une story qui ne porte que l'écart, avec le même `figma:` et un slug qui nomme le changement (`redesign-cart-summary`). Si la PR de la story d'origine est encore ouverte, préviens que la nouvelle story ne s'implémente qu'après son merge
+   - **codée** : laisse-la intacte, elle décrit le code livré. Ajoute une story qui ne porte que l'écart, avec le même `figma:` et un slug qui nomme le changement (`redesign-cart-summary`).
 
 ### 2.1 — Maquettes ou jet brut
 
