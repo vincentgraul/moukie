@@ -1,135 +1,136 @@
 # Moukie
 
-Seul, de la maquette Figma à la PR : Moukie est un plugin Claude Code qui code ton front et ton back **en parallèle** contre un contrat partagé, puis te rapporte la PR. C'est toi qui merges.
+Solo, from Figma mockup to PR: Moukie is a Claude Code plugin that codes your front end and back end **in parallel** against a shared contract, then brings you back the PR. You do the merging.
 
-Le plugin embarque les **skills** du workflow et les **subagents** d'implémentation. À l'initialisation, il installe dans chaque projet un **hook git** qui refuse les commits sur `main`/`master`.
+The plugin ships the workflow **skills** and the implementation **subagents**. At setup, it installs a **git hook** in each project that refuses commits on `main`/`master`.
 
 ---
 
-## Le pipeline
+## The pipeline
 
 ```
 setup     →  spec  →  ┌─ contract ─┐  →  reviewer  →  pr
-(config)    (WHY)     │ orchestrator│    (revue)     (PR)
+(config)    (WHY)     │ orchestrator│    (review)     (PR)
                       │ front ∥ back│
                       └────────────┘
 ```
 
-| Étape | Skill | Rôle | S'arrête à |
-|-------|-------|------|-----------|
-| 1 | `setup` | Entretien de cadrage (produit, stack, architecture) → écrit le vault `project/`, fait générer le code manquant par `scaffold`, configure permissions, linter, garde-fou git et `CLAUDE.md` | PR d'initialisation ouverte |
-| 2 | `spec` | Cadrage d'une feature → `project/specs/<feature>/` (son `README.md` + une story par fichier) | Feature `validated` |
-| 3a | `contract` | Gèle l'interface front/back en schémas **zod** (si la story est multi-couche) | Contrat gelé |
-| 3b | `orchestrator` | Implémente **une story** : lance les lanes front/back en parallèle (worktrees isolés), intègre, fait revoir | PR ouverte (délègue à `pr`) |
-| 4 | `pr` | Commit (conventional), push, `gh pr create` | PR ouverte (**ne merge jamais**) |
+| Step | Skill | Role | Stops at |
+|------|-------|------|----------|
+| 1 | `setup` | Framing interview (product, stack, architecture) → writes the `project/` vault, has `scaffold` generate the missing code, configures permissions, linter, git guard and `CLAUDE.md` | Setup PR opened |
+| 2 | `spec` | Frames a feature → `project/specs/<feature>/` (its `README.md` + one story per file) | Feature `validated` |
+| 3a | `contract` | Freezes the front/back interface as **zod** schemas (if the story spans several layers) | Contract frozen |
+| 3b | `orchestrator` | Implements **one story**: runs the front/back lanes in parallel (isolated worktrees), integrates, gets it reviewed | PR opened (delegates to `pr`) |
+| 4 | `pr` | Commit (conventional), push, `gh pr create` | PR opened (**never merges**) |
 
-Chaque skill a une **frontière nette** et passe explicitement la main à la suivante. Aucun ne merge ni ne saute d'étape.
+Each skill has a **clear boundary** and explicitly hands over to the next one. None of them merges or skips a step.
 
-À côté de ces étapes, deux **skills de connaissance** sont invoqués par les autres plutôt que par l'utilisateur :
+Alongside these steps, two **knowledge skills** are invoked by the other skills rather than by the user:
 
-| Skill | Rôle | Invoqué par |
-|-------|------|-------------|
-| `feature-sliced-design` | La méthodologie FSD v2.1 qui fait foi côté front | `front-web`, `front-mobile`, `reviewer` |
-| `figma-annotations` | Récolte les annotations Dev Mode des maquettes et les normalise en règles exploitables | `spec`, `contract` |
+| Skill | Role | Invoked by |
+|-------|------|------------|
+| `feature-sliced-design` | The FSD v2.1 methodology, the reference for the front end | `front-web`, `front-mobile`, `reviewer` |
+| `figma-annotations` | Collects the Dev Mode annotations from the mockups and normalizes them into usable rules | `spec`, `contract` |
 
 ---
 
-## Le vault `project/`
+## The `project/` vault
 
-Tout ce qui parle **du projet** plutôt que de son code vit dans un seul dossier à la racine du dépôt, en markdown :
+Everything about **the project** rather than its code lives in a single folder at the root of the repository, in Markdown:
 
 ```
 project/
-├── product.md        ← le WHY : problème résolu, pour qui, périmètre
-├── market.md         ← alternatives, positionnement, licence ou modèle économique
-├── stack.md          ← la stack retenue (source de vérité, pas le CLAUDE.md)
-├── architecture.md   ← stratégie de dépôt, FSD côté front, Vertical Slice côté back
-├── decisions.md      ← journal des arbitrages structurants
-├── design.md         ← liens vers les maquettes et le design system
-├── rules/            ← invariants propres au projet (auth.md, …)
-└── specs/            ← les features et leurs stories
+├── product.md        ← the WHY: problem solved, for whom, scope
+├── market.md         ← alternatives, positioning, licence or business model
+├── stack.md          ← the chosen stack (source of truth, not CLAUDE.md)
+├── architecture.md   ← repository strategy, FSD on the front end, Vertical Slice on the back end
+├── decisions.md      ← log of structural trade-offs
+├── design.md         ← links to the mockups and the design system
+├── rules/            ← project-specific invariants (auth.md, …)
+└── specs/            ← features and their stories
 ```
 
-Ce dossier est à la fois le **vault Obsidian** de l'utilisateur — on l'ouvre tel quel, donc Obsidian n'indexe jamais `node_modules` — et le **contexte** que les agents chargent. Comme il est versionné dans le dépôt, une spec et le code qui l'implémente changent dans le même commit et la même PR.
+This folder is both the user's **Obsidian vault** (opened as is, so Obsidian never indexes `node_modules`) and the **context** the agents load. Since it is versioned in the repository, a spec and the code that implements it change in the same commit and the same PR.
 
-Le `CLAUDE.md` à la racine est un **routeur**, pas une documentation : il importe `product.md` et `stack.md` (petits, toujours pertinents), renvoie vers le reste à la demande, et porte la **table des règles** — une ligne par fichier de `rules/`, domaine → fichier — pour qu'un agent sache lequel ouvrir sans les lire tous.
+The root `CLAUDE.md` is a **router**, not documentation: it imports `product.md` and `stack.md` (small, always relevant), points to the rest on demand, and holds the **rules table** (one line per file in `rules/`, domain → file) so an agent knows which one to open without reading them all.
 
-Un `architecture.canvas` peut être dessiné à la main dans Obsidian. C'est une **vue** : `architecture.md` reste la source canonique, celle que les agents lisent et que le `reviewer` confronte au code.
+An `architecture.canvas` can be drawn by hand in Obsidian. It is a **view**: `architecture.md` remains the canonical source, the one the agents read and the `reviewer` checks the code against.
 
-Trois outils suffisent donc pour mener un projet : **Figma** (les maquettes), **Obsidian** (le vault) et **Claude Code** (l'exécution).
-
----
-
-## Les subagents
-
-| Agent | Modèle | Outils | Usage |
-|-------|--------|--------|-------|
-| `front-web` | sonnet | tous | Lane front web — React + TS, design system [Empreint](https://github.com/vincentgraul/empreint), maquettes Figma (lecture) |
-| `front-mobile` | sonnet | tous | Lane front mobile — React Native + TS, Empreint, Figma (lecture) |
-| `backend` | sonnet | Read/Edit/Write/Bash/Grep/Glob | Lane back — endpoints, logique métier, accès données |
-| `reviewer` | sonnet | Read/Grep/Glob/Bash/Skill | Revue lecture seule avant PR — findings priorisés |
-
-Les agents tournent sur **Sonnet** par défaut ; l'orchestrateur passe une lane en Opus seulement pour une story complexe.
-
-Les writers travaillent **contre le contrat zod gelé** : ils ne le modifient jamais et remontent tout besoin de changement à l'orchestrateur.
+Three tools are enough to run a project: **Figma** (the mockups), **Obsidian** (the vault) and **Claude Code** (the execution).
 
 ---
 
-## Les hooks
+## The subagents
 
-- **Garde-fou git** — `setup` installe dans chaque projet un hook `pre-commit` (`.githooks/`) qui refuse tout commit sur `main` ou `master`, activé automatiquement à l'installation des dépendances. Garde-fou déterministe : les subagents tournent en autonomie, l'instruction seule ne suffit pas.
-- **Notification** (hook du plugin) — notification macOS (`osascript`) quand une action attend l'utilisateur. macOS uniquement, échoue silencieusement ailleurs.
+| Agent | Model | Tools | Use |
+|-------|-------|-------|-----|
+| `front-web` | sonnet | all | Web front-end lane: React + TS, [Empreint](https://github.com/vincentgraul/empreint) design system, Figma mockups (read only) |
+| `front-mobile` | sonnet | all | Mobile front-end lane: React Native + TS, Empreint, Figma (read only) |
+| `backend` | sonnet | Read/Edit/Write/Bash/Grep/Glob | Back-end lane: endpoints, business logic, data access |
+| `reviewer` | sonnet | Read/Grep/Glob/Bash/Skill | Read-only review before the PR, prioritized findings |
+
+The agents run on **Sonnet** by default; the orchestrator switches a lane to Opus only for a complex story.
+
+The writers work **against the frozen zod contract**: they never modify it and report any change they need to the orchestrator.
 
 ---
 
-## Prérequis
+## The hooks
 
-- **`gh` CLI** installé et authentifié (compte GitHub Free suffit).
-- **MCP Figma** connecté (lecture seule ; l'écriture est en `deny`).
-- Front : design system [Empreint](https://github.com/vincentgraul/empreint).
+- **Git guard**: `setup` installs a `pre-commit` hook (`.githooks/`) in each project that refuses any commit on `main` or `master`, activated automatically when dependencies are installed. A deterministic guard: the subagents run autonomously, and an instruction alone is not enough.
+- **Notification** (plugin hook): a macOS notification (`osascript`) when an action is waiting for the user. macOS only, fails silently elsewhere.
+
+---
+
+## Requirements
+
+- **`gh` CLI** installed and authenticated (a GitHub Free account is enough).
+- **Figma MCP** connected (read only; writing is set to `deny`).
+- Front end: the [Empreint](https://github.com/vincentgraul/empreint) design system.
 
 ---
 
 ## Installation
 
-Le repo est aussi une **marketplace** (`.claude-plugin/marketplace.json`). Depuis Claude Code :
+The repository is also a **marketplace** (`.claude-plugin/marketplace.json`). From Claude Code:
 
 ```
 /plugin marketplace add vincentgraul/moukie
 /plugin install moukie@vincentgraul
 ```
 
-(ou pointe la marketplace sur ce dépôt local pendant le développement).
+(or point the marketplace to this local repository during development).
 
-Après installation, ouvre `/hooks` une fois pour que la config des hooks soit rechargée.
+After installing, open `/hooks` once so the hooks configuration is reloaded.
 
 ---
 
-## Utilisation
+## Usage
 
-Tout est piloté en langage naturel — les skills se déclenchent sur l'intention :
+Everything is driven in natural language; the skills trigger on intent:
 
-- *« configure Claude Code pour ce projet »* → `setup`
-- *« rédige la spec de la feature panier »* → `spec`
-- *« implémente la story ajout-article »* → `orchestrator` (qui enchaîne `contract`, les lanes, `reviewer`, `pr`)
+- *"set up Claude Code for this project"* → `setup`
+- *"write the spec for the cart feature"* → `spec`
+- *"implement the add-item story"* → `orchestrator` (which chains `contract`, the lanes, `reviewer`, `pr`)
 
-Les échanges sont menés en **français**.
+Conversations and the generated Markdown (the vault, the specs, the PR descriptions) use the **project language**, chosen at `setup`. Names, commits, branches, code and the repository's public files stay in English.
 
 ---
 
 ## Conventions
 
-- **Git** : conventional commits ; jamais sur `main`/`master` ; jamais de merge automatique.
-- **Pas de tracker externe** : les specs versionnées dans `project/specs/` sont la source unique du besoin, l'avancement se lit dans les PR GitHub. Pas de fichier d'état d'avancement : il se désynchroniserait.
-- **Une feature est un dossier, une story est un fichier** : `project/specs/<feature>/README.md` porte le cadrage et le `status` ; chaque `project/specs/<feature>/<story>.md` porte une story et ses critères d'acceptation (une checklist — jamais une story par critère).
-- **Le slug est l'identifiant de la story** : c'est le nom de son fichier, donc unique par construction et fixé une fois pour toutes (le titre lisible, lui, peut changer). Sa branche `<feature>/<story>` reprend exactement son chemin sous `project/specs/`.
-- **Contrat** : source unique de vérité en zod, gel strict pendant le travail parallèle.
+- **Git**: conventional commits; never on `main`/`master`; never an automatic merge.
+- **English names**: files, folders, slugs, branches, commits and code are in English, whatever the project language.
+- **No external tracker**: the specs versioned in `project/specs/` are the single source of the requirements, and progress is read from the GitHub PRs. No progress file: it would drift out of sync.
+- **A feature is a folder, a story is a file**: `project/specs/<feature>/README.md` holds the framing and the `status`; each `project/specs/<feature>/<story>.md` holds one story and its acceptance criteria (a checklist, never one story per criterion).
+- **The slug is the story's identifier**: it is its file name, so unique by construction and fixed once and for all (the readable title can change). Its branch `<feature>/<story>` mirrors its path under `project/specs/`.
+- **Contract**: a single source of truth in zod, strictly frozen during parallel work.
 
 ---
 
-## Contribuer
+## Contributing
 
-Les contributions sont bienvenues : lis [CONTRIBUTING.md](CONTRIBUTING.md).
+Contributions are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licence
 
