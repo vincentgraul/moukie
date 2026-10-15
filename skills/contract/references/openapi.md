@@ -1,6 +1,6 @@
 # Contrat en OpenAPI
 
-Pour une API REST dès qu'au moins une app sort de TypeScript : une app iOS en Swift, Android en Kotlin, Flutter en Dart, ou un back dans un autre langage. Le fichier OpenAPI est la source, et **chaque app génère ses types** à partir de lui.
+Le fichier OpenAPI est la source, et **chaque app génère ses types** à partir de lui.
 
 ---
 
@@ -18,10 +18,9 @@ Valide le fichier avec un linter OpenAPI (Spectral ou Redocly, par exemple) avan
 
 ## Les types
 
-Chaque app génère ses types, et au besoin son client, avec un générateur reconnu pour son langage : openapi-typescript pour TypeScript, openapi-generator pour Swift, Kotlin, Dart et bien d'autres. Retiens le générateur dans `stack.md`.
+Chaque app génère ses types, et au besoin son client, avec le générateur que `stack.md` retient pour son langage, comme openapi-typescript pour TypeScript ou openapi-generator pour Swift, Kotlin et Dart.
 
-- le code généré n'est **jamais retouché à la main** : il est régénéré par la commande notée dans la section « Commandes » du `CLAUDE.md`, que le skill `scaffold` a mise en place en installant le générateur
-- le gel porte sur le fichier OpenAPI, pas sur le code généré : une lane qui régénère ses types ne modifie pas le contrat
+Le code généré n'est **jamais retouché à la main** : il se régénère par la commande notée dans la section « Commandes » du `CLAUDE.md`.
 
 ---
 

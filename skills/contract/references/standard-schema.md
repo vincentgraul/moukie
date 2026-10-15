@@ -2,8 +2,6 @@
 
 Pour des apps toutes en TypeScript. Le contrat s'écrit avec une bibliothèque de schémas compatible **Standard Schema** : Zod par défaut, ou Valibot, ArkType… La bibliothèque est un choix de stack, dans `stack.md`. Les exemples ci-dessous sont en Zod : avec une autre bibliothèque, applique-les avec ses équivalents.
 
-Une seule définition donne à la fois les types, à la compilation, des deux côtés, et la validation à l'exécution : le back valide ce qu'il reçoit, le front valide ce qu'il reçoit en réponse.
-
 ---
 
 ## La source

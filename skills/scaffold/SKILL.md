@@ -17,11 +17,11 @@ Applique le skill `naming-conventions` à tout ce que tu nommes, quand le géné
 
 Tu **génères**, tu ne décides pas. La structure vient de `project/architecture.md`, les outils de `project/stack.md`. Une app, un dossier ou un outil que ni l'un ni l'autre ne prévoit ne se crée pas : renvoie vers le skill `architecture` ou `stack`.
 
-**Ne génère que ce qui manque.** Ne modifie, ne déplace et ne supprime jamais du code existant. C'est ce qui permet de te relancer sans danger, à chaque fois que l'architecture prévoit quelque chose de nouveau.
+**Ne génère que ce qui manque.** Ne modifie, ne déplace et ne supprime jamais du code existant : on doit pouvoir te relancer sans danger.
 
 **Rien de plus que la structure** : pas de page, pas d'endpoint, pas de logique métier. Le premier code utile arrive avec une story.
 
-Ne commite pas : c'est le rôle de celui qui t'appelle. `setup` commite dans sa PR, l'orchestrateur sur la branche de la story, y compris quand c'est `contract` qui t'a invoqué, et l'utilisateur lui-même s'il t'a appelé directement.
+Ne commite pas : c'est le rôle de celui qui t'appelle, ou de l'orchestrateur quand c'est `contract`.
 
 ---
 

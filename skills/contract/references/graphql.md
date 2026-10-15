@@ -11,7 +11,7 @@ Le **schéma GraphQL** (SDL) est la source, à l'emplacement que fixe `architect
 - chaque type et chaque opération (query, mutation) que la story ajoute ou modifie, avec ses arguments et sa réponse
 - les **erreurs attendues** typées dans le schéma, par une union de résultats, plutôt que laissées aux seules erreurs génériques de GraphQL
 
-Les apps clientes écrivent leurs opérations, et génèrent leurs types depuis le schéma et ces opérations, avec GraphQL Code Generator ou l'équivalent de leur langage, par la commande notée dans la section « Commandes » du `CLAUDE.md`, que le skill `scaffold` a mise en place en installant le générateur. Le gel porte sur le schéma.
+Les apps clientes écrivent leurs opérations, et génèrent leurs types depuis le schéma et ces opérations, avec GraphQL Code Generator ou l'équivalent de leur langage, par la commande notée dans la section « Commandes » du `CLAUDE.md`. Le gel porte sur le schéma.
 
 ---
 

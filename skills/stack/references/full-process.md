@@ -46,7 +46,18 @@ Soumets les arbitrages avec `AskUserQuestion`, ta recommandation en premier. Ré
 
 ## Écriture
 
-Écris `stack.md` avec le gabarit du `SKILL.md`. En challenge ou en mise à jour, modifie-le au plus près plutôt que de le réécrire.
+Écris `stack.md` en groupant par domaine, une ligne par brique : son rôle, son nom, sa version majeure. N'y mets que les briques **retenues** : les alternatives écartées et leurs raisons vont dans `decisions.md`. En challenge ou en mise à jour, modifie-le au plus près plutôt que de le réécrire.
+
+```markdown
+# Stack
+
+## Commun
+- langage : TypeScript 5
+- runtime et gestionnaire de paquets : Bun 1
+
+## Back
+- framework : Hono 4
+```
 
 Consigne chaque arbitrage dans `decisions.md`, y compris les préférences **confirmées** après challenge : ce sont elles qu'un futur passage serait tenté de rouvrir.
 

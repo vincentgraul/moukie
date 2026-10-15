@@ -11,35 +11,23 @@ metadata:
 
 Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`).
 
-Ce skill **lit** Figma, il n'écrit jamais dedans.
-Il ne fait **pas** de design-to-code : traduire une maquette en composants reste le travail des agents front, via le skill `figma-design-to-code` du plugin Figma officiel. Ici on ne récolte que des **règles fonctionnelles**.
+Ce skill **lit** Figma sans jamais y écrire, et ne récolte que des **règles fonctionnelles** : traduire une maquette en composants reste le travail des agents front.
 
-Il est appelé par `spec`, qui range ses résultats dans la story. `contract` s'en sert ensuite **via la story**, sans jamais rappeler ce skill. Il ne produit jamais de code.
+Figma **alimente**, la story **fait foi** : une annotation devient un critère d'acceptation de la story, et c'est ce fichier versionné que la suite du workflow lit. Si la maquette change après validation, la story repasse par `spec`.
 
-### Source de vérité
-
-Figma **alimente**, la story **fait foi**.
-
-Une annotation devient un critère d'acceptation dans `project/specs/<feature>/<story>.md`, et c'est ce fichier qui est ensuite la référence : c'est lui qui est versionné, relu en PR et confronté au code par le `reviewer`. Si la maquette bouge après validation de la feature, on repasse par `spec` pour mettre la story à jour, jamais par un agent qui relit Figma pendant l'implémentation.
-
-**N'invente rien.** Une règle absente de la maquette n'est pas une règle. Un élément sans annotation n'est pas un oubli à combler.
+**N'invente rien.** Une règle absente de la maquette n'est pas une règle, et un élément sans annotation n'est pas un oubli à combler.
 
 ---
 
 ## Phase 1 — Récolte
 
-Il te faut le **nœud de l'écran** : `spec` te le transmet, après l'avoir fait choisir à l'utilisateur. Sinon cherche-le dans le frontmatter `figma:` de la story, et en dernier recours demande-le. L'URL doit contenir un `node-id`.
+Il te faut le **nœud de l'écran** : `spec` te le transmet ; sinon, cherche-le dans le frontmatter `figma:` de la story, et en dernier recours demande-le. L'URL doit contenir un `node-id`.
 
-Le bon nœud est le **plus petit frame contenant tous les éléments annotés**, la modale plutôt que l'écran qui la porte, le formulaire plutôt que la page. Un nœud trop haut ramène toute l'interface autour (sidebar, header, tableau) pour les mêmes quelques règles.
+Prends le **plus petit frame qui contient tous les éléments annotés** : la modale plutôt que l'écran qui la porte, le formulaire plutôt que la page. Un nœud trop haut ramène toute l'interface autour pour les mêmes quelques règles.
 
-Charge d'abord le skill `figma-design-to-code`, que le MCP Figma exige, puis appelle `get_design_context` sur ce nœud.
+Charge d'abord le skill `figma-design-to-code`, que le MCP Figma exige, puis appelle `get_design_context` sur ce nœud avec `excludeScreenshot: true` : tu cherches du texte, pas des pixels. `get_metadata` ne renvoie pas les annotations.
 
-Deux points qui font gagner du temps :
-
-- `get_metadata` ne renvoie **pas** les annotations. Seul `get_design_context` les porte
-- passe `excludeScreenshot: true` : tu cherches du texte, pas des pixels
-
-Dans la réponse, récupère tout élément portant un attribut `data-*-annotations`, avec son `data-node-id` et son `data-name`.
+Dans la réponse, récupère tout élément qui porte un attribut `data-*-annotations`, avec son `data-node-id` et son `data-name` :
 
 ```jsx
 <div data-node-id="…;465:4977"
@@ -53,21 +41,19 @@ Valeur possible:
 2. String">
 ```
 
-Le segment central du nom d'attribut est la **catégorie** de l'annotation dans Figma : `data-input-annotations` → catégorie `Input`, `data-button-annotations` → catégorie `Button`.
+Le segment central du nom d'attribut est la **catégorie** de l'annotation : `data-input-annotations` → `Input`, `data-button-annotations` → `Button`.
 
 ### Pièges
 
 - les séparateurs `---` arrivent **échappés** en `\---`
-- les puces sont converties en **listes numérotées**. Le numéro ne porte aucun sens, ne le reprends pas
-- l'appel est verbeux : tu reçois le code de tout l'écran pour quelques règles. Ne recopie jamais ce code, ne garde que les annotations
+- les puces arrivent en **listes numérotées** : le numéro ne porte aucun sens, ne le reprends pas
+- tu reçois le code de tout l'écran pour quelques règles : ne garde que les annotations, ne recopie jamais ce code
 
 ---
 
 ## Phase 2 — Lecture
 
-Une annotation est faite de **blocs séparés par `---`**. Le premier bloc est toujours la description de l'élément. Les suivants portent une clé.
-
-Les clés en usage :
+Une annotation est faite de **blocs séparés par `---`**. Le premier décrit l'élément ; les suivants portent une clé :
 
 | Clé | Ce qu'elle porte |
 |---|---|
@@ -77,21 +63,23 @@ Les clés en usage :
 | `Visible seulement si` | la condition d'affichage de l'élément |
 | `Règles:` | les comportements attendus (état désactivé, déclenchement…) |
 
-Une clé peut être **conditionnée à un autre champ** : « Valeur par défaut (en lien avec "type de la colonne") ». Conserve la condition, elle fait partie de la règle.
+Les clés suivent la langue des maquettes : reconnais-les à leur sens quand elles sont écrites autrement.
 
-Les catégories rencontrées sont `Input` et `Button`. La liste n'est pas fermée : traite toute catégorie inconnue comme un élément d'interface et route ses règles normalement.
+Une clé peut être **conditionnée à un autre champ** : « Valeur par défaut (en lien avec "type de la colonne") ». Garde la condition, elle fait partie de la règle.
+
+Les catégories rencontrées sont `Input` et `Button`, mais la liste n'est pas fermée : traite une catégorie inconnue comme un élément d'interface.
 
 ---
 
 ## Phase 3 — Routage
 
-Chaque règle a une destination, et une seule annotation peut en alimenter plusieurs :
+Une annotation peut alimenter plusieurs destinations :
 
-- `Est requis`, `Valeur possible`, `Valeur par défaut` → le **contrat** (validation et types partagés), **et** un critère d'acceptation
-- `Visible seulement si` → le **comportement front**, et un critère d'acceptation
+- `Est requis`, `Valeur possible`, `Valeur par défaut` → le **contrat** (validation et types partagés) **et** un critère d'acceptation
+- `Visible seulement si` → le **comportement front** et un critère d'acceptation
 - `Règles:` → un **critère d'acceptation**, toujours
 
-Quand une valeur par défaut décrit une correspondance technique (« si String: varchar »), elle concerne le **back**. Elle doit atterrir dans la story, pas rester dans le contexte de l'agent front. C'est tout l'intérêt de récolter ici plutôt qu'au moment de coder.
+Une valeur par défaut qui décrit une correspondance technique (« si String: varchar ») concerne le **back** : elle doit atterrir dans la story, pas rester dans le contexte de l'agent front.
 
 ---
 
@@ -110,10 +98,10 @@ Rends un bloc par élément annoté, dans l'ordre de la maquette :
 → critère d'acceptation
 ```
 
-Reformule chaque règle en **comportement observable**, pour qu'elle soit directement utilisable comme critère d'acceptation : « le bouton est désactivé tant que le formulaire n'est pas valide » est vérifiable, « gérer la validation » ne l'est pas.
+Reformule chaque règle en **comportement observable**, directement utilisable comme critère : « le bouton est désactivé tant que le formulaire n'est pas valide » est vérifiable, « gérer la validation » ne l'est pas.
 
 ---
 
 ## Fin
 
-Rends la restitution à l'appelant, en signalant ce que tu n'as **pas** pu router : une annotation ambiguë, une condition qui référence un champ absent de l'écran, une règle qui contredit la story. C'est à l'appelant de trancher, pas à toi.
+Rends la restitution à l'appelant, en signalant ce que tu n'as **pas** pu router : une annotation ambiguë, une condition qui référence un champ absent de l'écran, une règle qui contredit la story. C'est à l'appelant de trancher.

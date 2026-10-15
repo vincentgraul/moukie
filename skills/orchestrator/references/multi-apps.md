@@ -14,11 +14,11 @@ Invoque le skill `contract` pour **définir et geler** le contrat **avant** de l
 
 Chaque app a sa lane. Une app mobile fait **une instance de `front-mobile` par app** : une app iOS et une app Android font deux lanes, une app multiplateforme n'en fait qu'une.
 
-Vérifie que la source du contrat est commitée, puis lance **un agent par app, en parallèle**, chacun avec l'option `isolation: "worktree"` de l'outil Agent. Claude Code donne à chacun sa copie du dépôt, créée à partir du dernier commit de la branche de la story : tu n'as aucun `git worktree` à gérer toi-même.
+Lance **un agent par app, en parallèle**, chacun avec l'option `isolation: "worktree"` de l'outil Agent. Claude Code donne à chacun sa copie du dépôt, créée à partir du dernier commit de la branche de la story : tu n'as aucun `git worktree` à gérer toi-même.
 
 Donne à chaque agent, en plus de ce que liste le `SKILL.md` :
 
-- le **chemin de la source du contrat**, et la consigne de **coder contre lui sans le modifier**
+- le **chemin de la source du contrat**
 - pour un critère qui traverse plusieurs apps, sa part seulement : chaque lane la couvre par ses propres tests, le test end-to-end viendra après l'intégration
 
 ---
@@ -47,7 +47,13 @@ Fais ensuite le ménage : supprime les worktrees des lanes, puis leurs branches 
 
 Un critère qui traverse plusieurs apps n'est prouvé que par un test qui les exerce ensemble, et ce test ne peut s'écrire qu'ici. Si la story n'a aucun critère de ce genre, passe à la validation.
 
-Sinon, confie ces critères à l'agent de l'app par laquelle passe l'utilisateur : `front-web` ou `front-mobile`, ou `backend` si le critère ne traverse que des apps serveur. Lance-le **sans isolation**, sur la branche de la story, avec la consigne d'écrire un test end-to-end par critère. Si plusieurs apps clientes sont concernées, lance leurs agents l'un après l'autre.
+Sinon, confie ces critères à l'agent de l'app par laquelle passe l'utilisateur : `front-web` ou `front-mobile`, ou `backend` si le critère ne traverse que des apps serveur. Lance-le **sans isolation**, sur la branche de la story, où toutes les apps sont réunies, avec ces consignes :
+
+- écrire un test end-to-end par critère, titré par le critère mot pour mot, avec l'outil retenu par `stack.md`. Si la stack n'en retient aucun, le signaler plutôt que d'en choisir un
+- démarrer les apps dont le test a besoin avec les commandes du `CLAUDE.md`, puis lancer les tests end-to-end et les faire passer
+- quand un test échoue à cause d'une autre app, ne pas la corriger : le signaler dans le compte rendu
+
+Si plusieurs apps clientes sont concernées, lance leurs agents l'un après l'autre.
 
 ---
 

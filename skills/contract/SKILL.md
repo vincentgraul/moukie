@@ -15,23 +15,17 @@ metadata:
 Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`).
 Applique le skill `naming-conventions` à tout ce que tu nommes : sa section « Contrat entre apps » fixe le nom des schémas et des routes.
 
-Le contrat est la **source unique de vérité** de l'interface entre les apps. Chaque app en tire ses types, par inférence ou par génération selon le format, et ne les redéfinit jamais à la main. Une story qui ne touche qu'une app n'en a pas besoin.
+Le contrat est la **source unique de vérité** de l'interface entre les apps : chacune en tire ses types, par inférence ou par génération selon le format, sans jamais les redéfinir. Son **format** est fixé par `project/stack.md`, son **emplacement** par `project/architecture.md` : ce skill ne décide ni l'un ni l'autre.
 
-Le **format** est un choix de stack, dans `project/stack.md`. L'**emplacement** est un choix d'architecture, dans `project/architecture.md`. Ce skill ne décide ni l'un ni l'autre.
-
-Une fois gelé, le contrat est **immuable** pendant le travail parallèle :
-
-- aucun agent ne modifie sa source dans sa copie. Régénérer ses types à partir d'elle n'est pas la modifier
-- un agent qui découvre qu'un changement d'interface est nécessaire ne bricole pas de contournement : il s'arrête sur ce point précis, continue le reste de son travail, et remonte la demande à l'orchestrateur
-- tout changement passe par l'**évolution contrôlée**, plus bas, jamais par une modification dans un worktree
+Une fois gelée, sa source est **immuable** pendant le travail parallèle : elle ne change que par l'évolution contrôlée, plus bas, jamais dans un worktree. Régénérer des types à partir d'elle n'est pas la modifier.
 
 ---
 
 ## Phase 1 — Préparation
 
-Lis dans `project/stack.md` le format du contrat, et dans `project/architecture.md` son emplacement. S'il en manque un, arrête-toi et signale-le plutôt que de le deviner : c'est à `stack` ou à `architecture` de trancher.
+Lis le format dans `project/stack.md` et l'emplacement dans `project/architecture.md`. S'il en manque un, arrête-toi et signale-le : c'est à `stack` ou à `architecture` de trancher.
 
-**Charge la référence du format retenu**, et suis-la pour tout ce qui suit :
+**Lis la référence du format retenu**, et suis-la pour tout ce qui suit :
 
 | Format | Quand | Référence |
 |---|---|---|
@@ -47,30 +41,21 @@ Détermine enfin si tu **crées** un contrat, si tu l'**étends** avec de nouvea
 
 Construis le contrat à partir de la story :
 
-- **ce que la story fixe déjà** : les énumérations, les champs requis et les valeurs par défaut sont dans ses critères quand la feature a des maquettes annotées, puisque `figma-annotations` les y a rangés au moment de la spec. Reprends-les, ne les réinvente pas. S'il manque à la story une valeur dont le contrat a besoin, ne la cherche pas dans Figma et ne l'invente pas : signale-le à l'orchestrateur, la story doit repasser par `spec`
-- **chaque échange** : sa requête, sa réponse et ses erreurs, ainsi que ce qui l'adresse, la route et la méthode en REST, l'opération en GraphQL
-- **les types de chaque app** : assure-toi que chacune les tire du contrat, comme le prévoit la référence. Si le format demande une génération, lance la commande notée dans la section « Commandes » du `CLAUDE.md` et vérifie qu'elle passe. Si cette commande n'existe pas, par exemple parce que le projet a changé de format de contrat depuis son initialisation, invoque `scaffold` : il installe le générateur que la stack retient et ajoute la commande. Ne commite pas ce qu'il crée : l'orchestrateur le commite avec la source du contrat
+- **ce que la story fixe déjà** : les énumérations, les champs requis et les valeurs par défaut que `figma-annotations` a rangés dans ses critères. Reprends-les sans les réinventer. S'il manque une valeur, ne la cherche pas dans Figma et ne l'invente pas : signale-le à l'orchestrateur, la story repasse par `spec`
+- **chaque échange** : sa requête, sa réponse et ses erreurs, avec ce qui l'adresse, la route et la méthode en REST, l'opération en GraphQL
+- **les types de chaque app**, tirés du contrat comme le prévoit la référence. Si le format demande une génération, lance la commande notée dans la section « Commandes » du `CLAUDE.md` et vérifie qu'elle passe. Si elle n'existe pas, parce que le projet a changé de format depuis son initialisation, invoque `scaffold` : il installe le générateur et ajoute la commande. Ne commite pas ce qu'il crée
 
 ---
 
 ## Phase 3 — Validation et gel
 
-Fais valider le contrat par l'utilisateur, puis **gèle-le** : il devient la référence.
-
-Le gel porte sur la source du contrat (le module de schémas Standard Schema, le fichier OpenAPI, le schéma GraphQL), jamais sur les types générés. C'est ce chemin que l'orchestrateur vérifie avant chaque fusion.
+Fais valider le contrat par l'utilisateur, puis **gèle-le**. Le gel porte sur la source (le module de schémas Standard Schema, le fichier OpenAPI, le schéma GraphQL), jamais sur les types générés : c'est ce chemin que l'orchestrateur vérifie avant chaque fusion.
 
 ---
 
 ## Évolution contrôlée
 
-Pour faire évoluer un contrat gelé :
-
-1. **Suspends** le travail parallèle sur les parties concernées.
-2. Amende la **source** du contrat sur la branche de la story, jamais dans un worktree, et **commite-la** : les lanes ne voient le changement qu'à travers ce commit.
-3. Les lanes **rebasent** sur la branche de la story, et régénèrent leurs types si le format le demande.
-4. **Relance** le travail parallèle.
-
-Décris le changement d'interface, pour que chaque lane sache ce qui a bougé.
+Quand l'orchestrateur te fait évoluer un contrat gelé, amende sa **source** sur la branche de la story, jamais dans un worktree, et décris le changement d'interface pour que chaque lane sache ce qui a bougé. C'est l'orchestrateur qui suspend les lanes, commite, les fait rebaser et les relance.
 
 ---
 
