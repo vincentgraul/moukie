@@ -24,7 +24,7 @@ Une feature est un dossier de `project/specs/`, chacune de ses stories un fichie
 Avant de poser la moindre question :
 
 - lis les features de `project/specs/` s'il en existe : leur `README.md` et leurs stories
-- lis `project/product.md`, `project/market.md` s'il existe, `project/stack.md` et `project/architecture.md`, qui te serviront en 2.5, et `project/design.md` s'il existe, qui te servira en 2.3
+- lis `project/product.md`, `project/market.md` s'il existe, `project/stack.md` et `project/architecture.md`, qui te serviront en 2.5, et `project/design.md` s'il existe, qui décide du départ de l'entretien en 2.1
 - détermine si l'utilisateur **crée** une feature ou **met à jour** une feature existante ; en cas de doute, demande-lui
 - en **mise à jour**, récupère l'état du remote (`git fetch`) et repère sa branche par défaut, notée `origin/<défaut>` (`git symbolic-ref --short refs/remotes/origin/HEAD`). Puis, pour la branche `<feature>/spec` :
   - si elle existe et n'est pas encore contenue dans `origin/<défaut>` (`git merge-base --is-ancestor <feature>/spec origin/<défaut>` échoue), bascule dessus avant d'écrire : elle porte la dernière version validée de la feature
@@ -36,23 +36,27 @@ Résume en une ou deux lignes ce que tu as détecté.
 
 ## Phase 2 — Entretien
 
-L'utilisateur décrit librement, tu structures, puis tu ne le questionnes que sur les trous.
+Tu pars de ce qui est déjà écrit, l'utilisateur corrige et complète, puis tu ne le questionnes que sur les trous.
 
-### 2.1 — Jet brut
+### 2.1 — Maquettes ou jet brut
 
-Demande le **nom de la feature**, puis laisse l'utilisateur décrire ce qu'il veut, librement et dans le désordre, sans l'interrompre.
+Demande le **nom de la feature**.
+
+**Avec `project/design.md`**, lis les maquettes avant de demander quoi que ce soit : elles montrent déjà les écrans, leurs textes et leur structure, que l'utilisateur n'a pas à paraphraser. Lis la structure du fichier avec `get_metadata` et repère les frames de la feature. Sur un gros fichier, cherche dans la réponse par nom de frame plutôt que de tout lire. N'utilise pas `get_design_context`, bien trop lourd ici. Si les noms ne suffisent pas à comprendre un écran, regarde-en au plus trois avec `get_screenshot`. Si la liste des pages ne montre pas les écrans de la feature, demande le lien de la page qui les contient. Restitue en quelques lignes ce que montrent les maquettes, et laisse l'utilisateur corriger et ajouter ce qu'elles ne disent pas.
+
+**Sans `design.md`**, laisse l'utilisateur décrire ce qu'il veut, librement et dans le désordre, sans l'interrompre ni lui suggérer de sujets : les trous se comblent en 2.4.
 
 ### 2.2 — Structuration et découpage
 
-Range ce qu'il a dit dans les sections du gabarit de la Phase 3, sans rien inventer. Ce qui manque reste **vide** : cette liste de vides pilote la suite. Restitue ta compréhension en quelques lignes et laisse-le corriger.
+Range ce que tu sais dans les sections du gabarit de la Phase 3, sans rien inventer. Ce qui manque reste **vide** : cette liste de vides pilote la suite. Restitue ta compréhension en quelques lignes et laisse-le corriger.
 
 **Propose ensuite le découpage en stories**, et fais-le valider avant d'aller plus loin. Une story est un comportement qu'un utilisateur peut constater, livrable et testable seul, et qui tient dans une PR qu'on relit sans peine ; jamais une story par critère d'acceptation. Pour chacune, propose un titre et un **slug** : c'est ici qu'il se discute, il ne changera plus.
 
-### 2.3 — Maquettes
+### 2.3 — Écran de chaque story
 
 Pour **chaque** story, détermine si elle a un écran dans Figma, sans le déduire du jet brut.
 
-**Avec `project/design.md`**, propose plutôt que de demander : lis la structure du fichier des maquettes avec `get_metadata`, repère les frames dont le nom correspond à chaque story, et soumets-les avec `AskUserQuestion`, une option par frame candidat plus « pas d'écran ». Sur un gros fichier, cherche dans la réponse par nom de frame plutôt que de tout lire. N'utilise pas `get_design_context`, bien trop lourd ici. L'URL d'un nœud se construit depuis celle du fichier : ajoute `?node-id=` suivi de l'id du frame, avec un tiret à la place du deux-points (`465:4996` donne `node-id=465-4996`).
+**Avec `design.md`**, propose plutôt que de demander : soumets les frames repérés en 2.1 avec `AskUserQuestion`, une option par frame candidat plus « pas d'écran ». L'URL d'un nœud se construit depuis celle du fichier : ajoute `?node-id=` suivi de l'id du frame, avec un tiret à la place du deux-points (`465:4996` donne `node-id=465-4996`).
 
 **Sans `design.md`**, demande une fois si la feature a des maquettes, puis l'URL du **nœud** de chaque story concernée (clic droit sur le frame, puis *Copy link to selection*).
 
@@ -104,7 +108,7 @@ project/specs/
     └── update-quantity.md ← une story
 ```
 
-Écris à partir du jet brut et des réponses de la Phase 2. Ne laisse aucune section vide : s'il manque un élément, retourne le demander. En **mise à jour**, modifie l'existant au plus près ; ajouter une story, c'est ajouter un fichier sans toucher aux autres.
+Écris à partir de la Phase 2. Ne laisse aucune section vide : s'il manque un élément, retourne le demander. En **mise à jour**, modifie l'existant au plus près ; ajouter une story, c'est ajouter un fichier sans toucher aux autres.
 
 ### Le cadrage de la feature
 
