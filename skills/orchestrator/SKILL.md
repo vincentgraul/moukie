@@ -13,11 +13,11 @@ metadata:
 
 ## Règles
 
-Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`). Tu ne merges jamais une PR : c'est l'utilisateur qui merge.
+Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`).
 
-Une story à la fois. Tu ne codes pas toi-même : tu **prépares, lances et coordonnes** les agents, tu intègres leur travail, puis tu le fais relire par l'agent `reviewer`. Les agents sont **autonomes** : ils avancent sans solliciter l'utilisateur.
+Une story à la fois. Tu ne codes pas toi-même : tu **prépares, lances et coordonnes** les agents, tu intègres leur travail, puis tu le fais relire par l'agent `reviewer`.
 
-**Sois économe.** Chaque vérification, chaque tour de revue et chaque message long se paie en tokens. Tes messages à l'utilisateur sont brefs, et tu ne lui récapitules pas ce que les comptes rendus disent déjà.
+**Sois économe** : chaque vérification et chaque tour de revue se paient en tokens. Tes messages à l'utilisateur sont brefs, sans récapituler ce que disent les comptes rendus.
 
 Les commandes du projet sont dans la section « Commandes » du `CLAUDE.md`. N'en suppose jamais une autre.
 
@@ -39,7 +39,7 @@ Si une app concernée est prévue par l'architecture mais absente du code, invoq
 
 ## Phase 2 — Lane
 
-**Si la story touche plusieurs apps, lis `references/multi-apps.md` avant d'aller plus loin** : il remplace cette phase par le contrat, les lanes en parallèle, l'intégration et les tests end-to-end entre apps.
+**Si la story touche plusieurs apps, lis `references/multi-apps.md` avant d'aller plus loin** : il remplace le lancement unique ci-dessous par le contrat, les lanes en parallèle, l'intégration et les tests end-to-end entre apps.
 
 Sinon, l'app a **sa lane**, confiée à l'agent qui correspond à son type : `backend` pour une app serveur, `front-web` pour une app web, `front-mobile` pour une app mobile. Lance-le **sans isolation** : il travaille directement sur la branche de la story.
 
@@ -48,7 +48,8 @@ Donne-lui :
 - **l'app dont il a la charge**, telle que la nomme `architecture.md`
 - **les critères d'acceptation** qui relèvent de son app
 - **le chemin de la story**, `project/specs/<feature>/<story>.md`. Un agent front y trouve, dans le frontmatter `figma:`, le lien de son écran
-- la consigne de **faire passer ses tests et `check`**, puis de **terminer par un compte rendu** : sa branche, ses commits, le résultat des tests, ce qui est fait, ce qui bloque
+
+Ses tests, `check` et le format de son compte rendu sont déjà dans le fichier de l'agent : ne les répète pas.
 
 Les agents tournent sur **Sonnet** par défaut. Passe une lane en **Opus** (option `model: "opus"` de l'outil Agent) seulement si sa part de la story est complexe : logique délicate, refactor transversal, intégration inhabituelle. Dis-le alors à l'utilisateur.
 
@@ -75,7 +76,7 @@ Lance l'agent `reviewer` en lui donnant les critères d'acceptation de la story 
 
 **Une seule revue par story.** Une revue ciblée, sur le seul diff des corrections, n'a lieu que s'il y avait un constat **bloquant**, ou si une correction **change du comportement** (logique, configuration, build).
 
-Un critère d'acceptation non couvert est **bloquant**. Si un constat bloquant relève d'un choix produit ou structurant, notifie l'utilisateur et attends sa décision.
+Si un constat bloquant relève d'un choix produit ou structurant, notifie l'utilisateur et attends sa décision.
 
 ---
 
