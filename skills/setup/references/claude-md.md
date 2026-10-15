@@ -12,7 +12,7 @@ Une ligne en tête du fichier, que tous les skills lisent :
 Langue du projet : <langue>
 ```
 
-Suivie de ce qu'elle couvre : les échanges, et tout le Markdown généré (le vault, les specs, le texte des PR). Si le projet est open source, ajoute que ses fichiers publics (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`) sont en anglais.
+Suivie de ce qu'elle couvre : les échanges, et tout le Markdown généré (le vault, les specs, le corps des PR). Ajoute que les fichiers publics du dépôt, ceux qui s'adressent à ses visiteurs et contributeurs (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `CHANGELOG.md`, `SECURITY.md`…) sont en anglais, que le projet soit open source ou non.
 
 ---
 

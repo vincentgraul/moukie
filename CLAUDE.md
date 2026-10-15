@@ -2,7 +2,7 @@
 
 Ce dépôt contient le plugin Claude Code Moukie (`skills/`, `agents/`, `hooks/`, `.claude-plugin/`) et son site de documentation (`docs/`). Le site lit les fichiers du plugin au build : ils sont sa source de contenu.
 
-Langue du projet : français. Elle couvre les échanges et le Markdown généré (le vault, les specs, le texte des PR) ; les fichiers publics (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`) sont en anglais.
+Langue du projet : français. Elle couvre les échanges et le Markdown généré (le vault, les specs, le corps des PR) ; les fichiers publics du dépôt, ceux qui s'adressent à ses visiteurs et contributeurs (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `CHANGELOG.md`, `SECURITY.md`…) sont en anglais.
 
 ## Cadrage
 

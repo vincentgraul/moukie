@@ -13,7 +13,7 @@ metadata:
 
 ## Règles
 
-Échange dans la langue dans laquelle l'utilisateur t'écrit, puis dans la **langue du projet** une fois choisie en 2.1. Tout le Markdown que tu écris est dans cette langue, titres des gabarits compris, sauf les fichiers publics d'un projet open source, en anglais.
+Échange dans la langue dans laquelle l'utilisateur t'écrit, puis dans la **langue du projet** une fois choisie en 2.1. Tout le Markdown que tu écris est dans cette langue, titres des gabarits compris, sauf les fichiers publics du dépôt, ceux qui s'adressent à ses visiteurs et contributeurs (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `CHANGELOG.md`, `SECURITY.md`…), toujours en anglais.
 N'écris pas de commentaires dans le code.
 Commite en conventional commits, avec des messages en anglais et sans mention de co-auteur.
 N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas des obstacles.

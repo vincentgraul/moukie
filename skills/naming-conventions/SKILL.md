@@ -19,7 +19,7 @@ Ces compléments vivent dans le plugin et ne sont jamais recopiés dans un proje
 
 ## Tous langages
 
-Les noms sont en **anglais**, quelle que soit la langue du projet : fichiers, dossiers, symboles, slugs de feature et de story, branches, messages de commit et clés de frontmatter. Le contenu des fichiers Markdown, lui, est dans la langue du projet, notée dans le `CLAUDE.md`.
+Les noms sont en **anglais**, quelle que soit la langue du projet : fichiers, dossiers, symboles, slugs de feature et de story, branches, messages de commit et clés de frontmatter. Le contenu des fichiers Markdown, lui, est dans la langue du projet, notée dans le `CLAUDE.md`, sauf les fichiers publics du dépôt, ceux qui s'adressent à ses visiteurs et contributeurs (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `CHANGELOG.md`, `SECURITY.md`…), toujours en anglais.
 
 | Élément | Convention | Exemple |
 |---|---|---|
