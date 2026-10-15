@@ -32,7 +32,7 @@ Lis :
 
 - **la story**, `project/specs/<feature>/<story>.md`, et les critères d'acceptation qui relèvent de ton app
 - **`project/stack.md`** : la stack fait foi. N'introduis aucune bibliothèque qu'elle ne retient pas ; s'il t'en faut une autre, remonte-le à l'orchestrateur
-- **`project/architecture.md`** : range le code là où il le prévoit. S'il retient Feature-Sliced Design, applique le skill `feature-sliced-design`. Si ta story demande une organisation qu'il ne prévoit pas, remonte-le à l'orchestrateur
+- **`project/architecture.md`** : range le code là où il le prévoit. S'il retient Feature-Sliced Design, n'ouvre le skill `feature-sliced-design` que pour créer une slice ou un segment, ou si tu hésites sur l'endroit où ranger du code : le reste, `check:architecture` le vérifie. Si ta story demande une organisation qu'il ne prévoit pas, remonte-le à l'orchestrateur
 - **`project/rules/`** : les règles propres au projet qui concernent ton périmètre. La table du `CLAUDE.md` te dit lesquelles ouvrir
 
 ---

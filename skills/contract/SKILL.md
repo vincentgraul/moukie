@@ -13,9 +13,6 @@ metadata:
 ## Règles
 
 Mène les échanges en **français**.
-N'écris pas de commentaires dans le code.
-Commite en conventional commits, avec des messages en anglais et sans mention de co-auteur.
-N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas des obstacles.
 Applique le skill `naming-conventions` à tout ce que tu nommes : sa section « Contrat entre apps » fixe le nom des schémas et des routes.
 
 Le contrat est la **source unique de vérité** de l'interface entre les apps. Chaque app en tire ses types, par inférence ou par génération selon le format, et ne les redéfinit jamais à la main. Une story qui ne touche qu'une app n'en a pas besoin.

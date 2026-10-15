@@ -23,7 +23,7 @@ Une PR part toujours d'une branche dédiée : **refuse de continuer** si la bran
 
 ## Phase 1 — Préparation
 
-Le nom de la branche est le chemin de la story sous `project/specs/` : la branche `panier/ajout-article` correspond à `project/specs/panier/ajout-article.md`. Si le nom ne suit pas ce format, **demande** la feature et le slug.
+Le nom de la branche est le chemin de la story sous `project/specs/` : la branche `cart/add-item` correspond à `project/specs/cart/add-item.md`. Si le nom ne suit pas ce format, **demande** la feature et le slug.
 
 Lis la story : son titre et ses critères d'acceptation alimentent la PR.
 
@@ -45,7 +45,7 @@ Crée la PR avec la CLI de la forge (`gh pr create` sur GitHub, `glab mr create`
 - **corps** :
   - **What** : ce que fait le changement
   - **Why** : le besoin auquel il répond
-  - **Story** : son titre et le chemin de son fichier (`project/specs/panier/ajout-article.md`)
+  - **Story** : son titre et le chemin de son fichier (`project/specs/cart/add-item.md`)
   - **Critères d'acceptation** : la checklist de la story, reprise telle quelle
   - **Suggestions non appliquées** : celles que l'orchestrateur t'a transmises. S'il n'y en a pas, omets la section
 

@@ -44,7 +44,7 @@ Examine :
 - **la sécurité** : injections, secrets exposés, validation manquante, contrôle d'accès
 - **la simplicité** : duplication, complexité inutile, code mort
 - **le respect du contrat** : le code est-il conforme au contrat gelé, et chaque app tire-t-elle ses types de lui plutôt que de les redéfinir ?
-- **l'architecture** : conformité à `project/architecture.md` (apps, découpage, modules, emplacement du contrat). Lance la commande `check:architecture` si le projet en a une, et applique le skill `feature-sliced-design` si l'architecture le retient
+- **l'architecture** : conformité à `project/architecture.md` (apps, découpage, modules, emplacement du contrat). Lance la commande `check:architecture` si le projet en a une : c'est elle qui vérifie le découpage. N'ouvre le skill `feature-sliced-design` que pour un placement douteux qu'elle ne tranche pas, ou si l'architecture le retient sans qu'aucune commande le vérifie
 - **les conventions** : cohérence avec `project/stack.md`, les conventions de nommage du skill `naming-conventions`, les règles propres au projet dans `project/rules/`, et le style du code existant
 
 ---
