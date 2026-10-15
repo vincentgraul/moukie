@@ -48,6 +48,7 @@ Une ligne par commande du projet : celles que les agents, l'orchestrateur et le 
 | Rôle | Commande |
 |---|---|
 | Installer les dépendances | … |
+| Lancer l'app en local, une ligne par app | … |
 | Lancer le linter | `check` |
 | Lancer les tests | … |
 | Lancer les tests end-to-end | … |
