@@ -42,7 +42,7 @@ Tu pars de ce qui est déjà écrit, l'utilisateur corrige et complète, puis tu
 
 Demande le **nom de la feature**.
 
-**Avec `project/design.md`**, lis les maquettes avant de demander quoi que ce soit : elles montrent déjà les écrans, leurs textes et leur structure, que l'utilisateur n'a pas à paraphraser. Lis la structure du fichier avec `get_metadata` et repère les frames de la feature. Sur un gros fichier, cherche dans la réponse par nom de frame plutôt que de tout lire. N'utilise pas `get_design_context`, bien trop lourd ici. Si les noms ne suffisent pas à comprendre un écran, regarde-en au plus trois avec `get_screenshot`. Si la liste des pages ne montre pas les écrans de la feature, demande le lien de la page qui les contient. Restitue en quelques lignes ce que montrent les maquettes, et laisse l'utilisateur corriger et ajouter ce qu'elles ne disent pas.
+**Avec `project/design.md`**, lis les maquettes avant de demander quoi que ce soit : elles montrent déjà les écrans, leurs textes et leur structure, que l'utilisateur n'a pas à paraphraser. Lis la structure de la page des maquettes avec `get_metadata` sur le `node-id` de l'URL de `design.md`, et repère les frames de la feature. Sur une grosse page, cherche dans la réponse par nom de frame plutôt que de tout lire. N'utilise pas `get_design_context`, bien trop lourd ici. Si les noms ne suffisent pas à comprendre un écran, regarde-en au plus trois avec `get_screenshot`. Si cette URL n'a pas de `node-id`, ou si la page ne montre pas les écrans de la feature, demande le lien de la page qui les contient. Restitue en quelques lignes ce que montrent les maquettes, et laisse l'utilisateur corriger et ajouter ce qu'elles ne disent pas.
 
 **Sans `design.md`**, laisse l'utilisateur décrire ce qu'il veut, librement et dans le désordre, sans l'interrompre ni lui suggérer de sujets : les trous se comblent en 2.4.
 
@@ -56,7 +56,7 @@ Range ce que tu sais dans les sections du gabarit de la Phase 3, sans rien inven
 
 Pour **chaque** story, détermine si elle a un écran dans Figma, sans le déduire du jet brut.
 
-**Avec `design.md`**, propose plutôt que de demander : soumets les frames repérés en 2.1 avec `AskUserQuestion`, une option par frame candidat plus « pas d'écran ». L'URL d'un nœud se construit depuis celle du fichier : ajoute `?node-id=` suivi de l'id du frame, avec un tiret à la place du deux-points (`465:4996` donne `node-id=465-4996`).
+**Avec `design.md`**, propose plutôt que de demander : soumets les frames repérés en 2.1 avec `AskUserQuestion`, une option par frame candidat plus « pas d'écran ». L'URL d'un nœud se construit depuis celle de la page lue en 2.1 : remplace son `node-id` par l'id du frame, avec un tiret à la place du deux-points (`465:4996` donne `node-id=465-4996`).
 
 **Sans `design.md`**, demande une fois si la feature a des maquettes, puis l'URL du **nœud** de chaque story concernée (clic droit sur le frame, puis *Copy link to selection*).
 

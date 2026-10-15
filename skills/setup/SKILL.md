@@ -43,13 +43,13 @@ Les skills `product` et `stack` écrivent leurs fichiers pendant l'entretien. Po
 - son **type** : `application web` / `application mobile` / `site e-commerce` / `bibliothèque de composants` / `autre`
 - sa **nature** : `commercial` / `open source` / `personnel`. Elle décide de ce que le skill `product` analyse, des licences acceptables pour les dépendances, et des fichiers open source de la Phase 6
 - sa **langue** : celle des échanges et de tout le Markdown du projet. Propose par défaut celle dans laquelle l'utilisateur t'écrit. Transmets-la à chaque skill que tu invoques
-- ses **maquettes** : le projet a-t-il des maquettes Figma ? Si oui, vérifie que le MCP Figma est connecté ; sinon, demande à l'utilisateur de le connecter avant de continuer. Demande ensuite deux URLs de **fichier**, pas de nœud : celle des maquettes et celle du design system. Elles iront dans `project/design.md` en Phase 4. Sans maquettes, ne force rien : le projet n'aura pas de `design.md`, et tu passes directement au produit
+- ses **maquettes** : le projet a-t-il des maquettes Figma ? Si oui, vérifie que le MCP Figma est connecté ; sinon, demande à l'utilisateur de le connecter avant de continuer. Demande ensuite l'URL de la **page** Figma qui contient les écrans : l'utilisateur ouvre cette page et copie son URL, qui porte le `node-id` de la page. Garde-la telle quelle. Pour le design system, l'URL du fichier ou d'une page suffit. Elles iront dans `project/design.md` en Phase 4. Sans maquettes, ne force rien : le projet n'aura pas de `design.md`, et tu passes directement au produit
 
 ### 2.2 — Maquettes
 
 Lis les maquettes **avant** l'entretien produit : elles répondent déjà aux questions sur les pages, la navigation et le contenu.
 
-Lis la structure du fichier des maquettes avec `get_metadata` : les pages et les frames de premier niveau, leurs noms et leurs dimensions. Sur un gros fichier, cherche dans la réponse plutôt que de tout lire. N'utilise pas `get_design_context`, bien trop lourd ici. Si les noms des frames ne suffisent pas à comprendre un écran, regarde-en au plus trois avec `get_screenshot`.
+Lis la structure de la page des maquettes avec `get_metadata` sur le `node-id` de son URL : les frames de premier niveau, leurs noms et leurs dimensions. Sans `node-id`, le MCP desktop ne liste que les pages chargées, et les écrans peuvent manquer. Sur une grosse page, cherche dans la réponse plutôt que de tout lire. N'utilise pas `get_design_context`, bien trop lourd ici. Si les noms des frames ne suffisent pas à comprendre un écran, regarde-en au plus trois avec `get_screenshot`.
 
 Tires-en un **inventaire** de quelques lignes :
 
@@ -102,7 +102,7 @@ Gabarit de `design.md` :
 # Design
 
 ## Maquettes
-<URL du fichier Figma des maquettes>
+<URL de la page Figma des écrans>
 
 ## Design system
 <URL du fichier Figma du design system>
