@@ -1,6 +1,6 @@
 ---
 name: orchestrator
-description: Implémente une story de bout en bout, avec un agent par app concernée, en parallèle dans des worktrees isolés, autour d'un contrat d'interface gelé. Intègre leur travail, le fait valider et relire, puis délègue l'ouverture de la PR au skill `pr`. Se déclenche quand l'utilisateur veut implémenter une story de `project/specs/<feature>/`, désignée par son slug.
+description: Implémente une story de bout en bout, avec un agent par app concernée, en parallèle dans des worktrees isolés, autour d'un contrat d'interface gelé. Intègre leur travail, le fait valider et relire, puis délègue l'ouverture de la PR au skill `pr` et enchaîne sur la story suivante de la feature, empilée sur la précédente. Se déclenche quand l'utilisateur veut implémenter une story de `project/specs/<feature>/`, désignée par son slug.
 metadata:
   moukie-badge: "story"
   moukie-icon: "clef-treble"
@@ -26,10 +26,11 @@ Les commandes du projet sont dans la section « Commandes » du `CLAUDE.md`. N'e
 ## Phase 1 — Préparation
 
 1. **Identifie la story** par son slug, puis récupère l'état du remote (`git fetch`). Repère la branche par défaut du remote, `origin/main` ou `origin/master` (`git symbolic-ref --short refs/remotes/origin/HEAD`), notée `origin/<défaut>` dans la suite.
-2. **Choisis la base de la story**, d'après la branche `<feature>/spec`, où le skill `spec` a commité la feature validée :
-   - si elle existe et n'est pas encore contenue dans `origin/<défaut>` (`git merge-base --is-ancestor <feature>/spec origin/<défaut>` échoue), la base est `<feature>/spec`
-   - sinon, la base est `origin/<défaut>`, qui porte aussi le code des stories déjà mergées. Si `<feature>/spec` existe encore, supprime-la (`git branch -D`) : la garder ferait repartir les stories suivantes d'une spec dépassée
-3. **Lis la story** telle qu'elle est dans la base (`git show <base>:project/specs/<feature>/<story>.md`), ainsi que le `README.md` de sa feature. **Refuse de continuer** si son frontmatter n'est pas `status: validated`.
+2. **Choisis la base de la story**, dans cet ordre :
+   - **la dernière story de la feature encore ouverte** : liste, avec la CLI de la forge de `project/stack.md`, les PR ouvertes dont la branche source est une `<feature>/<story>`, hors `<feature>/spec`. S'il y en a, la base est la branche de celle qu'aucune autre ne vise : la story **s'empile** sur elle et part du code de toutes les précédentes, sans attendre leur merge
+   - sinon, `<feature>/spec`, où le skill `spec` a commité la feature validée, si elle existe et n'est pas encore contenue dans `origin/<défaut>` (`git merge-base --is-ancestor <feature>/spec origin/<défaut>` échoue)
+   - sinon, `origin/<défaut>`, qui porte aussi le code des stories déjà mergées. Si `<feature>/spec` existe encore, supprime-la (`git branch -D`) : la garder ferait repartir les stories suivantes d'une spec dépassée
+3. **Lis la story** telle qu'elle est dans la base (`git show <base>:project/specs/<feature>/<story>.md`), ainsi que le `README.md` de sa feature. **Refuse de continuer** si le frontmatter de ce `README.md` n'est pas `status: validated`.
 4. **Détermine les apps concernées**, parmi celles que liste `project/architecture.md`.
 5. **Crée la branche de la story** depuis la base, et bascule dessus. Elle se nomme `<feature>/<story>` (`cart/add-item`).
 
@@ -82,7 +83,7 @@ Si un constat bloquant relève d'un choix produit ou structurant, notifie l'util
 
 ## Phase 5 — PR
 
-Une fois les constats bloquants levés, invoque le skill `pr`, en lui transmettant les suggestions non appliquées.
+Une fois les constats bloquants levés, invoque le skill `pr`, en lui transmettant les suggestions non appliquées et, si la story est empilée, sa **branche cible** : celle de la story sur laquelle elle s'empile.
 
 ---
 
@@ -94,6 +95,11 @@ Tiens l'utilisateur informé avec l'outil `PushNotification`, à **trois moments
 
 ## Fin
 
-Une fois la PR ouverte, envoie la dernière notification, puis donne à l'utilisateur le lien de la PR. C'est lui qui la merge.
+Une fois la PR ouverte, envoie la dernière notification, puis donne à l'utilisateur le lien de la PR. C'est lui qui la merge, dans l'ordre de la pile.
 
-**Frontière de session** : donne la commande de l'étape suivante (par exemple `/moukie:orchestrator <feature>/<story suivante>`, à lancer une fois la PR mergée), puis, en dernier, propose de vider la conversation (l'outil qui vide la session dans l'app desktop, après accord ; sinon `/clear`).
+**Story suivante** : cherche les stories de la feature dont la branche n'a aucune PR, ouverte ou mergée. S'il en reste, choisis celle que les autres supposent livrée en premier, d'après le `README.md` de la feature, puis enchaîne sans attendre de merge :
+
+- si un outil te permet d'ouvrir une nouvelle session (app desktop), ouvres-en une dans le même dossier, avec pour seul prompt « Lance le skill `moukie:orchestrator` sur la story `<feature>/<story>`. ». Dis à l'utilisateur laquelle tu as lancée, puis arrête-toi : elle repart d'un contexte vide
+- sinon, enchaîne dans cette conversation : dis à l'utilisateur quelle story tu lances, puis reprends à la Phase 1 avec elle, sans réinvoquer le skill, déjà chargé
+
+**Frontière de session**, s'il ne reste aucune story : donne la commande de l'étape suivante (`/moukie:spec` pour une nouvelle feature), puis, en dernier, propose de vider la conversation (l'outil qui vide la session dans l'app desktop, après accord ; sinon `/clear`).
