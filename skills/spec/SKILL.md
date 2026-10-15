@@ -51,7 +51,7 @@ Range ce qu'il a dit dans les sections du gabarit de la Phase 3, sans rien inven
 
 Restitue ta compréhension en quelques lignes et laisse-le corriger.
 
-**Propose ensuite le découpage en stories**, et fais-le valider avant d'aller plus loin : toute la suite se fait story par story. Une story est un comportement qu'un utilisateur peut constater, livrable et testable seul, et qui tient dans une PR qu'on relit sans peine. Pour chacune, propose un titre et un **slug**. Le slug est fixé une fois pour toutes : c'est donc ici qu'il se discute.
+**Propose ensuite le découpage en stories**, et fais-le valider avant d'aller plus loin : toute la suite se fait story par story. Une story est un comportement qu'un utilisateur peut constater, livrable et testable seul, et qui tient dans une PR qu'on relit sans peine. Pour chacune, propose un titre et un **slug**, en anglais. Le slug est fixé une fois pour toutes : c'est donc ici qu'il se discute.
 
 Ne fais jamais une story par critère d'acceptation.
 
@@ -111,10 +111,10 @@ C'est ici que ces écarts coûtent le moins cher : après la validation, tout le
 
 ```text
 project/specs/
-└── panier/                        ← la feature
+└── cart/                          ← la feature
     ├── README.md                  ← son cadrage
-    ├── ajout-article.md           ← une story
-    └── modification-quantite.md   ← une story
+    ├── add-item.md                ← une story
+    └── update-quantity.md         ← une story
 ```
 
 Écris à partir du jet brut et des réponses de la Phase 2. Ne laisse aucune section vide : s'il manque encore un élément, retourne le demander plutôt que de le combler toi-même.
@@ -123,7 +123,7 @@ En **mise à jour**, lis d'abord l'existant et **modifie-le au plus près** plut
 
 ### Le cadrage de la feature
 
-`project/specs/<feature>/README.md`, où `<feature>` est le nom de la feature en kebab-case. Il ne contient aucune story : il porte ce qui vaut pour toutes.
+`project/specs/<feature>/README.md`, où `<feature>` est le nom de la feature en anglais et en kebab-case. Il ne contient aucune story : il porte ce qui vaut pour toutes.
 
 ```markdown
 ---
@@ -167,7 +167,7 @@ En tant que <rôle>, je veux <…> afin de <…>.
 - [ ] …
 ```
 
-Le **slug** est en kebab-case (`ajout-article`) et **fixé une fois pour toutes**, même si le titre lisible change. C'est **l'identifiant de la story** : il nomme son fichier et sa branche `<feature>/<story>`. Le renommer casse le lien avec la branche et la PR.
+Le **slug** est en anglais et en kebab-case (`add-item`) et **fixé une fois pour toutes**, même si le titre lisible change. C'est **l'identifiant de la story** : il nomme son fichier et sa branche `<feature>/<story>`. Le renommer casse le lien avec la branche et la PR.
 
 Le champ `figma:` porte l'URL du **nœud** de l'écran (elle contient un `node-id`), pas celle du fichier. Laisse-le vide si la story n'a pas d'écran.
 
@@ -179,9 +179,9 @@ Les critères d'acceptation restent une checklist. **Jamais** une story par crit
 
 Présente le cadrage et les stories à l'utilisateur. Quand il valide, passe le frontmatter du `README.md` de la feature à `status: validated`, puis **commite la feature** :
 
-- bascule sur la branche `<feature>/spec`, en la créant depuis la branche par défaut du remote, à jour (`origin/main` ou `origin/master`), si elle n'existe pas. Pas `<feature>` tout court : git refuse qu'une branche `panier` coexiste avec les branches de story `panier/ajout-article`
+- bascule sur la branche `<feature>/spec`, en la créant depuis la branche par défaut du remote, à jour (`origin/main` ou `origin/master`), si elle n'existe pas. Pas `<feature>` tout court : git refuse qu'une branche `cart` coexiste avec les branches de story `cart/add-item`
 - ajoute le dossier `project/specs/<feature>/` et les fichiers du vault amendés en 2.5 (`product.md`, `market.md`, `stack.md`, `architecture.md`, `decisions.md`), et rien d'autre
-- commite-les (`docs(specs): add panier feature`)
+- commite-les (`docs(specs): add cart feature`)
 - ne pousse pas et n'ouvre pas de PR : la spec rejoindra `main` avec la PR de la première story implémentée, dans la même PR que le code
 
 Ce commit rend la spec visible dans les worktrees des agents, et permet de lancer plusieurs stories sans attendre le merge de la première.

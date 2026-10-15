@@ -31,7 +31,7 @@ Les commandes du projet sont dans la section « Commandes » du `CLAUDE.md`. N'e
    - sinon, la base est `origin/<défaut>`, qui porte aussi le code des stories déjà mergées. Si `<feature>/spec` existe encore, supprime-la (`git branch -D`) : la garder ferait repartir les stories suivantes d'une spec dépassée
 3. **Lis la story** telle qu'elle est dans la base (`git show <base>:project/specs/<feature>/<story>.md`), ainsi que le `README.md` de sa feature. **Refuse de continuer** si son frontmatter n'est pas `status: validated`.
 4. **Détermine les apps concernées**, parmi celles que liste `project/architecture.md`.
-5. **Crée la branche de la story** depuis la base, et bascule dessus. Elle se nomme `<feature>/<story>` (`panier/ajout-article`).
+5. **Crée la branche de la story** depuis la base, et bascule dessus. Elle se nomme `<feature>/<story>` (`cart/add-item`).
 
 Si une app concernée est prévue par l'architecture mais absente du code, invoque le skill `scaffold`, puis commite ce qu'il génère sur la branche de la story.
 
@@ -52,7 +52,7 @@ Donne-lui :
 
 Les agents tournent sur **Sonnet** par défaut. Passe une lane en **Opus** (option `model: "opus"` de l'outil Agent) seulement si sa part de la story est complexe : logique délicate, refactor transversal, intégration inhabituelle. Dis-le alors à l'utilisateur.
 
-Si un agent remonte un besoin qu'il ne doit pas trancher seul (changement de contrat, information manquante dans la story, bibliothèque absente de la stack, module absent de l'architecture), **lis `references/blocages.md`** et suis la procédure du cas.
+Si un agent remonte un besoin qu'il ne doit pas trancher seul (changement de contrat, information manquante dans la story, bibliothèque absente de la stack, module absent de l'architecture), **lis `references/blockers.md`** et suis la procédure du cas.
 
 ---
 

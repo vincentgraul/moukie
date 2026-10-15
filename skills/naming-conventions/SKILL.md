@@ -19,6 +19,8 @@ Ces compléments vivent dans le plugin et ne sont jamais recopiés dans un proje
 
 ## Tous langages
 
+Les noms sont en **anglais** : fichiers, dossiers, symboles, slugs de feature et de story, branches et messages de commit. Le contenu des fichiers Markdown, lui, reste en français.
+
 | Élément | Convention | Exemple |
 |---|---|---|
 | Booléen | préfixe qui se lit comme une question (`is`, `has`, `should`, ou l'équivalent du langage) | `isLoading`, `hasAccess` |
