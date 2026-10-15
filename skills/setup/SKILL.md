@@ -136,7 +136,7 @@ Si l'architecture retenue a un outil qui vérifie son découpage, installe-le et
 
 ### Garde-fou
 
-**Lis `references/garde-fou.md`** et installe le hook qui refuse les commits sur `main`.
+**Lis `references/git-hook.md`** et installe le hook qui refuse les commits sur `main`.
 
 ### Projet open source
 

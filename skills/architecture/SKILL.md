@@ -29,7 +29,7 @@ Tu proposes, l'utilisateur tranche. Lis `project/decisions.md` avant de proposer
 - **création** : il n'y a pas encore d'`architecture.md`
 - **challenge** : l'utilisateur veut remettre en cause tout ou partie de l'architecture
 
-En **création** et en **challenge**, `project/product.md` et `project/stack.md` doivent exister : s'il en manque un, arrête-toi et renvoie vers le skill `product` ou `stack`. Lis-les, avec `architecture.md` s'il existe et l'arborescence du code déjà présent, puis **lis `references/conception.md`** et suis-le.
+En **création** et en **challenge**, `project/product.md` et `project/stack.md` doivent exister : s'il en manque un, arrête-toi et renvoie vers le skill `product` ou `stack`. Lis-les, avec `architecture.md` s'il existe et l'arborescence du code déjà présent, puis **lis `references/full-process.md`** et suis-le.
 
 ---
 

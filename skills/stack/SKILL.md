@@ -32,7 +32,7 @@ Lis `project/decisions.md` avant de proposer quoi que ce soit : un choix consign
 - **challenge** : l'utilisateur veut remettre en cause tout ou partie de la stack
 - **mise à jour** : vérifier les versions et repérer ce qui est déprécié ou abandonné
 
-En **création**, **challenge** et **mise à jour**, lis `project/product.md`, `project/stack.md` et `project/design.md` s'ils existent, et les manifestes du code déjà présent (`package.json`, `Package.swift`, `build.gradle`, `pubspec.yaml`…), puis **lis `references/conception.md`** et suis-le.
+En **création**, **challenge** et **mise à jour**, lis `project/product.md`, `project/stack.md` et `project/design.md` s'ils existent, et les manifestes du code déjà présent (`package.json`, `Package.swift`, `build.gradle`, `pubspec.yaml`…), puis **lis `references/full-process.md`** et suis-le.
 
 ---
 
