@@ -2,6 +2,8 @@
 
 Ce dépôt contient le plugin Claude Code Moukie (`skills/`, `agents/`, `hooks/`, `.claude-plugin/`) et son site de documentation (`docs/`). Le site lit les fichiers du plugin au build : ils sont sa source de contenu.
 
+Langue du projet : français. Elle couvre les échanges et le Markdown généré (le vault, les specs, le texte des PR) ; les fichiers publics (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`) sont en anglais.
+
 ## Cadrage
 
 @project/product.md
@@ -54,3 +56,4 @@ Les skills de connaissance : `naming-conventions`, `feature-sliced-design` et `f
 - Jamais de merge sur `main`, jamais de merge d'une PR : c'est l'utilisateur qui merge. Les fusions des lanes dans la branche d'une story font partie du travail de l'orchestrateur.
 - Pas de commentaires dans le code.
 - Commits en conventional commits, en anglais, sans mention de co-auteur.
+- Noms en anglais : commits, branches, fichiers, dossiers et code.
