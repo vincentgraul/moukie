@@ -13,12 +13,12 @@ metadata:
 
 ## Règles
 
-Mène les échanges en **français**.
+Échange dans la langue dans laquelle l'utilisateur t'écrit, puis dans la **langue du projet** une fois choisie en 2.1. Tout le Markdown que tu écris est dans cette langue, titres des gabarits compris, sauf les fichiers publics du dépôt, ceux qui s'adressent à ses visiteurs et contributeurs (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `CHANGELOG.md`, `SECURITY.md`…), toujours en anglais.
 N'écris pas de commentaires dans le code.
 Commite en conventional commits, avec des messages en anglais et sans mention de co-auteur.
 N'utilise jamais `--no-verify` : les hooks du dépôt sont des garde-fous, pas des obstacles.
 Ne merge jamais sur `main`, et ne merge jamais une PR : c'est l'utilisateur qui merge.
-Applique le skill `naming-conventions` à tout ce que tu nommes.
+Applique le skill `naming-conventions` à tout ce que tu nommes : les fichiers, les dossiers, les branches, les commits et le code sont en anglais.
 
 ---
 
@@ -45,10 +45,11 @@ Les skills `product` et `stack` écrivent leurs fichiers pendant l'entretien. Po
 - le **nom** du projet
 - son **type** : `application web` / `application mobile` / `site e-commerce` / `bibliothèque de composants` / `autre`
 - sa **nature** : `commercial` / `open source` / `personnel`. Elle décide de ce que le skill `product` analyse, des licences acceptables pour les dépendances, et des fichiers open source de la Phase 6
+- sa **langue** : celle des échanges et de tout le Markdown du projet. Propose par défaut celle dans laquelle l'utilisateur t'écrit. Transmets-la à chaque skill que tu invoques
 
 ### 2.2 — Produit
 
-Invoque le skill `product` en lui transmettant le nom, le type et la nature du projet. Il écrit `project/product.md`, et `project/market.md` si le projet est commercial ou open source. Le produit passe avant la stack, parce que la stack se décide à partir de lui.
+Invoque le skill `product` en lui transmettant le nom, le type, la nature et la langue du projet. Il écrit `project/product.md`, et `project/market.md` si le projet est commercial ou open source. Le produit passe avant la stack, parce que la stack se décide à partir de lui.
 
 ### 2.3 — Stack
 

@@ -13,7 +13,7 @@ metadata:
 
 ## Règles
 
-Mène les échanges en **français**.
+Échange et écris dans la **langue du projet**, transmise par `setup` ou notée dans le `CLAUDE.md`. Traduis les titres des gabarits dans cette langue.
 
 Ce skill est le seul à écrire `project/architecture.md`. Les agents rangent le code là où il le prévoit, et le `reviewer` le confronte au code.
 

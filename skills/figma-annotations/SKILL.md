@@ -9,7 +9,7 @@ metadata:
 
 ## Règles
 
-Mène les échanges en **français**.
+Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`).
 
 Ce skill **lit** Figma, il n'écrit jamais dedans.
 Il ne fait **pas** de design-to-code : traduire une maquette en composants reste le travail des agents front, via le skill `figma-design-to-code` du plugin Figma officiel. Ici on ne récolte que des **règles fonctionnelles**.

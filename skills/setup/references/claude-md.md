@@ -1,6 +1,18 @@
 # `CLAUDE.md`
 
-C'est le **seul** fichier que Claude Code charge automatiquement. C'est donc un **routeur**, pas une documentation : il ne recopie jamais le contenu de `project/`, il y renvoie. Garde-le **sous 100 lignes**. Il contient cinq sections.
+C'est le **seul** fichier que Claude Code charge automatiquement. C'est donc un **routeur**, pas une documentation : il ne recopie jamais le contenu de `project/`, il y renvoie. Garde-le **sous 100 lignes**. Écris-le dans la langue du projet. Il contient six sections.
+
+---
+
+## La langue
+
+Une ligne en tête du fichier, que tous les skills lisent :
+
+```markdown
+Langue du projet : <langue>
+```
+
+Suivie de ce qu'elle couvre : les échanges, et tout le Markdown généré (le vault, les specs, le corps des PR). Ajoute que les fichiers publics du dépôt, ceux qui s'adressent à ses visiteurs et contributeurs (`README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `CHANGELOG.md`, `SECURITY.md`…) sont en anglais, que le projet soit open source ou non.
 
 ---
 
@@ -60,6 +72,6 @@ Sur un projet neuf, `rules/` est vide : **n'écris pas la table**. Elle apparaî
 
 ## Le workflow
 
-Les skills et leur enchaînement, les agents et leur rôle, et les interdits : jamais de commit sur `main` ou `master` ni de `--no-verify`, jamais de merge sur `main` ni de merge d'une PR, pas de commentaires dans le code, des commits en conventional commits, en anglais, sans mention de co-auteur.
+Les skills et leur enchaînement, les agents et leur rôle, et les interdits : jamais de commit sur `main` ou `master` ni de `--no-verify`, jamais de merge sur `main` ni de merge d'une PR, pas de commentaires dans le code, des commits en conventional commits sans mention de co-auteur, et des noms en anglais : commits, branches, fichiers, dossiers et code.
 
 Écris-les tous : les skills ne les répètent pas, ils comptent sur le `CLAUDE.md`. Les fusions des lanes dans la branche d'une story, elles, font partie du travail de l'orchestrateur.

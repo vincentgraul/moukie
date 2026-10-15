@@ -13,7 +13,7 @@ metadata:
 
 ## Règles
 
-Mène les échanges en **français**. Tu ne merges jamais une PR : c'est l'utilisateur qui merge.
+Échange et écris dans la **langue du projet**, notée dans le `CLAUDE.md` (à défaut, celle des fichiers de `project/`). Tu ne merges jamais une PR : c'est l'utilisateur qui merge.
 
 Une story à la fois. Tu ne codes pas toi-même : tu **prépares, lances et coordonnes** les agents, tu intègres leur travail, puis tu le fais relire par l'agent `reviewer`. Les agents sont **autonomes** : ils avancent sans solliciter l'utilisateur.
 
