@@ -24,6 +24,10 @@
 	--empreint-select-border-width: 3px;
 	--empreint-select-border-color: var(--moukie-color-border);
 	--empreint-select-trigger-padding: 9px;
+	--empreint-button-background-color-primary: var(
+		--moukie-color-surface-inverse
+	);
+	--empreint-button-color-primary: var(--moukie-color-text-inverse);
 	--empreint-icon-button-color-ghost: var(--moukie-color-text);
 }
 

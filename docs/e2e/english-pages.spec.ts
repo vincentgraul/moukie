@@ -316,11 +316,10 @@ test("Un test end-to-end vérifie qu'aucune chaîne d'interface française ne re
 		await page.setViewportSize({ width: 1280, height: 900 });
 	}
 
-	const redirectPage = readBuiltPage("en/index.html");
+	const homePage = readBuiltPage("en/index.html");
 	for (const text of frenchStrings) {
-		expect(redirectPage, `en/ : ${text}`).not.toContain(text);
+		expect(homePage, `en/ : ${text}`).not.toContain(text);
 	}
-	expect(redirectPage).toContain("Continue to the Skills page");
 });
 
 test("Les pages anglaises sont pré-rendues, comme les pages françaises.", async ({
