@@ -18,5 +18,18 @@
 	"skills_title": "Skills",
 	"skills_intro": "Un skill est une compétence de Moukie. Tu n'as pas besoin de les appeler par leur nom : ils se déclenchent sur ce que tu dis. Tu peux aussi les invoquer directement, avec /moukie:<skill>.",
 	"agents_title": "Agents",
-	"agents_intro": "Les agents sont ceux qui codent. Tu ne les appelles jamais : l'orchestrateur les lance pour chaque story, un par app concernée, en parallèle, chacun dans sa propre copie du dépôt. Ils suivent ta stack, ton architecture et le contrat entre les apps, écrivent leurs tests d'abord, et ne mergent jamais rien."
+	"agents_intro": "Les agents sont ceux qui codent. Tu ne les appelles jamais : l'orchestrateur les lance pour chaque story, un par app concernée, en parallèle, chacun dans sa propre copie du dépôt. Ils suivent ta stack, ton architecture et le contrat entre les apps, écrivent leurs tests d'abord, et ne mergent jamais rien.",
+	"getting_started_title": "Getting started",
+	"getting_started_intro_context": "Moukie est un plugin Claude Code qui t'accompagne de l'idée à la pull request.",
+	"getting_started_intro_flow": "Tu cadres, il code chaque app en parallèle contre un contrat partagé, puis il te rapporte la PR : c'est toi qui merges.",
+	"requirements_title": "Prérequis",
+	"requirements_lead": "Avant de commencer, vérifie que tu as installé :",
+	"requirement_claude_code": "Claude Code",
+	"requirement_git_cli": "gh (pour GitHub) ou glab (pour GitLab), authentifié",
+	"requirement_figma_mcp": "le MCP Figma, si ton projet a des maquettes",
+	"installation_title": "Installation",
+	"installation_done": "Moukie est chargé à ta prochaine session Claude Code.",
+	"update_title": "Mise à jour",
+	"copy_command": "Copier la commande",
+	"copied": "Copié"
 }

@@ -8,7 +8,7 @@ const NAVIGATION_ENTRIES = [
 	"Agents",
 	"Workflow map",
 ];
-const DISABLED_ENTRIES = ["Getting started", "Workflow map"];
+const DISABLED_ENTRIES = ["Workflow map"];
 
 function sidebar(page: Page) {
 	return page.getByRole("navigation", { name: "Navigation principale" });
@@ -67,7 +67,7 @@ test("L'entrée de la page courante est mise en évidence comme dans la maquette
 	}
 });
 
-test("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : Getting started et Workflow map.", async ({
+test("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : Workflow map.", async ({
 	page,
 }) => {
 	for (const name of DISABLED_ENTRIES) {
@@ -78,7 +78,7 @@ test("Une entrée dont la page n'existe pas encore est affichée désactivée et
 		await entry.click({ force: true });
 		await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
 	}
-	for (const name of ["Skills", "Agents"]) {
+	for (const name of ["Getting started", "Skills", "Agents"]) {
 		await expect(sidebar(page).getByRole("link", { name })).toBeEnabled();
 	}
 });
