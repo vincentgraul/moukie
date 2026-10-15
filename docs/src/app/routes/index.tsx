@@ -3,7 +3,7 @@ import { toPagePath, toSiteUrl } from "@/shared/config";
 import { baseLocale, m } from "@/shared/i18n";
 import { StaticRedirect, staticRedirectMeta } from "@/shared/ui";
 
-const TARGET_URL = toSiteUrl(toPagePath(baseLocale, "skills"));
+const TARGET_URL = toSiteUrl(toPagePath(baseLocale));
 
 export const Route = createFileRoute("/")({
 	head: () => ({ meta: staticRedirectMeta(TARGET_URL) }),

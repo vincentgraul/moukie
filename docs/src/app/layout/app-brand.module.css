@@ -1,0 +1,20 @@
+.appBrand {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.appBrand[data-layout="stacked"] {
+	flex-direction: column;
+}
+
+.appBrand[data-layout="inline"] {
+	padding: 12px;
+}
+
+.appBrand[data-layout="inline"] .logo {
+	width: 75px;
+	height: 50px;
+}

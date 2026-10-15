@@ -2,6 +2,7 @@ import { IconButton as EmpreintIconButton, useDisclosure } from "@empreint/ui";
 import { MenuIcon, XIcon } from "lucide-react";
 import { useId } from "react";
 import { m, useLocale } from "@/shared/i18n";
+import { AppBrand } from "./app-brand";
 import { AppNavigation } from "./app-navigation";
 import styles from "./mobile-menu.module.css";
 
@@ -30,6 +31,7 @@ export function MobileMenu() {
 					className={styles.panel}
 					aria-label={m.navigation_label({}, { locale })}
 				>
+					<AppBrand layout="inline" onNavigate={onClose} />
 					<AppNavigation onNavigate={onClose} />
 				</nav>
 			) : null}

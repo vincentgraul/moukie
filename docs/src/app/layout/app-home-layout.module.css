@@ -1,0 +1,26 @@
+.appHomeLayout {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	min-height: 100vh;
+	padding: 32px;
+}
+
+.main {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-width: 0;
+}
+
+@media (max-width: 1199px) {
+	.appHomeLayout {
+		padding: 24px;
+	}
+}
+
+@media (max-width: 767px) {
+	.appHomeLayout {
+		padding: 16px;
+	}
+}

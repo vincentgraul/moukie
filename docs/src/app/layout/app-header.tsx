@@ -9,12 +9,16 @@ import { AppLanguageSelector } from "./app-language-selector";
 import githubMark from "./github-mark.svg";
 import { MobileMenu } from "./mobile-menu";
 
-export function AppHeader() {
+export type AppHeaderProps = {
+	readonly withMobileMenu?: boolean;
+};
+
+export function AppHeader({ withMobileMenu = true }: AppHeaderProps) {
 	const locale = useLocale();
 
 	return (
 		<header className={styles.appHeader}>
-			<MobileMenu />
+			{withMobileMenu ? <MobileMenu /> : null}
 			<EmpreintIconButton asChild variant="ghost" size="5">
 				<a
 					href={REPOSITORY_URL}
