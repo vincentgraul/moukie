@@ -100,7 +100,7 @@ Chaque critère d'acceptation doit être **vérifiable** : un comportement obser
 Avant d'écrire, confronte la feature à ce qui est déjà décidé :
 
 - **le produit** : sort-elle du périmètre de `product.md`, ouvre-t-elle un nouveau public, contredit-elle le positionnement ? Si oui, invoque le skill `product` en mode amendement, en lui transmettant la feature. Ne modifie jamais `product.md` toi-même. Si l'amendement est refusé, la feature est hors périmètre : dis-le, et propose de la réduire ou de l'abandonner
-- **la stack** : demande-t-elle une capacité que `stack.md` ne couvre pas, comme un paiement, du temps réel, du stockage de fichiers, des emails ou de la recherche ? Si oui, invoque le skill `stack` en mode challenge, sur ce domaine seulement
+- **la stack** : demande-t-elle une capacité que `stack.md` ne couvre pas, comme un paiement, du temps réel, du stockage de fichiers, des emails ou de la recherche ? Si oui, invoque le skill `stack` en mode amendement, en lui transmettant le besoin
 - **l'architecture** : demande-t-elle un module, une app ou une communication entre apps que `architecture.md` ne prévoit pas ? Si oui, invoque le skill `architecture` en mode amendement, en lui transmettant le besoin
 
 C'est ici que ces écarts coûtent le moins cher. Une fois la feature validée, le contrat, les critères et le travail des agents reposent sur le produit, la stack et l'architecture : les changer après coup est le chemin le plus coûteux du workflow.

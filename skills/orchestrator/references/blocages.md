@@ -25,7 +25,7 @@ Si `contract` ou un agent signale qu'il manque à la story une information (une 
 
 ## Bibliothèque absente de la stack
 
-Ni l'agent ni toi ne tranchez : notifie l'utilisateur. S'il accepte d'étudier l'ajout, invoque le skill `stack` en mode challenge, sur ce domaine seulement. Une fois `stack.md` à jour, commite-le sur la branche de la story et fais rebaser la lane concernée avant de la reprendre.
+Ni l'agent ni toi ne tranchez : notifie l'utilisateur. S'il accepte d'étudier l'ajout, invoque le skill `stack` en mode amendement, en lui transmettant le besoin. Une fois `stack.md` à jour, commite-le sur la branche de la story et fais rebaser la lane concernée avant de la reprendre.
 
 ---
 
