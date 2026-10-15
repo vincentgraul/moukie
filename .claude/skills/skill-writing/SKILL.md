@@ -21,7 +21,9 @@ Un `SKILL.md` invoqué se charge **en entier** et reste dans le contexte jusqu'�
 - **Le `SKILL.md` porte le chemin courant.** Un cas rare (un mode peu utilisé, un blocage, une variante multi-apps) va dans `references/`, avec un déclencheur explicite à l'endroit où on y entre : « Si la story touche plusieurs apps, **lis `references/multi-apps.md`** avant d'aller plus loin ». Un simple renvoi en fin de fichier ne serait jamais suivi.
 - **Ne répète pas le `CLAUDE.md`.** Il est chargé à chaque session : ses interdits (commits, `main`, `--no-verify`, commentaires, noms en anglais) n'ont pas à revenir dans chaque skill. Seuls `setup`, qui tourne avant qu'il existe, et les agents gardent les leurs.
 - **Une raison par consigne, au plus, et courte.** Garde-la quand elle évite une erreur déjà vue ou aide Claude à généraliser ; coupe-la quand elle ne fait que plaider. Une majuscule d'insistance ou un « toujours » en gras signale une raison manquante : écris la raison.
-- **Une seule source par information.** Si deux skills disent la même chose, l'un renvoie à l'autre ou au fichier du vault qui la porte.
+- **Une référence coûte un appel d'outil.** Ne sors dans `references/` qu'un bloc de plusieurs centaines de mots qui ne sert pas à chaque fois : en deçà, l'appel coûte plus que ce qu'il économise.
+- **Un agent n'a pas de références.** Les consignes d'un mode rare d'un agent vont dans le prompt que l'orchestrateur lui donne, pas dans son fichier, chargé à chaque lane.
+- **Une seule source par information.** Si deux skills disent la même chose, l'un renvoie à l'autre ou au fichier du vault qui la porte. Un format se définit chez celui qui le produit (le compte rendu dans l'agent), pas chez celui qui le demande.
 
 ---
 
