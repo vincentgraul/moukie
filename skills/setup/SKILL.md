@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Initialise un projet pour le workflow Moukie. Mène l'entretien de cadrage (l'identité, puis le produit, la stack et l'architecture par leurs skills), écrit le vault `project/`, fait générer le code manquant par `scaffold`, puis configure le workflow : permissions, linter, garde-fou git, fichiers open source et `CLAUDE.md`. Se déclenche quand l'utilisateur veut démarrer un projet avec Moukie, ou installer le workflow Moukie dans un projet existant. S'arrête à la PR d'initialisation.
+description: Initialise un projet pour le workflow Moukie. Mène l'entretien de cadrage (l'identité et les maquettes, puis le produit, la stack et l'architecture par leurs skills), écrit le vault `project/`, fait générer le code manquant par `scaffold`, puis configure le workflow : permissions, linter, garde-fou git, fichiers open source et `CLAUDE.md`. Se déclenche quand l'utilisateur veut démarrer un projet avec Moukie, ou installer le workflow Moukie dans un projet existant. S'arrête à la PR d'initialisation.
 metadata:
   moukie-badge: "project"
   moukie-icon: "rocket"
@@ -46,19 +46,33 @@ Les skills `product` et `stack` écrivent leurs fichiers pendant l'entretien. Po
 - son **type** : `application web` / `application mobile` / `site e-commerce` / `bibliothèque de composants` / `autre`
 - sa **nature** : `commercial` / `open source` / `personnel`. Elle décide de ce que le skill `product` analyse, des licences acceptables pour les dépendances, et des fichiers open source de la Phase 6
 - sa **langue** : celle des échanges et de tout le Markdown du projet. Propose par défaut celle dans laquelle l'utilisateur t'écrit. Transmets-la à chaque skill que tu invoques
+- ses **maquettes** : le projet a-t-il des maquettes Figma ? Si oui, vérifie que le MCP Figma est connecté ; sinon, demande à l'utilisateur de le connecter avant de continuer. Demande ensuite deux URLs de **fichier**, pas de nœud : celle des maquettes et celle du design system. Elles iront dans `project/design.md` en Phase 4. Sans maquettes, ne force rien : le projet n'aura pas de `design.md`, et tu passes directement au produit
 
-### 2.2 — Produit
+### 2.2 — Maquettes
 
-Invoque le skill `product` en lui transmettant le nom, le type, la nature et la langue du projet. Il écrit `project/product.md`, et `project/market.md` si le projet est commercial ou open source. Le produit passe avant la stack, parce que la stack se décide à partir de lui.
+Les maquettes répondent à la plupart des questions sur les pages, la navigation et le contenu : lis-les **avant** l'entretien produit, plutôt que de poser ces questions à l'utilisateur.
 
-### 2.3 — Stack
+Lis la structure du fichier des maquettes avec `get_metadata` : les pages et les frames de premier niveau, leurs noms et leurs dimensions. Sur un gros fichier, cherche dans la réponse plutôt que de tout lire. N'utilise pas `get_design_context`, bien trop lourd ici. Si les noms des frames ne suffisent pas à comprendre un écran, regarde-en au plus trois avec `get_screenshot`.
 
-Invoque le skill `stack`. Il écrit `project/stack.md` et les premières entrées de `project/decisions.md`. Reprends la main quand il a fini : toute la suite s'appuie sur `stack.md`.
+Tires-en un **inventaire** de quelques lignes :
 
-### 2.4 — Outils externes
+- les **écrans**, regroupés par parcours (accueil, authentification, catalogue…)
+- les **surfaces**, d'après la largeur des frames : web, mobile, les deux
+- les **capacités visibles** qui pèseront sur la stack : authentification, paiement, recherche, upload, temps réel…
+
+Restitue-le à l'utilisateur, qui le corrige. Il n'est écrit nulle part : tu le transmets à `product` et à `stack`.
+
+### 2.3 — Produit
+
+Invoque le skill `product` en lui transmettant le nom, le type, la nature et la langue du projet, et l'inventaire des maquettes s'il existe. Il écrit `project/product.md`, et `project/market.md` si le projet est commercial ou open source. Le produit passe avant la stack, parce que la stack se décide à partir de lui.
+
+### 2.4 — Stack
+
+Invoque le skill `stack`, en lui transmettant l'inventaire des maquettes s'il existe. Il écrit `project/stack.md` et les premières entrées de `project/decisions.md`. Reprends la main quand il a fini : toute la suite s'appuie sur `stack.md`.
+
+### 2.5 — Outils externes
 
 - **forge** : vérifie que la CLI officielle de la forge retenue par `stack.md` est installée et authentifiée, `gh` pour GitHub, `glab` pour GitLab. Sans elle, le skill `pr` ne pourra pas ouvrir de PR
-- **Figma** : demande si le projet a des maquettes. Si oui, vérifie que le MCP Figma est connecté, puis demande deux URLs de **fichier**, pas de nœud : celle des maquettes et celle du design system. Elles iront dans `project/design.md` en Phase 4. Sans maquettes, ne force rien : le projet n'aura pas de `design.md`
 - **Docker** : si `stack.md` retient Docker, vérifie que Docker Desktop est installé. Sinon, signale-le avant de continuer
 
 ---

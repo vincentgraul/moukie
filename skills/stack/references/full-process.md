@@ -12,7 +12,7 @@ Traduis le produit en besoins techniques : ce sont eux, pas les préférences, q
 
 Ne pose jamais de question ouverte sur ce qui s'énumère : propose une liste de candidats, que l'utilisateur coche, écarte ou complète. Déduis les candidats de `product.md`, et soumets-les par lots avec `AskUserQuestion` :
 
-- surfaces : web, mobile, les deux ; un back est-il nécessaire
+- surfaces : web, mobile, les deux ; un back est-il nécessaire. Si `setup` t'a transmis l'inventaire des maquettes, ses surfaces et ses capacités visibles pré-remplissent ces candidats
 - rendu : SEO et contenu public, ou application derrière une authentification
 - temps réel, hors ligne, notifications
 - paiement, e-commerce, upload de médias
