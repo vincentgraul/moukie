@@ -1,6 +1,6 @@
 ---
 name: spec
-description: Crée ou met à jour la spec d'une feature par un entretien guidé, puis la commite une fois validée. Se déclenche quand l'utilisateur veut rédiger, affiner ou mettre à jour une spec. Écrit `project/specs/<feature>/` : le cadrage de la feature et un fichier par story, prêtes à être implémentées une par une par le skill `orchestrator`.
+description: Crée ou met à jour la spec d'une feature par un entretien guidé, puis la commite une fois validée. Se déclenche quand l'utilisateur veut rédiger, affiner ou mettre à jour une spec, y compris après avoir modifié une maquette Figma. Écrit `project/specs/<feature>/` : le cadrage de la feature et un fichier par story, prêtes à être implémentées une par une par le skill `orchestrator`.
 metadata:
   moukie-badge: "feature"
   moukie-icon: "file-text"
@@ -37,6 +37,17 @@ Résume en une ou deux lignes ce que tu as détecté.
 ## Phase 2 — Entretien
 
 Tu pars de ce qui est déjà écrit, l'utilisateur corrige et complète, puis tu ne le questionnes que sur les trous.
+
+### Maquette modifiée
+
+Si la mise à jour vient d'un écran modifié dans Figma, suis cette section à la place de 2.1 à 2.3, puis reprends à 2.4.
+
+1. Demande quels écrans ont changé, par leur nom de frame ou leur URL, et ce qui a changé, en une ligne : le MCP Figma ne donne pas l'historique d'un fichier.
+2. Retrouve la story de chaque écran : celle dont le `figma:` porte le même `node-id`. Un écran sans story est un nouvel écran : découpe-le par 2.2 et 2.3.
+3. Regarde l'écran avec `get_screenshot`, puis invoque `figma-annotations` sur son nœud. Compare-les aux critères de la story et restitue les écarts en quelques lignes.
+4. Détermine si la story est **déjà codée** : sa branche `<feature>/<story>` a une PR, ouverte ou mergée (avec la CLI de la forge de `stack.md`), ou existe sur le remote.
+   - **pas codée** : amende ses critères sur place. Si l'écart n'est que visuel, la story ne change pas, car l'agent front lit la maquette au moment de l'implémenter : dis-le et arrête-toi
+   - **codée** : laisse-la intacte, elle décrit le code livré. Ajoute une story qui ne porte que l'écart, avec le même `figma:` et un slug qui nomme le changement (`redesign-cart-summary`). Si la PR de la story d'origine est encore ouverte, préviens que la nouvelle story ne s'implémente qu'après son merge
 
 ### 2.1 — Maquettes ou jet brut
 
