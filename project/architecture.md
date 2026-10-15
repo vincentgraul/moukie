@@ -58,7 +58,7 @@ Pas de couche `widgets`.
 ## URL
 - chaque page existe en `/fr/<page>` et `/en/<page>`, sous le chemin de base `/moukie/`
 - la racine redirige vers `/fr/`
-- tant que l'accueil n'existe pas, `/fr/` et `/en/` mènent à la page Skills de leur langue
+- `/fr/` et `/en/` sont l'accueil de leur langue
 - GitHub Pages ne redirige pas côté serveur : les redirections sont des pages statiques pré-rendues
 - les URL internes se terminent par une barre oblique (`/moukie/fr/skills/`), comme les sert GitHub Pages
 - la navigation entre pages et entre langues se fait par rechargement complet, sans navigation côté client : les pages naviguent par des liens classiques vers des pages pré-rendues, et le sélecteur de langue déclenche le rechargement de la même page dans l'autre langue

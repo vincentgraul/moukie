@@ -15,12 +15,12 @@ describe("navigation entries", () => {
 		}
 	});
 
-	it("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : Getting started et Workflow map.", () => {
+	it("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : Workflow map.", () => {
 		const entriesWithoutPage = NAVIGATION_ENTRIES.filter(
 			(entry) => !isSitePage(entry.page),
 		).map((entry) => entry.page);
 
-		expect(entriesWithoutPage).toEqual(["getting-started", "workflow-map"]);
+		expect(entriesWithoutPage).toEqual(["workflow-map"]);
 	});
 
 	it("gives the Agents entry its label and a page of the site", () => {

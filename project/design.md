@@ -1,7 +1,7 @@
 # Design
 
 ## Maquettes
-https://www.figma.com/design/Lm9h3j5XNo3oaWfYP4ofVd/Moukie
+https://www.figma.com/design/Lm9h3j5XNo3oaWfYP4ofVd/Moukie?node-id=4-7
 
 ## Design system
 Pas de fichier Figma de design system : l'interface s'appuie sur la bibliothèque Empreint (`@empreint/ui`, https://github.com/vincentgraul/empreint).

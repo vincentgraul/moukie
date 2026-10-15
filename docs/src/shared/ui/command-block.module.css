@@ -1,0 +1,49 @@
+.commandBlock {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	width: fit-content;
+	max-width: 100%;
+	padding: 16px;
+	border-radius: var(--empreint-radius-1);
+	background-color: var(--empreint-neutral-800);
+	color: var(--moukie-color-text-inverse);
+}
+
+.command {
+	min-width: 0;
+	margin: 0;
+	font: inherit;
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: normal;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.command code {
+	font: inherit;
+}
+
+.copyButton {
+	margin: -8px;
+	--empreint-icon-button-size-1: 2rem;
+	--empreint-icon-button-color-ghost: var(--moukie-color-accent);
+	--empreint-icon-button-background-color-ghost-hover: var(
+		--empreint-neutral-700
+	);
+	--empreint-icon-button-outline-focus: 2px solid
+		var(--moukie-color-text-inverse);
+}
+
+.status {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}

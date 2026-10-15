@@ -14,6 +14,7 @@ import { Route as LocaleRouteImport } from './routes/$locale'
 import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
 import { Route as LocaleLayoutRouteImport } from './routes/$locale/_layout'
 import { Route as LocaleLayoutAgentsRouteImport } from './routes/$locale/_layout/agents'
+import { Route as LocaleLayoutGettingStartedRouteImport } from './routes/$locale/_layout/getting-started'
 import { Route as LocaleLayoutSkillsRouteImport } from './routes/$locale/_layout/skills'
 
 const IndexRoute = IndexRouteImport.update({
@@ -40,6 +41,12 @@ const LocaleLayoutAgentsRoute = LocaleLayoutAgentsRouteImport.update({
   path: '/agents',
   getParentRoute: () => LocaleLayoutRoute,
 } as any)
+const LocaleLayoutGettingStartedRoute =
+  LocaleLayoutGettingStartedRouteImport.update({
+    id: '/getting-started',
+    path: '/getting-started',
+    getParentRoute: () => LocaleLayoutRoute,
+  } as any)
 const LocaleLayoutSkillsRoute = LocaleLayoutSkillsRouteImport.update({
   id: '/skills',
   path: '/skills',
@@ -51,12 +58,14 @@ export interface FileRoutesByFullPath {
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/agents': typeof LocaleLayoutAgentsRoute
+  '/$locale/getting-started': typeof LocaleLayoutGettingStartedRoute
   '/$locale/skills': typeof LocaleLayoutSkillsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/agents': typeof LocaleLayoutAgentsRoute
+  '/$locale/getting-started': typeof LocaleLayoutGettingStartedRoute
   '/$locale/skills': typeof LocaleLayoutSkillsRoute
 }
 export interface FileRoutesById {
@@ -66,14 +75,25 @@ export interface FileRoutesById {
   '/$locale/_layout': typeof LocaleLayoutRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/_layout/agents': typeof LocaleLayoutAgentsRoute
+  '/$locale/_layout/getting-started': typeof LocaleLayoutGettingStartedRoute
   '/$locale/_layout/skills': typeof LocaleLayoutSkillsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/$locale' | '/$locale/' | '/$locale/agents' | '/$locale/skills'
+    | '/'
+    | '/$locale'
+    | '/$locale/'
+    | '/$locale/agents'
+    | '/$locale/getting-started'
+    | '/$locale/skills'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$locale' | '/$locale/agents' | '/$locale/skills'
+  to:
+    | '/'
+    | '/$locale'
+    | '/$locale/agents'
+    | '/$locale/getting-started'
+    | '/$locale/skills'
   id:
     | '__root__'
     | '/'
@@ -81,6 +101,7 @@ export interface FileRouteTypes {
     | '/$locale/_layout'
     | '/$locale/'
     | '/$locale/_layout/agents'
+    | '/$locale/_layout/getting-started'
     | '/$locale/_layout/skills'
   fileRoutesById: FileRoutesById
 }
@@ -126,6 +147,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleLayoutAgentsRouteImport
       parentRoute: typeof LocaleLayoutRoute
     }
+    '/$locale/_layout/getting-started': {
+      id: '/$locale/_layout/getting-started'
+      path: '/getting-started'
+      fullPath: '/$locale/getting-started'
+      preLoaderRoute: typeof LocaleLayoutGettingStartedRouteImport
+      parentRoute: typeof LocaleLayoutRoute
+    }
     '/$locale/_layout/skills': {
       id: '/$locale/_layout/skills'
       path: '/skills'
@@ -138,11 +166,13 @@ declare module '@tanstack/react-router' {
 
 interface LocaleLayoutRouteChildren {
   LocaleLayoutAgentsRoute: typeof LocaleLayoutAgentsRoute
+  LocaleLayoutGettingStartedRoute: typeof LocaleLayoutGettingStartedRoute
   LocaleLayoutSkillsRoute: typeof LocaleLayoutSkillsRoute
 }
 
 const LocaleLayoutRouteChildren: LocaleLayoutRouteChildren = {
   LocaleLayoutAgentsRoute: LocaleLayoutAgentsRoute,
+  LocaleLayoutGettingStartedRoute: LocaleLayoutGettingStartedRoute,
   LocaleLayoutSkillsRoute: LocaleLayoutSkillsRoute,
 }
 

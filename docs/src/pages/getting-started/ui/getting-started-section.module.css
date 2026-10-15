@@ -1,0 +1,31 @@
+.section {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.section[data-gap="compact"] {
+	gap: 24px;
+}
+
+.section[data-gap="spacious"] {
+	gap: 40px;
+}
+
+.separator[data-has-label][data-orientation="horizontal"][data-size="3"] {
+	width: fit-content;
+	max-width: 100%;
+	gap: 12px;
+}
+
+.separator[data-has-label][data-orientation="horizontal"][data-size="3"]::before,
+.separator[data-has-label][data-orientation="horizontal"][data-size="3"]::after {
+	flex: none;
+	width: 50px;
+}
+
+.title {
+	color: var(--moukie-color-accent);
+	-webkit-text-stroke: 5px var(--moukie-color-border);
+	paint-order: stroke fill;
+}

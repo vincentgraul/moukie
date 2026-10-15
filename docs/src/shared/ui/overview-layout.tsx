@@ -4,7 +4,7 @@ import styles from "./overview-layout.module.css";
 
 export type OverviewLayoutProps = {
 	readonly title: string;
-	readonly introduction: string;
+	readonly introduction: ReactNode;
 	readonly children: ReactNode;
 };
 

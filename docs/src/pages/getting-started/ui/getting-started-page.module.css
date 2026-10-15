@@ -1,0 +1,11 @@
+.introductionLine {
+	display: block;
+}
+
+.arrow {
+	flex-shrink: 0;
+	width: 16px;
+	height: 16px;
+	fill: var(--moukie-color-accent);
+	color: var(--moukie-color-text);
+}
