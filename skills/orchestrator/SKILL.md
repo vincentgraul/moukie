@@ -102,4 +102,8 @@ Une fois la PR ouverte, envoie la dernière notification, puis donne à l'utilis
 - si un outil te permet d'ouvrir une nouvelle session (app desktop), ouvres-en une dans le même dossier, avec pour seul prompt « Lance le skill `moukie:orchestrator` sur la story `<feature>/<story>`. ». Dis à l'utilisateur laquelle tu as lancée, puis arrête-toi : elle repart d'un contexte vide
 - sinon, enchaîne dans cette conversation : dis à l'utilisateur quelle story tu lances, puis reprends à la Phase 1 avec elle, sans réinvoquer le skill, déjà chargé
 
-**Frontière de session**, s'il ne reste aucune story : donne la commande de l'étape suivante (`/moukie:spec` pour une nouvelle feature), puis, en dernier, propose de vider la conversation (l'outil qui vide la session dans l'app desktop, après accord ; sinon `/clear`).
+**Frontière de session**, s'il ne reste aucune story :
+
+1. **Lance la feature en local**, depuis la branche courante, qui porte toutes ses stories : chaque app qu'elle touche, les apps serveur d'abord, en arrière-plan, avec la commande qui la lance en local dans le `CLAUDE.md`. Dans l'app desktop, ouvre l'app cliente dans son navigateur intégré. Donne son URL à l'utilisateur, pour qu'il essaie la feature avant de merger. Si la commande manque au `CLAUDE.md`, dis-le
+2. Donne la commande de l'étape suivante (`/moukie:spec` pour une nouvelle feature)
+3. En dernier, propose de vider la conversation (l'outil qui vide la session dans l'app desktop, après accord ; sinon `/clear`)
