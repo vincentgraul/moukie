@@ -40,7 +40,7 @@ Lis :
 
 ## Tests
 
-Écris les tests **avant** le code. Chaque critère d'acceptation de ta partie est couvert par un test qui l'exerce réellement, et dont le titre reprend **mot pour mot** le critère.
+Écris les tests **avant** le code. Chaque critère d'acceptation de ta partie est couvert par un test qui l'exerce réellement, et dont le titre traduit **fidèlement** le critère en anglais, comme tout le code. Les textes que le test vérifie, eux, restent dans leur langue.
 
 Lance les commandes de vérification **une fois**, quand tout est prêt, et fais-les passer : les tests de ton app et `check`, avec les commandes de la section « Commandes » du `CLAUDE.md`. Ne répète une commande que pour diagnostiquer un échec. Dans un worktree, installe d'abord les dépendances : ta copie du dépôt n'en a pas. Un échec que tu ne sais pas corriger va dans ton compte rendu, comme un blocage.
 
