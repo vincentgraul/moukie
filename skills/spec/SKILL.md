@@ -26,6 +26,7 @@ Avant de poser la moindre question :
 - lis les features de `project/specs/` s'il en existe : leur `README.md` et leurs stories
 - lis `project/product.md`, `project/market.md` s'il existe, `project/stack.md` et `project/architecture.md`, qui te serviront en 2.5, et `project/design.md` s'il existe, qui décide du départ de l'entretien en 2.1
 - détermine si l'utilisateur **crée** une feature ou **met à jour** une feature existante ; en cas de doute, demande-lui
+- lis `project/ideas.md` s'il existe. Si la feature part d'une idée, ses champs ouvrent l'entretien : le problème et la piste alimentent le contexte et l'objectif, ses questions ouvertes rejoignent celles de 2.4
 - en **mise à jour**, récupère l'état du remote (`git fetch`) et repère sa branche par défaut, notée `origin/<défaut>` (`git symbolic-ref --short refs/remotes/origin/HEAD`). Puis, pour la branche `<feature>/spec` :
   - si elle existe et n'est pas encore contenue dans `origin/<défaut>` (`git merge-base --is-ancestor <feature>/spec origin/<défaut>` échoue), bascule dessus avant d'écrire : elle porte la dernière version validée de la feature
   - si elle y est déjà contenue, supprime-la (`git branch -D`) et pars de `origin/<défaut>`
@@ -173,10 +174,10 @@ Le champ `figma:` porte l'URL du **nœud** de l'écran, qui contient un `node-id
 
 ## Phase 4 — Validation et commit
 
-Présente le cadrage et les stories. Quand l'utilisateur valide, passe le `README.md` de la feature à `status: validated`, puis **commite la feature** :
+Présente le cadrage et les stories. Quand l'utilisateur valide, passe le `README.md` de la feature à `status: validated`, retire de `project/ideas.md` l'idée dont la feature est partie, puis **commite la feature** :
 
 - bascule sur la branche `<feature>/spec`, en la créant si besoin depuis la branche par défaut du remote, à jour. Pas `<feature>` tout court : git refuse qu'une branche `cart` coexiste avec les branches de story `cart/add-item`
-- ajoute le dossier `project/specs/<feature>/` et les fichiers du vault amendés en 2.5, et rien d'autre
+- ajoute le dossier `project/specs/<feature>/`, les fichiers du vault amendés en 2.5 et `project/ideas.md` s'il a changé, et rien d'autre
 - commite-les (`docs(specs): add cart feature`)
 - ne pousse pas et n'ouvre pas de PR : la spec rejoindra `main` avec la PR de la première story implémentée
 

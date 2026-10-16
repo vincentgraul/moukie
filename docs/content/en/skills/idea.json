@@ -1,0 +1,10 @@
+{
+	"summary": {
+		"text": "Notes an idea for later, with its complexity and cost.",
+		"sourceHash": "c90504db196c9db30781ab46e3ee4b915ab1aa456a1dd5d04a5b2b428de134e4"
+	},
+	"produces": {
+		"text": "Writes ideas.md",
+		"sourceHash": "9bd48e7dacc3afe2497b3a6237debdec1f540432322363da05e0fd87ce36261c"
+	}
+}

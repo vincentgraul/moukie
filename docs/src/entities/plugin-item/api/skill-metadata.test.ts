@@ -70,6 +70,21 @@ const DISPLAYED_SKILLS = {
 		"moukie-rank": "9",
 		"moukie-summary": "Commite, pousse et ouvre la PR. Ne merge jamais.",
 	},
+	next: {
+		"moukie-badge": "project",
+		"moukie-icon": "compass",
+		"moukie-rank": "10",
+		"moukie-summary":
+			"Fait le point sur le projet et propose la prochaine étape.",
+	},
+	idea: {
+		"moukie-badge": "project",
+		"moukie-icon": "lightbulb",
+		"moukie-rank": "11",
+		"moukie-summary":
+			"Note une idée pour plus tard, avec sa complexité et son coût.",
+		"moukie-produces": "Écrit ideas.md",
+	},
 };
 
 const KNOWLEDGE_SKILLS = [
@@ -91,7 +106,7 @@ function readMoukieMetadataByName() {
 }
 
 describe("skill metadata", () => {
-	it("Les 9 skills affichables portent, dans le `metadata` de leur frontmatter, ces valeurs :", () => {
+	it("Les 11 skills affichables portent, dans le `metadata` de leur frontmatter, ces valeurs :", () => {
 		const metadataByName = readMoukieMetadataByName();
 
 		for (const [name, expectedMetadata] of Object.entries(DISPLAYED_SKILLS)) {
