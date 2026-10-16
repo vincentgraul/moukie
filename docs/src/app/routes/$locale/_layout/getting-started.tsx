@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { createPageHead } from "@/app/seo";
 import {
 	GettingStartedPage,
 	getInstallCommands,
@@ -8,15 +9,15 @@ import { m } from "@/shared/i18n";
 
 export const Route = createFileRoute("/$locale/_layout/getting-started")({
 	loader: () => getInstallCommands(),
-	head: ({ params }) => ({
-		meta: [
-			{
-				title: formatDocumentTitle(
-					m.getting_started_title({}, { locale: params.locale }),
-				),
-			},
-		],
-	}),
+	head: ({ params }) => {
+		const options = { locale: params.locale };
+		return createPageHead({
+			locale: params.locale,
+			page: "getting-started",
+			title: formatDocumentTitle(m.getting_started_title({}, options)),
+			description: `${m.getting_started_intro_context({}, options)} ${m.getting_started_intro_flow({}, options)}`,
+		});
+	},
 	component: GettingStartedRoute,
 });
 

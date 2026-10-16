@@ -116,3 +116,8 @@
 - **Choix** : une seule entité `plugin-item` porte le modèle, la carte, la validation des métadonnées et l'association aux traductions des skills et des agents, qui en deviennent deux sources. `shared/api` ne garde que la lecture générique des fichiers du plugin (racine, frontmatter). Le sélecteur de langue déclenche le rechargement par JavaScript ; les autres liens restent des liens classiques.
 - **Écartés** : deux entités `skill` et `agent` dupliquées ; une mise en commun dans `shared/api`, qui y mettait du métier.
 - **Raison** : demandé par la revue de la story `skills-et-agents/version-anglaise`. La mise en commun avait mis dans `shared` les badges, la règle `knowledge`, la carte et les traductions, ce que FSD interdit (« shared must never contain business logic »). Et les deux entités ne gardaient plus en propre que la façon de lister leurs fichiers. FSD recommande alors de fusionner les frontières plutôt que de descendre dans `shared`.
+
+## 2026-10-16 · Mise en ligne : 404, référencement et vérifications
+- **Choix** : une slice de page `not-found` pour la 404, en français et en anglais ; une slice `app/seo/` qui compose les métadonnées de chaque page et génère au build `sitemap.xml` à partir de la carte du site ; un workflow de vérification sur chaque PR, et un déploiement qui ne publie que si `check` et les tests unitaires passent.
+- **Écartés** : des métadonnées déclarées par chaque slice de `pages`.
+- **Raison** : feature `public-release`. L'URL canonique et le hreflang se déduisent tous deux de la carte du site : les composer à un seul endroit évite de répéter cette logique dans chaque page.

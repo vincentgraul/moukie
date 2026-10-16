@@ -1,0 +1,34 @@
+.notFoundPage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 40px;
+}
+
+.notFoundPage .code[data-size] {
+	font-size: var(--empreint-font-size-11);
+	line-height: normal;
+	color: var(--moukie-color-accent);
+	-webkit-text-stroke: 10px var(--moukie-color-border);
+	paint-order: stroke fill;
+}
+
+.notFoundPage .title[data-size] {
+	max-width: 100%;
+	line-height: normal;
+}
+
+@media (max-width: 767px) {
+	.notFoundPage {
+		gap: 32px;
+	}
+
+	.notFoundPage .code[data-size] {
+		font-size: 64px;
+		-webkit-text-stroke-width: 8px;
+	}
+
+	.notFoundPage .title[data-size] {
+		font-size: 24px;
+	}
+}
