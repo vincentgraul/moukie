@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LocaleRouteImport } from './routes/$locale'
+import { Route as R404RouteImport } from './routes/404'
 import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
+import { Route as Locale404RouteImport } from './routes/$locale/404'
 import { Route as LocaleLayoutRouteImport } from './routes/$locale/_layout'
 import { Route as LocaleLayoutAgentsRouteImport } from './routes/$locale/_layout/agents'
 import { Route as LocaleLayoutGettingStartedRouteImport } from './routes/$locale/_layout/getting-started'
@@ -27,9 +29,19 @@ const LocaleRoute = LocaleRouteImport.update({
   path: '/$locale',
   getParentRoute: () => rootRouteImport,
 } as any)
+const R404Route = R404RouteImport.update({
+  id: '/404',
+  path: '/404',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const Locale404Route = Locale404RouteImport.update({
+  id: '/404',
+  path: '/404',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleLayoutRoute = LocaleLayoutRouteImport.update({
@@ -56,6 +68,8 @@ const LocaleLayoutSkillsRoute = LocaleLayoutSkillsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/404': typeof R404Route
+  '/$locale/404': typeof Locale404Route
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/agents': typeof LocaleLayoutAgentsRoute
   '/$locale/getting-started': typeof LocaleLayoutGettingStartedRoute
@@ -63,6 +77,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/404': typeof R404Route
+  '/$locale/404': typeof Locale404Route
   '/$locale': typeof LocaleIndexRoute
   '/$locale/agents': typeof LocaleLayoutAgentsRoute
   '/$locale/getting-started': typeof LocaleLayoutGettingStartedRoute
@@ -72,6 +88,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/404': typeof R404Route
+  '/$locale/404': typeof Locale404Route
   '/$locale/_layout': typeof LocaleLayoutRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/_layout/agents': typeof LocaleLayoutAgentsRoute
@@ -83,6 +101,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$locale'
+    | '/404'
+    | '/$locale/404'
     | '/$locale/'
     | '/$locale/agents'
     | '/$locale/getting-started'
@@ -90,6 +110,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/404'
+    | '/$locale/404'
     | '/$locale'
     | '/$locale/agents'
     | '/$locale/getting-started'
@@ -98,6 +120,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$locale'
+    | '/404'
+    | '/$locale/404'
     | '/$locale/_layout'
     | '/$locale/'
     | '/$locale/_layout/agents'
@@ -108,6 +132,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocaleRoute: typeof LocaleRouteWithChildren
+  R404Route: typeof R404Route
 }
 
 declare module '@tanstack/react-router' {
@@ -126,11 +151,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/404': {
+      id: '/404'
+      path: '/404'
+      fullPath: '/404'
+      preLoaderRoute: typeof R404RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$locale/': {
       id: '/$locale/'
       path: '/'
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/404': {
+      id: '/$locale/404'
+      path: '/404'
+      fullPath: '/$locale/404'
+      preLoaderRoute: typeof Locale404RouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/_layout': {
@@ -181,11 +220,13 @@ const LocaleLayoutRouteWithChildren = LocaleLayoutRoute._addFileChildren(
 )
 
 interface LocaleRouteChildren {
+  Locale404Route: typeof Locale404Route
   LocaleLayoutRoute: typeof LocaleLayoutRouteWithChildren
   LocaleIndexRoute: typeof LocaleIndexRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
+  Locale404Route: Locale404Route,
   LocaleLayoutRoute: LocaleLayoutRouteWithChildren,
   LocaleIndexRoute: LocaleIndexRoute,
 }
@@ -196,6 +237,7 @@ const LocaleRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocaleRoute: LocaleRouteWithChildren,
+  R404Route: R404Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

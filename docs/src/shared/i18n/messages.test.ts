@@ -24,5 +24,7 @@ describe("interface messages", () => {
 		}
 		expect(englishMessages.header_language).toBe("Language");
 		expect(englishMessages.badge_project).toBe("Project");
+		expect(englishMessages.not_found_title).toBe("Page not found");
+		expect(englishMessages.not_found_home).toBe("Go home");
 	});
 });

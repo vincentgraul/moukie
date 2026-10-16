@@ -25,6 +25,8 @@ export default defineConfig({
 			},
 			pages: [
 				{ path: "/" },
+				{ path: "/404", prerender: { outputPath: "/404.html" } },
+				{ path: `${toPagePath("en")}404/` },
 				...PUBLISHED_LOCALE_CODES.flatMap((locale) => [
 					{ path: toPagePath(locale) },
 					...SITE_PAGES.map((page) => ({ path: toPagePath(locale, page) })),

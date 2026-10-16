@@ -5,7 +5,10 @@ import {
 	LanguageSelector as EmpreintLanguageSelector,
 } from "@empreint/ui";
 import type { CSSProperties, ReactNode } from "react";
-import { useSwitchLanguage } from "@/features/switch-language";
+import {
+	type LanguageSwitchDestination,
+	useSwitchLanguage,
+} from "@/features/switch-language";
 import {
 	isPublishedLocale,
 	m,
@@ -30,9 +33,15 @@ const LANGUAGE_FLAGS: Readonly<Record<PublishedLocale, LanguageFlag>> = {
 	},
 };
 
-export function AppLanguageSelector() {
+export type AppLanguageSelectorProps = {
+	readonly destination?: LanguageSwitchDestination;
+};
+
+export function AppLanguageSelector({
+	destination = "same-page",
+}: AppLanguageSelectorProps) {
 	const locale = useLocale();
-	const switchLanguage = useSwitchLanguage();
+	const switchLanguage = useSwitchLanguage(destination);
 	const currentFlagStyle = {
 		"--app-language-current-flag": `url("${LANGUAGE_FLAGS[locale].imageUrl}")`,
 	} as CSSProperties;

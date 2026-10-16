@@ -4,6 +4,7 @@ import { extname, join, normalize, resolve } from "node:path";
 
 const ROOT_DIRECTORY = resolve(import.meta.dirname, "../dist/client");
 const BASE_PATH = "/moukie/";
+const NOT_FOUND_FILE = join(ROOT_DIRECTORY, "404.html");
 const PORT = Number(process.env.PORT ?? 3000);
 
 const CONTENT_TYPES: Readonly<Record<string, string>> = {
@@ -57,6 +58,11 @@ createServer((request, response) => {
 		return;
 	}
 	if (resolution.kind === "missing") {
+		if (pathname.startsWith(BASE_PATH) && existsSync(NOT_FOUND_FILE)) {
+			response.writeHead(404, { "content-type": CONTENT_TYPES[".html"] });
+			createReadStream(NOT_FOUND_FILE).pipe(response);
+			return;
+		}
 		response.writeHead(404, { "content-type": "text/plain" });
 		response.end("Not found");
 		return;
