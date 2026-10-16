@@ -105,5 +105,4 @@ Une fois la PR ouverte, envoie la dernière notification, puis donne à l'utilis
 **Frontière de session**, s'il ne reste aucune story :
 
 1. **Lance la feature en local**, depuis la branche courante, qui porte toutes ses stories : chaque app qu'elle touche, les apps serveur d'abord, en arrière-plan, avec la commande qui la lance en local dans le `CLAUDE.md`. Dans l'app desktop, ouvre l'app cliente dans son navigateur intégré. Donne son URL à l'utilisateur, pour qu'il essaie la feature avant de merger. Si la commande manque au `CLAUDE.md`, dis-le
-2. Donne la commande de l'étape suivante (`/moukie:spec` pour une nouvelle feature)
-3. En dernier, propose de vider la conversation (l'outil qui vide la session dans l'app desktop, après accord ; sinon `/clear`)
+2. Donne la commande de l'étape suivante, à lancer dans une nouvelle session : `/moukie:spec` pour une nouvelle feature, ou `/moukie:next` pour faire le point. Ne propose pas de vider la conversation : une nouvelle session repart déjà d'un contexte vide

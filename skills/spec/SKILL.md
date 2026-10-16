@@ -185,6 +185,7 @@ Présente le cadrage et les stories. Quand l'utilisateur valide, passe le `READM
 
 ## Fin
 
-Propose de passer la main au skill `orchestrator` pour implémenter une première story, désignée par son slug.
+Enchaîne sur la **première story**, celle que le `README.md` de la feature place en tête, sans rien demander : la spec validée suffit.
 
-**Frontière de session** : donne la commande à lancer (`/moukie:orchestrator <feature>/<story>`), puis, en dernier, propose de vider la conversation (l'outil qui vide la session dans l'app desktop, après accord ; sinon `/clear`).
+- si un outil te permet d'ouvrir une nouvelle session (app desktop), ouvres-en une dans le même dossier, avec pour seul prompt « Lance le skill `moukie:orchestrator` sur la story `<feature>/<story>`. ». Dis à l'utilisateur laquelle tu as lancée, puis arrête-toi : elle repart d'un contexte vide
+- sinon, dis à l'utilisateur quelle story tu lances, puis invoque le skill `orchestrator` sur elle, dans cette conversation
