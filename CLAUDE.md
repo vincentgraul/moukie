@@ -15,6 +15,7 @@ Langue du projet : français. Elle couvre les échanges et le Markdown généré
 - `project/decisions.md` : avant de remettre en cause un choix structurant
 - `project/market.md` : avant de challenger le produit ou de cadrer une feature
 - `project/design.md` : avant de travailler sur un écran, ou pour retrouver les maquettes et le design system
+- `project/ideas.md` : avant de proposer la suite du projet
 - `project/specs/<feature>/<story>.md` : la story en cours, avec le `README.md` de sa feature
 
 ## Commandes
@@ -40,7 +41,7 @@ Les skills s'enchaînent ainsi :
 3. `orchestrator` : implémente une story, avec `contract` s'il y a plusieurs apps, une lane par app, puis le `reviewer`
 4. `pr` : ouvre la PR
 
-`product`, `stack` et `architecture` se rouvrent pour challenger ou amender le cadrage. `scaffold` génère ce que l'architecture prévoit et qui manque.
+`product`, `stack` et `architecture` se rouvrent pour challenger ou amender le cadrage. `scaffold` génère ce que l'architecture prévoit et qui manque. `next` fait le point et propose la prochaine étape ; `idea` note les idées pour plus tard dans `project/ideas.md`.
 
 Les agents :
 
