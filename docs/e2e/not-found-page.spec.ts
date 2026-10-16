@@ -214,15 +214,23 @@ test("Chaque 404 déclare la langue de sa page et `noindex`, et son onglet s'int
 		await page.goto(url);
 		await expect(page).toHaveTitle(documentTitle);
 		await expect(page.locator("html")).toHaveAttribute("lang", locale);
-		await expect(page.locator('meta[name="robots"]').first()).toHaveAttribute(
+		await page.waitForLoadState("networkidle");
+		await expect(page.locator('meta[name="robots"]')).toHaveCount(1);
+		await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
 			"content",
 			"noindex",
 		);
 	}
 
 	await page.goto("unknown/");
+	await page.waitForLoadState("networkidle");
 	await expect(page).toHaveTitle("Page introuvable · Moukie");
 	await expect(page.locator("html")).toHaveAttribute("lang", "fr");
+	await expect(page.locator('meta[name="robots"]')).toHaveCount(1);
+	await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+		"content",
+		"noindex",
+	);
 });
 
 test("En dessous de 768 px, le contenu tient dans la largeur, sans défilement horizontal.", async ({
@@ -266,6 +274,7 @@ test("Sur desktop, le rendu correspond à la maquette : polices, tailles, couleu
 	await expect(title).toHaveCSS("font-weight", "700");
 	await expect(title).toHaveCSS("color", "rgb(27, 25, 25)");
 
+	await expect(button).toHaveCSS("font-family", /Geist/);
 	await expect(button).toHaveCSS("font-size", "28px");
 	await expect(button).toHaveCSS("font-weight", "500");
 	await expect(button).toHaveCSS("color", "rgb(255, 255, 255)");
