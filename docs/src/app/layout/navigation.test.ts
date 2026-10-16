@@ -3,7 +3,7 @@ import { isSitePage } from "@/shared/config";
 import { NAVIGATION_ENTRIES } from "./navigation";
 
 describe("navigation entries", () => {
-	it("La barre latérale affiche le logo, « Moukie », puis les entrées Getting started, Skills, Agents et Workflow map, avec leurs icônes.", () => {
+	it("The sidebar shows the logo, “Moukie”, then the Getting started, Skills, Agents and Workflow map entries, with their icons.", () => {
 		expect(NAVIGATION_ENTRIES.map((entry) => entry.label("fr"))).toEqual([
 			"Getting started",
 			"Skills",
@@ -15,7 +15,7 @@ describe("navigation entries", () => {
 		}
 	});
 
-	it("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : Workflow map.", () => {
+	it("An entry whose page does not exist yet is shown disabled and is not clickable: Workflow map.", () => {
 		const entriesWithoutPage = NAVIGATION_ENTRIES.filter(
 			(entry) => !isSitePage(entry.page),
 		).map((entry) => entry.page);

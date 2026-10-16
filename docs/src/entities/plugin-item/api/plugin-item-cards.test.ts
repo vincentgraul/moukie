@@ -67,7 +67,7 @@ afterEach(() => {
 });
 
 describe("readPluginItemCards for skills", () => {
-	it("La page affiche une carte par skill du plugin dont le badge n'est pas `knowledge`, soit 11 aujourd'hui.", () => {
+	it("The page shows one card per plugin skill whose badge is not `knowledge`, 11 today.", () => {
 		const cards = readPluginItemCards(findPluginRoot(), SKILL_SOURCE, "fr");
 
 		expect(cards.map((card) => card.name)).toEqual([
@@ -85,7 +85,7 @@ describe("readPluginItemCards for skills", () => {
 		]);
 	});
 
-	it("Modifier le `moukie-summary` d'un skill dans le plugin change sa carte au build suivant, sans modifier le code du site.", () => {
+	it("Changing a skill's `moukie-summary` in the plugin changes its card at the next build, without changing the site's code.", () => {
 		const pluginRoot = createPluginRoot();
 		writeSkill(pluginRoot, "setup", "Premier résumé.");
 		const firstBuild = readPluginItemCards(pluginRoot, SKILL_SOURCE, "fr");
@@ -148,7 +148,7 @@ describe("readPluginItemCards for skills in English", () => {
 });
 
 describe("readPluginItemCards for agents", () => {
-	it("La page affiche une carte par agent du plugin, triées par rang croissant : backend, front-web, front-mobile, reviewer.", () => {
+	it("The page shows one card per plugin agent, sorted by ascending rank: backend, front-web, front-mobile, reviewer.", () => {
 		const cards = readPluginItemCards(findPluginRoot(), AGENT_SOURCE, "fr");
 
 		expect(cards.map((card) => card.name)).toEqual([

@@ -106,7 +106,7 @@ function readMoukieMetadataByName() {
 }
 
 describe("skill metadata", () => {
-	it("Les 11 skills affichables portent, dans le `metadata` de leur frontmatter, ces valeurs :", () => {
+	it("The 11 displayable skills carry, in the `metadata` of their frontmatter, these values:", () => {
 		const metadataByName = readMoukieMetadataByName();
 
 		for (const [name, expectedMetadata] of Object.entries(DISPLAYED_SKILLS)) {
@@ -114,7 +114,7 @@ describe("skill metadata", () => {
 		}
 	});
 
-	it("Les skills `naming-conventions`, `feature-sliced-design` et `figma-annotations` portent `moukie-badge: knowledge`, et aucune autre clé `moukie-*`.", () => {
+	it("The `naming-conventions`, `feature-sliced-design` and `figma-annotations` skills carry `moukie-badge: knowledge`, and no other `moukie-*` key.", () => {
 		const metadataByName = readMoukieMetadataByName();
 
 		for (const name of KNOWLEDGE_SKILLS) {

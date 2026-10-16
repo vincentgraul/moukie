@@ -100,7 +100,7 @@ test.beforeEach(async ({ page }) => {
 	await page.goto(SKILLS_URL);
 });
 
-test("`/moukie/fr/skills` affiche le titre « Skills », puis l'introduction : « Un skill est une compétence de Moukie. Tu n'as pas besoin de les appeler par leur nom : ils se déclenchent sur ce que tu dis. Tu peux aussi les invoquer directement, avec /moukie:<skill>. »", async ({
+test("`/moukie/fr/skills` shows the title “Skills”, then the introduction: “Un skill est une compétence de Moukie. Tu n'as pas besoin de les appeler par leur nom : ils se déclenchent sur ce que tu dis. Tu peux aussi les invoquer directement, avec /moukie:<skill>.”", async ({
 	page,
 }) => {
 	await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
@@ -112,19 +112,19 @@ test("`/moukie/fr/skills` affiche le titre « Skills », puis l'introduction : �
 	);
 });
 
-test("La page affiche une carte par skill du plugin dont le badge n'est pas `knowledge`, soit 11 aujourd'hui.", async ({
+test("The page shows one card per plugin skill whose badge is not `knowledge`, 11 today.", async ({
 	page,
 }) => {
 	await expect(cards(page)).toHaveCount(11);
 });
 
-test("Les cartes sont triées par rang croissant. À rang égal, elles sont départagées par nom.", async ({
+test("The cards are sorted by ascending rank. Ties are broken by name.", async ({
 	page,
 }) => {
 	await expect(cardNames(page)).toHaveText(EXPECTED_NAMES);
 });
 
-test("Chaque carte affiche l'icône Lucide du skill, son nom, le libellé de son badge (Projet, Feature ou Story), son résumé et, seulement si `moukie-produces` est renseigné, une ligne précédée d'une flèche avec ce qu'il produit.", async ({
+test("Each card shows the skill's Lucide icon, its name, its badge label (Projet, Feature or Story), its summary and, only when `moukie-produces` is set, a line preceded by an arrow with what it produces.", async ({
 	page,
 }) => {
 	for (const [index, expected] of EXPECTED_CARDS.entries()) {
@@ -164,7 +164,7 @@ test("draws a distinct Lucide icon on each card", async ({ page }) => {
 	expect(drawings.every((drawing) => drawing.length > 0)).toBe(true);
 });
 
-test("Les skills `knowledge` n'apparaissent pas.", async ({ page }) => {
+test("`knowledge` skills do not appear.", async ({ page }) => {
 	for (const name of KNOWLEDGE_SKILLS) {
 		await expect(
 			page.getByRole("heading", { level: 2, name, exact: true }),
@@ -172,7 +172,7 @@ test("Les skills `knowledge` n'apparaissent pas.", async ({ page }) => {
 	}
 });
 
-test("Au survol, la bordure pointillée de la carte devient pleine et une ombre pleine, de la couleur de la bordure, la décale vers le bas et la droite. Elle reprend son aspect au départ du pointeur.", async ({
+test("On hover, the card's dotted border turns solid and a solid shadow, in the border's color, offsets it down and to the right. It returns to its look when the pointer leaves.", async ({
 	page,
 }) => {
 	const card = cards(page).first();
@@ -204,7 +204,7 @@ test("Au survol, la bordure pointillée de la carte devient pleine et une ombre 
 	await expect(card).toHaveCSS("box-shadow", "none");
 });
 
-test("Une carte n'est ni un lien ni un élément focalisable, et le curseur reste celui par défaut.", async ({
+test("A card is neither a link nor a focusable element, and the cursor stays the default one.", async ({
 	page,
 }) => {
 	const card = cards(page).first();
@@ -225,7 +225,7 @@ test("Une carte n'est ni un lien ni un élément focalisable, et le curseur rest
 	}
 });
 
-test("La page est pré-rendue : son HTML contient les 9 cartes sans exécuter de JavaScript.", async ({
+test("The page is prerendered: its HTML contains the 9 cards without running any JavaScript.", async ({
 	browser,
 }) => {
 	const html = readFileSync(
@@ -244,14 +244,14 @@ test("La page est pré-rendue : son HTML contient les 9 cartes sans exécuter de
 	await context.close();
 });
 
-test("L'onglet du navigateur s'intitule « Skills · Moukie » et la page déclare `lang=\"fr\"`.", async ({
+test('The browser tab is titled “Skills · Moukie” and the page declares `lang="fr"`.', async ({
 	page,
 }) => {
 	await expect(page).toHaveTitle("Skills · Moukie");
 	await expect(page.locator("html")).toHaveAttribute("lang", "fr");
 });
 
-test("Sur desktop, le rendu correspond à la maquette : polices, tailles, couleurs, bordures pointillées, espacements.", async ({
+test("On desktop, the rendering matches the mockup: fonts, sizes, colors, dotted borders, spacing.", async ({
 	page,
 }) => {
 	await page.setViewportSize({ width: 1512, height: 1173 });

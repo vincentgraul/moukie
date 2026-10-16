@@ -29,7 +29,7 @@ async function readClipboard(page: Page) {
 	return page.evaluate(() => navigator.clipboard.readText());
 }
 
-test("`/moukie/fr/getting-started/` affiche, dans la mise en page commune, le titre « Getting started », puis l'introduction : « Moukie est un plugin Claude Code qui t'accompagne de l'idée à la pull request. Tu cadres, il code chaque app en parallèle contre un contrat partagé, puis il te rapporte la PR : c'est toi qui merges. »", async ({
+test("`/moukie/fr/getting-started/` shows, in the shared layout, the title “Getting started”, then the introduction: “Moukie est un plugin Claude Code qui t'accompagne de l'idée à la pull request. Tu cadres, il code chaque app en parallèle contre un contrat partagé, puis il te rapporte la PR : c'est toi qui merges.”", async ({
 	page,
 }) => {
 	await page.goto(FRENCH_URL);
@@ -46,7 +46,7 @@ test("`/moukie/fr/getting-started/` affiche, dans la mise en page commune, le ti
 	);
 });
 
-test("La section « Prérequis » affiche « Avant de commencer, vérifie que tu as installé : », puis la liste : « Claude Code », « gh (pour GitHub) ou glab (pour GitLab), authentifié », « le MCP Figma, si ton projet a des maquettes ».", async ({
+test("The “Prérequis” section shows “Avant de commencer, vérifie que tu as installé :”, then the list: “Claude Code”, “gh (pour GitHub) ou glab (pour GitLab), authentifié”, “le MCP Figma, si ton projet a des maquettes”.", async ({
 	page,
 }) => {
 	await page.goto(FRENCH_URL);
@@ -67,7 +67,7 @@ test("La section « Prérequis » affiche « Avant de commencer, vérifie que tu
 	]);
 });
 
-test("La section « Installation » affiche `claude plugin marketplace add vincentgraul/moukie` puis `claude plugin install moukie@vincentgraul`, chacune dans un bloc de code, suivies de « Moukie est chargé à ta prochaine session Claude Code. »", async ({
+test("The “Installation” section shows `claude plugin marketplace add vincentgraul/moukie` then `claude plugin install moukie@vincentgraul`, each in a code block, followed by “Moukie est chargé à ta prochaine session Claude Code.”", async ({
 	page,
 }) => {
 	await page.goto(FRENCH_URL);
@@ -81,7 +81,7 @@ test("La section « Installation » affiche `claude plugin marketplace add vince
 	);
 });
 
-test("La section « Mise à jour » affiche `claude plugin marketplace update vincentgraul` puis `claude plugin update moukie@vincentgraul`.", async ({
+test("The “Mise à jour” section shows `claude plugin marketplace update vincentgraul` then `claude plugin update moukie@vincentgraul`.", async ({
 	page,
 }) => {
 	await page.goto(FRENCH_URL);
@@ -90,7 +90,7 @@ test("La section « Mise à jour » affiche `claude plugin marketplace update vi
 	await expect(update.locator("pre code")).toHaveText(UPDATE_COMMANDS);
 });
 
-test("Chaque bloc a un bouton de copie, atteignable au clavier, qui place la commande exacte dans le presse-papiers. L'icône devient une coche pendant 2 secondes, et « Copié » est annoncé aux lecteurs d'écran. Le texte de la commande reste sélectionnable à la main.", async ({
+test("Each block has a copy button, reachable with the keyboard, that puts the exact command in the clipboard. The icon turns into a check mark for 2 seconds, and “Copié” is announced to screen readers. The command text stays selectable by hand.", async ({
 	page,
 }) => {
 	await page.clock.install();
@@ -132,7 +132,7 @@ test("Chaque bloc a un bouton de copie, atteignable au clavier, qui place la com
 	).toBe(COMMANDS.addMarketplace);
 });
 
-test("`/moukie/en/getting-started/` affiche la page en anglais : sections « Requirements », « Installation » et « Update », introduction, prérequis et ligne d'après installation traduits, commandes identiques.", async ({
+test("`/moukie/en/getting-started/` shows the page in English: “Requirements”, “Installation” and “Update” sections, translated introduction, requirements and post-installation line, identical commands.", async ({
 	page,
 }) => {
 	await page.goto(ENGLISH_URL);
@@ -182,7 +182,7 @@ test("`/moukie/en/getting-started/` affiche la page en anglais : sections « Req
 	await expect(page.getByRole("status").first()).toHaveText("Copied");
 });
 
-test("L'entrée Getting started de la barre latérale et du menu mobile est active et mène à cette page ; seule Workflow map reste désactivée. La page est pré-rendue, déclare la langue de sa page, et son onglet s'intitule « Getting started · Moukie ».", async ({
+test("The Getting started entry of the sidebar and of the mobile menu is active and leads to this page; only Workflow map stays disabled. The page is prerendered, declares its page language, and its tab is titled “Getting started · Moukie”.", async ({
 	page,
 }) => {
 	await page.goto("fr/skills/");
@@ -234,7 +234,7 @@ test("L'entrée Getting started de la barre latérale et du menu mobile est acti
 	}
 });
 
-test("Sur desktop, le rendu correspond à la maquette : polices, tailles, couleurs, séparateurs de section, blocs de code. Seuls les titres de section en français, les prérequis et les commandes en diffèrent.", async ({
+test("On desktop, the rendering matches the mockup: fonts, sizes, colors, section separators, code blocks. Only the French section titles, the requirements and the commands differ.", async ({
 	page,
 }) => {
 	await page.setViewportSize({ width: 1512, height: 1153 });

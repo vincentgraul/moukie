@@ -93,7 +93,7 @@ test.beforeEach(async ({ page }) => {
 	await page.goto(AGENTS_URL);
 });
 
-test("`/moukie/fr/agents` affiche le titre « Agents », puis l'introduction : « Les agents sont ceux qui codent. Tu ne les appelles jamais : l'orchestrateur les lance pour chaque story, un par app concernée, en parallèle, chacun dans sa propre copie du dépôt. Ils suivent ta stack, ton architecture et le contrat entre les apps, écrivent leurs tests d'abord, et ne mergent jamais rien. »", async ({
+test("`/moukie/fr/agents` shows the title “Agents”, then the introduction: “Les agents sont ceux qui codent. Tu ne les appelles jamais : l'orchestrateur les lance pour chaque story, un par app concernée, en parallèle, chacun dans sa propre copie du dépôt. Ils suivent ta stack, ton architecture et le contrat entre les apps, écrivent leurs tests d'abord, et ne mergent jamais rien.”", async ({
 	page,
 }) => {
 	await expect(page).toHaveURL(/\/moukie\/fr\/agents\/$/);
@@ -103,14 +103,14 @@ test("`/moukie/fr/agents` affiche le titre « Agents », puis l'introduction : �
 	await expect(introduction).toHaveText(INTRODUCTION);
 });
 
-test("La page affiche une carte par agent du plugin, triées par rang croissant : backend, front-web, front-mobile, reviewer.", async ({
+test("The page shows one card per plugin agent, sorted by ascending rank: backend, front-web, front-mobile, reviewer.", async ({
 	page,
 }) => {
 	await expect(cards(page)).toHaveCount(4);
 	await expect(cardNames(page)).toHaveText(EXPECTED_NAMES);
 });
 
-test("Chaque carte affiche l'icône Lucide de l'agent, son nom, le libellé de son badge (Lane ou Review), son résumé et, seulement si `moukie-produces` est renseigné, une ligne précédée d'une flèche avec ce qu'il produit.", async ({
+test("Each card shows the agent's Lucide icon, its name, its badge label (Lane or Review), its summary and, only when `moukie-produces` is set, a line preceded by an arrow with what it produces.", async ({
 	page,
 }) => {
 	for (const [index, expected] of EXPECTED_CARDS.entries()) {
@@ -136,7 +136,7 @@ test("Chaque carte affiche l'icône Lucide de l'agent, son nom, le libellé de s
 	}
 });
 
-test("Les cartes ont le même aspect, le même survol et la même absence d'interaction que celles de la page Skills.", async ({
+test("The cards have the same look, the same hover and the same lack of interaction as those of the Skills page.", async ({
 	page,
 	browser,
 }) => {
@@ -193,7 +193,7 @@ test("Les cartes ont le même aspect, le même survol et la même absence d'inte
 	}
 });
 
-test("L'entrée Agents de la barre latérale est cliquable depuis toutes les pages, et mise en évidence sur la page Agents.", async ({
+test("The Agents sidebar entry is clickable from every page, and highlighted on the Agents page.", async ({
 	page,
 }) => {
 	for (const path of [SKILLS_URL, AGENTS_URL]) {
@@ -224,7 +224,7 @@ test("L'entrée Agents de la barre latérale est cliquable depuis toutes les pag
 	await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
 });
 
-test("La grille et le menu mobile suivent les mêmes seuils que la page Skills.", async ({
+test("The grid and the mobile menu follow the same breakpoints as the Skills page.", async ({
 	page,
 }) => {
 	const menuButton = page.getByRole("button", { name: "Ouvrir le menu" });
@@ -269,7 +269,7 @@ test("La grille et le menu mobile suivent les mêmes seuils que la page Skills."
 	await expect(menu).toBeHidden();
 });
 
-test("La page est pré-rendue : son HTML contient les 4 cartes sans exécuter de JavaScript.", async ({
+test("The page is prerendered: its HTML contains the 4 cards without running any JavaScript.", async ({
 	browser,
 }) => {
 	const html = readFileSync(
@@ -297,14 +297,14 @@ test("La page est pré-rendue : son HTML contient les 4 cartes sans exécuter de
 	await context.close();
 });
 
-test("L'onglet du navigateur s'intitule « Agents · Moukie » et la page déclare `lang=\"fr\"`.", async ({
+test('The browser tab is titled “Agents · Moukie” and the page declares `lang="fr"`.', async ({
 	page,
 }) => {
 	await expect(page).toHaveTitle("Agents · Moukie");
 	await expect(page.locator("html")).toHaveAttribute("lang", "fr");
 });
 
-test("Sur desktop, le rendu correspond à la maquette, à l'exception des textes des cartes, qui viennent du plugin.", async ({
+test("On desktop, the rendering matches the mockup, except for the card texts, which come from the plugin.", async ({
 	page,
 }) => {
 	await page.setViewportSize({ width: 1512, height: 1173 });

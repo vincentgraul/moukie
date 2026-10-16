@@ -46,7 +46,7 @@ function createDisplayedAgentFile(
 }
 
 describe("skill cards", () => {
-	it("Les cartes sont triées par rang croissant. À rang égal, elles sont départagées par nom.", () => {
+	it("The cards are sorted by ascending rank. Ties are broken by name.", () => {
 		const files = [
 			createDisplayedSkillFile("zeta", "2"),
 			createDisplayedSkillFile("beta", "10"),
@@ -59,7 +59,7 @@ describe("skill cards", () => {
 		).toEqual(["gamma", "alpha", "zeta", "beta"]);
 	});
 
-	it("Les skills `knowledge` n'apparaissent pas.", () => {
+	it("`knowledge` skills do not appear.", () => {
 		const files = [
 			createDisplayedSkillFile("setup", "1"),
 			createSkillFile("naming-conventions", { "moukie-badge": "knowledge" }),
@@ -76,7 +76,7 @@ describe("skill cards", () => {
 		).toBeUndefined();
 	});
 
-	it("Chaque carte affiche l'icône Lucide du skill, son nom, le libellé de son badge (Projet, Feature ou Story), son résumé et, seulement si `moukie-produces` est renseigné, une ligne précédée d'une flèche avec ce qu'il produit.", () => {
+	it("Each card shows the skill's Lucide icon, its name, its badge label (Projet, Feature or Story), its summary and, only when `moukie-produces` is set, a line preceded by an arrow with what it produces.", () => {
 		const withProduces = createDisplayedSkillFile("spec", "6", {
 			"moukie-badge": "feature",
 			"moukie-icon": "file-text",
@@ -113,7 +113,7 @@ describe("skill cards", () => {
 });
 
 describe("agent cards", () => {
-	it("La page affiche une carte par agent du plugin, triées par rang croissant : backend, front-web, front-mobile, reviewer.", () => {
+	it("The page shows one card per plugin agent, sorted by ascending rank: backend, front-web, front-mobile, reviewer.", () => {
 		const files = [
 			createDisplayedAgentFile("reviewer", "4", { "moukie-badge": "review" }),
 			createDisplayedAgentFile("front-mobile", "3"),
@@ -138,7 +138,7 @@ describe("agent cards", () => {
 		).toEqual(["alpha", "zeta", "beta"]);
 	});
 
-	it("Chaque carte affiche l'icône Lucide de l'agent, son nom, le libellé de son badge (Lane ou Review), son résumé et, seulement si `moukie-produces` est renseigné, une ligne précédée d'une flèche avec ce qu'il produit.", () => {
+	it("Each card shows the agent's Lucide icon, its name, its badge label (Lane or Review), its summary and, only when `moukie-produces` is set, a line preceded by an arrow with what it produces.", () => {
 		const withProduces = createDisplayedAgentFile("reviewer", "4", {
 			"moukie-badge": "review",
 			"moukie-icon": "eye",
