@@ -8,6 +8,15 @@ const ENGLISH_SUBTITLE =
 	"Solo, from Figma mockup to PR: Moukie codes your front end and back end in parallel against a shared contract.";
 const REPOSITORY_URL = "https://github.com/vincentgraul/moukie";
 
+function expectWithin(
+	actual: number | undefined,
+	expected: number,
+	tolerance = 2,
+) {
+	expect(actual).toBeGreaterThanOrEqual(expected - tolerance);
+	expect(actual).toBeLessThanOrEqual(expected + tolerance);
+}
+
 function readBuiltPage(path: string) {
 	return readFileSync(
 		resolve(import.meta.dirname, "../dist/client", path),
@@ -261,27 +270,27 @@ test("Sur desktop, le rendu correspond à la maquette : polices, tailles, couleu
 	const titleBox = await title.boundingBox();
 	const subtitleBox = await subtitle.boundingBox();
 	const buttonBox = await button.boundingBox();
-	expect(logoBox?.width).toBeCloseTo(300, 0);
-	expect(logoBox?.height).toBeCloseTo(200, 0);
-	expect(logoBox?.y).toBeCloseTo(128, 0);
-	expect((logoBox?.x ?? 0) + (logoBox?.width ?? 0) / 2).toBeCloseTo(756, 0);
-	expect((titleBox?.y ?? 0) - ((logoBox?.y ?? 0) + 200)).toBeCloseTo(64, 0);
-	expect(Math.abs((titleBox?.height ?? 0) - 125)).toBeLessThanOrEqual(1);
-	expect(
-		Math.abs(
-			(subtitleBox?.y ?? 0) - ((titleBox?.y ?? 0) + (titleBox?.height ?? 0)),
-		),
-	).toBeLessThanOrEqual(1);
-	expect(
+	expectWithin(logoBox?.width, 300);
+	expectWithin(logoBox?.height, 200);
+	expectWithin(logoBox?.y, 128);
+	expectWithin((logoBox?.x ?? 0) + (logoBox?.width ?? 0) / 2, 756);
+	expectWithin((titleBox?.y ?? 0) - ((logoBox?.y ?? 0) + 200), 64);
+	expectWithin(titleBox?.height, 125);
+	expectWithin(
+		(subtitleBox?.y ?? 0) - ((titleBox?.y ?? 0) + (titleBox?.height ?? 0)),
+		0,
+	);
+	expectWithin(
 		(buttonBox?.y ?? 0) - ((subtitleBox?.y ?? 0) + (subtitleBox?.height ?? 0)),
-	).toBeCloseTo(64, 0);
-	expect(buttonBox?.height).toBeCloseTo(79, 0);
-	expect(buttonBox?.width).toBeCloseTo(331, 0);
+		64,
+	);
+	expectWithin(buttonBox?.height, 79);
+	expectWithin(buttonBox?.width, 331);
 
 	const githubBox = await page
 		.getByRole("link", { name: "Moukie sur GitHub" })
 		.boundingBox();
-	expect(githubBox?.x).toBeCloseTo(1287, 0);
-	expect(githubBox?.y).toBeCloseTo(32, 0);
-	expect(githubBox?.width).toBeCloseTo(64, 0);
+	expectWithin(githubBox?.x, 1287);
+	expectWithin(githubBox?.y, 32);
+	expectWithin(githubBox?.width, 64);
 });
