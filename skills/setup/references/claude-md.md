@@ -37,6 +37,7 @@ Pour ceux-là, écris une **instruction de lecture**, pas un import :
 - `project/decisions.md` : avant de remettre en cause un choix structurant
 - `project/market.md`, s'il existe : avant de challenger le produit ou de cadrer une feature
 - `project/design.md`, s'il existe : avant de travailler sur un écran, ou pour retrouver les maquettes et le design system
+- `project/ideas.md`, s'il existe : avant de proposer la suite du projet
 - `project/specs/<feature>/<story>.md` : la story en cours, avec le `README.md` de sa feature
 
 ---

@@ -65,6 +65,19 @@ const EXPECTED_CARDS = [
 		badge: "Story",
 		summary: "Commite, pousse et ouvre la PR. Ne merge jamais.",
 	},
+	{
+		name: "next",
+		icon: "compass",
+		badge: "Projet",
+		summary: "Fait le point sur le projet et propose la prochaine étape.",
+	},
+	{
+		name: "idea",
+		icon: "lightbulb",
+		badge: "Projet",
+		summary: "Note une idée pour plus tard, avec sa complexité et son coût.",
+		produces: "Écrit ideas.md",
+	},
 ];
 
 const EXPECTED_NAMES = EXPECTED_CARDS.map((card) => card.name);
@@ -99,10 +112,10 @@ test("`/moukie/fr/skills` affiche le titre « Skills », puis l'introduction : �
 	);
 });
 
-test("La page affiche une carte par skill du plugin dont le badge n'est pas `knowledge`, soit 9 aujourd'hui.", async ({
+test("La page affiche une carte par skill du plugin dont le badge n'est pas `knowledge`, soit 11 aujourd'hui.", async ({
 	page,
 }) => {
-	await expect(cards(page)).toHaveCount(9);
+	await expect(cards(page)).toHaveCount(11);
 });
 
 test("Les cartes sont triées par rang croissant. À rang égal, elles sont départagées par nom.", async ({
@@ -146,8 +159,8 @@ test("draws a distinct Lucide icon on each card", async ({ page }) => {
 		.locator("svg[class*='lucide-']:not(.lucide-arrow-big-right)")
 		.evaluateAll((icons) => icons.map((icon) => icon.innerHTML));
 
-	expect(drawings).toHaveLength(9);
-	expect(new Set(drawings).size).toBe(9);
+	expect(drawings).toHaveLength(11);
+	expect(new Set(drawings).size).toBe(11);
 	expect(drawings.every((drawing) => drawing.length > 0)).toBe(true);
 });
 

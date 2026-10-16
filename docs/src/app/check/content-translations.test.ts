@@ -166,7 +166,7 @@ describe("checkContentTranslations", () => {
 			),
 		];
 
-		expect(items).toHaveLength(13);
+		expect(items).toHaveLength(15);
 		for (const { name, metadata, translationPath } of items) {
 			const absolutePath = join(pluginRoot, translationPath);
 			expect(existsSync(absolutePath), translationPath).toBe(true);

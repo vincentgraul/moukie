@@ -67,7 +67,7 @@ afterEach(() => {
 });
 
 describe("readPluginItemCards for skills", () => {
-	it("La page affiche une carte par skill du plugin dont le badge n'est pas `knowledge`, soit 9 aujourd'hui.", () => {
+	it("La page affiche une carte par skill du plugin dont le badge n'est pas `knowledge`, soit 11 aujourd'hui.", () => {
 		const cards = readPluginItemCards(findPluginRoot(), SKILL_SOURCE, "fr");
 
 		expect(cards.map((card) => card.name)).toEqual([
@@ -80,6 +80,8 @@ describe("readPluginItemCards for skills", () => {
 			"orchestrator",
 			"contract",
 			"pr",
+			"next",
+			"idea",
 		]);
 	});
 

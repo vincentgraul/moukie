@@ -237,12 +237,12 @@ describe("checkPluginMetadata", () => {
 		expect(checkPluginMetadata(findPluginRoot())).toEqual([]);
 	});
 
-	it("découvre les 12 skills et les 4 agents du dépôt, chacun avec un `name` égal au nom de son dossier ou de son fichier", () => {
+	it("découvre les 14 skills et les 4 agents du dépôt, chacun avec un `name` égal au nom de son dossier ou de son fichier", () => {
 		const pluginRoot = findPluginRoot();
 		const skillFiles = readPluginItemFiles(pluginRoot, SKILL_SOURCE);
 		const agentFiles = readPluginItemFiles(pluginRoot, AGENT_SOURCE);
 
-		expect(skillFiles).toHaveLength(12);
+		expect(skillFiles).toHaveLength(14);
 		expect(agentFiles).toHaveLength(4);
 		for (const file of skillFiles) {
 			expect(file.path).toBe(`skills/${file.frontmatter.name}/SKILL.md`);

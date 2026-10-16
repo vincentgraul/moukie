@@ -75,6 +75,19 @@ const ENGLISH_SKILL_CARDS: readonly ExpectedCard[] = [
 		badge: "Story",
 		summary: "Commits, pushes and opens the PR. Never merges.",
 	},
+	{
+		name: "next",
+		icon: "compass",
+		badge: "Project",
+		summary: "Takes stock of the project and suggests the next step.",
+	},
+	{
+		name: "idea",
+		icon: "lightbulb",
+		badge: "Project",
+		summary: "Notes an idea for later, with its complexity and cost.",
+		produces: "Writes ideas.md",
+	},
 ];
 
 const ENGLISH_AGENT_CARDS: readonly ExpectedCard[] = [

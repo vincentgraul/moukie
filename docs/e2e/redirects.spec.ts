@@ -30,13 +30,13 @@ test("redirects a page asked without its trailing slash, as GitHub Pages does, a
 	page.on("pageerror", (error) => errors.push(error.message));
 
 	const pages = [
-		{ path: "fr/skills", url: SKILLS_URL, title: "Skills", cardCount: 9 },
+		{ path: "fr/skills", url: SKILLS_URL, title: "Skills", cardCount: 11 },
 		{ path: "fr/agents", url: AGENTS_URL, title: "Agents", cardCount: 4 },
 		{
 			path: "en/skills",
 			url: /\/moukie\/en\/skills\/$/,
 			title: "Skills",
-			cardCount: 9,
+			cardCount: 11,
 		},
 		{
 			path: "en/agents",
