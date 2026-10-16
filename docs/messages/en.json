@@ -33,5 +33,7 @@
 	"installation_done": "Moukie is loaded in your next Claude Code session.",
 	"update_title": "Update",
 	"copy_command": "Copy the command",
-	"copied": "Copied"
+	"copied": "Copied",
+	"not_found_title": "Page not found",
+	"not_found_home": "Go home"
 }

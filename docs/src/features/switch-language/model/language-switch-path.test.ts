@@ -20,4 +20,12 @@ describe("toLanguageSwitchPath", () => {
 		expect(toLanguageSwitchPath("/fr/workflow-map/", "en")).toBe("/en/");
 		expect(toLanguageSwitchPath("/", "en")).toBe("/en/");
 	});
+
+	it("leads to the home of the chosen language whatever the current page, when asked for the home", () => {
+		expect(toLanguageSwitchPath("/fr/agents/", "en", "home")).toBe("/en/");
+		expect(toLanguageSwitchPath("/moukie/en/skills/", "fr", "home")).toBe(
+			"/fr/",
+		);
+		expect(toLanguageSwitchPath("/zzz/", "en", "home")).toBe("/en/");
+	});
 });

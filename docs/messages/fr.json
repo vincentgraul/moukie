@@ -33,5 +33,7 @@
 	"installation_done": "Moukie est chargé à ta prochaine session Claude Code.",
 	"update_title": "Mise à jour",
 	"copy_command": "Copier la commande",
-	"copied": "Copié"
+	"copied": "Copié",
+	"not_found_title": "Page introuvable",
+	"not_found_home": "Retour à l'accueil"
 }

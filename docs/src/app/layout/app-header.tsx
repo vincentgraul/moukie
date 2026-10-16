@@ -2,6 +2,7 @@ import {
 	IconButton as EmpreintIconButton,
 	Separator as EmpreintSeparator,
 } from "@empreint/ui";
+import type { LanguageSwitchDestination } from "@/features/switch-language";
 import { REPOSITORY_URL } from "@/shared/config";
 import { m, useLocale } from "@/shared/i18n";
 import styles from "./app-header.module.css";
@@ -11,9 +12,13 @@ import { MobileMenu } from "./mobile-menu";
 
 export type AppHeaderProps = {
 	readonly withMobileMenu?: boolean;
+	readonly languageDestination?: LanguageSwitchDestination;
 };
 
-export function AppHeader({ withMobileMenu = true }: AppHeaderProps) {
+export function AppHeader({
+	withMobileMenu = true,
+	languageDestination = "same-page",
+}: AppHeaderProps) {
 	const locale = useLocale();
 
 	return (
@@ -34,7 +39,7 @@ export function AppHeader({ withMobileMenu = true }: AppHeaderProps) {
 				orientation="vertical"
 				size="3"
 			/>
-			<AppLanguageSelector />
+			<AppLanguageSelector destination={languageDestination} />
 		</header>
 	);
 }

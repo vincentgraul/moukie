@@ -11,9 +11,15 @@ function findCurrentPage(pathname: string): SitePage | undefined {
 	return page !== undefined && isSitePage(page) ? page : undefined;
 }
 
+export type LanguageSwitchDestination = "same-page" | "home";
+
 export function toLanguageSwitchPath(
 	pathname: string,
 	locale: PublishedLocale,
+	destination: LanguageSwitchDestination = "same-page",
 ): string {
-	return toPagePath(locale, findCurrentPage(pathname));
+	return toPagePath(
+		locale,
+		destination === "home" ? undefined : findCurrentPage(pathname),
+	);
 }
