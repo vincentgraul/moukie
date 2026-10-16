@@ -97,13 +97,9 @@ Tiens l'utilisateur informé avec l'outil `PushNotification`, à **trois moments
 
 Une fois la PR ouverte, envoie la dernière notification, puis donne à l'utilisateur le lien de la PR. C'est lui qui la merge, dans l'ordre de la pile.
 
-**Story suivante** : cherche les stories de la feature dont la branche n'a aucune PR, ouverte ou mergée. S'il en reste, choisis celle que les autres supposent livrée en premier, d'après le `README.md` de la feature, puis enchaîne sans attendre de merge :
-
-- si un outil te permet d'ouvrir une nouvelle session (app desktop), ouvres-en une dans le même dossier, avec pour seul prompt « Lance le skill `moukie:orchestrator` sur la story `<feature>/<story>`. ». Dis à l'utilisateur laquelle tu as lancée, puis arrête-toi : elle repart d'un contexte vide
-- sinon, enchaîne dans cette conversation : dis à l'utilisateur quelle story tu lances, puis reprends à la Phase 1 avec elle, sans réinvoquer le skill, déjà chargé
+**Story suivante** : cherche les stories de la feature dont la branche n'a aucune PR, ouverte ou mergée. S'il en reste, choisis celle que les autres supposent livrée en premier, d'après le `README.md` de la feature, puis enchaîne sans attendre de merge, **dans cette conversation** : dis à l'utilisateur quelle story tu lances, puis reprends à la Phase 1 avec elle, sans réinvoquer le skill, déjà chargé. N'ouvre pas de nouvelle session : l'app desktop refuse qu'une session en ouvre une autre sans demande de l'utilisateur, et le travail lourd de chaque story reste de toute façon dans les sous-agents
 
 **Frontière de session**, s'il ne reste aucune story :
 
 1. **Lance la feature en local**, depuis la branche courante, qui porte toutes ses stories : chaque app qu'elle touche, les apps serveur d'abord, en arrière-plan, avec la commande qui la lance en local dans le `CLAUDE.md`. Dans l'app desktop, ouvre l'app cliente dans son navigateur intégré. Donne son URL à l'utilisateur, pour qu'il essaie la feature avant de merger. Si la commande manque au `CLAUDE.md`, dis-le
-2. Donne la commande de l'étape suivante (`/moukie:spec` pour une nouvelle feature)
-3. En dernier, propose de vider la conversation (l'outil qui vide la session dans l'app desktop, après accord ; sinon `/clear`)
+2. Donne la commande de l'étape suivante, à lancer dans une nouvelle session : `/moukie:spec` pour une nouvelle feature, ou `/moukie:next` pour faire le point. Ne propose pas de vider la conversation : une nouvelle session repart déjà d'un contexte vide
