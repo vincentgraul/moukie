@@ -188,4 +188,6 @@ Présente le cadrage et les stories. Quand l'utilisateur valide, passe le `READM
 Enchaîne sur la **première story**, celle que le `README.md` de la feature place en tête, sans rien demander : la spec validée suffit.
 
 - si un outil te permet d'ouvrir une nouvelle session (app desktop), ouvres-en une dans le même dossier, avec pour seul prompt « Lance le skill `moukie:orchestrator` sur la story `<feature>/<story>`. ». Dis à l'utilisateur laquelle tu as lancée, puis arrête-toi : elle repart d'un contexte vide
-- sinon, dis à l'utilisateur quelle story tu lances, puis invoque le skill `orchestrator` sur elle, dans cette conversation
+- sinon, ou si l'app refuse l'ouverture, dis à l'utilisateur quelle story tu lances, puis invoque le skill `orchestrator` sur elle, dans cette conversation
+
+L'orchestrateur enchaîne ensuite toutes les stories de la feature dans sa session.
