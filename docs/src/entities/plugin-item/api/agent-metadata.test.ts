@@ -43,7 +43,7 @@ function isSingleSentence(text: string) {
 }
 
 describe("agent metadata", () => {
-	it("Les 4 agents portent `moukie-badge`, `moukie-icon`, `moukie-rank` et `moukie-summary`, plus `moukie-produces` quand l'agent produit quelque chose. Les valeurs fixées par la maquette : `backend` · `lane` · `server` · `1` ; `front-web` · `lane` · `panel-top` · `2` ; `front-mobile` · `lane` · `smartphone` · `3` ; `reviewer` · `review` · `eye` · `4`.", () => {
+	it("The 4 agents carry `moukie-badge`, `moukie-icon`, `moukie-rank` and `moukie-summary`, plus `moukie-produces` when the agent produces something. The values set by the mockup: `backend` · `lane` · `server` · `1`; `front-web` · `lane` · `panel-top` · `2`; `front-mobile` · `lane` · `smartphone` · `3`; `reviewer` · `review` · `eye` · `4`.", () => {
 		const metadataByName = readMetadataByName();
 
 		expect([...metadataByName.keys()].sort()).toEqual(
@@ -71,7 +71,7 @@ describe("agent metadata", () => {
 		}
 	});
 
-	it("Les résumés et « produits » des agents sont rédigés à partir de leur fichier, dans le ton et la longueur des cartes Skills (une phrase de moins de 70 caractères), et relus dans la PR.", () => {
+	it("The agents' summaries and “products” are written from their file, in the tone and length of the Skills cards (one sentence under 70 characters), and reviewed in the PR.", () => {
 		for (const [name, metadata] of readMetadataByName()) {
 			const texts = [
 				metadata["moukie-summary"],

@@ -73,7 +73,7 @@ afterEach(() => {
 });
 
 describe("checkPluginMetadata", () => {
-	it("`bun run check` échoue en nommant le fichier fautif quand un skill ou un agent n'a pas de `moukie-badge`.", () => {
+	it("`bun run check` fails, naming the faulty file, when a skill or an agent has no `moukie-badge`.", () => {
 		const pluginRoot = createPluginRoot({
 			"skills/setup/SKILL.md": buildFile("setup", withoutKey("moukie-badge")),
 			"skills/pr/SKILL.md": buildFile("pr", []),
@@ -97,7 +97,7 @@ describe("checkPluginMetadata", () => {
 		}
 	});
 
-	it("`bun run check` échoue en nommant le fichier et la clé quand un élément qui n'est pas `knowledge` n'a pas de `moukie-summary`, de `moukie-icon` ou de `moukie-rank`.", () => {
+	it("`bun run check` fails, naming the file and the key, when an item that is not `knowledge` has no `moukie-summary`, `moukie-icon` or `moukie-rank`.", () => {
 		for (const key of ["moukie-summary", "moukie-icon", "moukie-rank"]) {
 			const pluginRoot = createPluginRoot({
 				"skills/setup/SKILL.md": buildFile("setup", withoutKey(key)),
@@ -116,7 +116,7 @@ describe("checkPluginMetadata", () => {
 		}
 	});
 
-	it("`bun run check` échoue en nommant le fichier et la valeur quand `moukie-badge` n'est pas l'un de `project`, `feature`, `story`, `lane`, `review`, `knowledge`.", () => {
+	it("`bun run check` fails, naming the file and the value, when `moukie-badge` is not one of `project`, `feature`, `story`, `lane`, `review`, `knowledge`.", () => {
 		const pluginRoot = createPluginRoot({
 			"skills/setup/SKILL.md": buildFile(
 				"setup",
@@ -139,7 +139,7 @@ describe("checkPluginMetadata", () => {
 		);
 	});
 
-	it("`bun run check` échoue en nommant le fichier et la valeur quand `moukie-icon` n'est pas une icône Lucide.", () => {
+	it("`bun run check` fails, naming the file and the value, when `moukie-icon` is not a Lucide icon.", () => {
 		const pluginRoot = createPluginRoot({
 			"skills/setup/SKILL.md": buildFile(
 				"setup",
@@ -162,7 +162,7 @@ describe("checkPluginMetadata", () => {
 		);
 	});
 
-	it("échoue en nommant le fichier et la valeur quand `moukie-rank` n'est pas un entier", () => {
+	it("fails, naming the file and the value, when `moukie-rank` is not an integer", () => {
 		const pluginRoot = createPluginRoot({
 			...VALID_AGENT,
 			"skills/setup/SKILL.md": buildFile(
@@ -176,7 +176,7 @@ describe("checkPluginMetadata", () => {
 		]);
 	});
 
-	it("échoue en nommant le fichier quand son frontmatter est illisible", () => {
+	it("fails, naming the file, when its frontmatter cannot be read", () => {
 		const pluginRoot = createPluginRoot({
 			...VALID_SKILL,
 			"agents/backend.md": "# backend\n",
@@ -187,7 +187,7 @@ describe("checkPluginMetadata", () => {
 		]);
 	});
 
-	it("échoue avec un message explicite quand le dossier `skills/` ou `agents/` est absent", () => {
+	it("fails with an explicit message when the `skills/` or `agents/` folder is missing", () => {
 		const withoutSkills = createPluginRoot(VALID_AGENT);
 		const withoutAgents = createPluginRoot(VALID_SKILL);
 
@@ -199,7 +199,7 @@ describe("checkPluginMetadata", () => {
 		]);
 	});
 
-	it("échoue avec un message explicite quand aucun skill ou aucun agent n'est trouvé", () => {
+	it("fails with an explicit message when no skill or no agent is found", () => {
 		const withoutSkill = createPluginRoot({
 			...VALID_AGENT,
 			"skills/notes.md": "# notes\n",
@@ -218,7 +218,7 @@ describe("checkPluginMetadata", () => {
 		]);
 	});
 
-	it("passe sur des métadonnées complètes et sur un élément `knowledge` qui n'a que son badge", () => {
+	it("passes on complete metadata and on a `knowledge` item that only has its badge", () => {
 		const pluginRoot = createPluginRoot({
 			"skills/setup/SKILL.md": buildFile("setup", VALID_METADATA),
 			"skills/naming-conventions/SKILL.md": buildFile("naming-conventions", [
@@ -233,11 +233,11 @@ describe("checkPluginMetadata", () => {
 		expect(checkPluginMetadata(pluginRoot)).toEqual([]);
 	});
 
-	it("`bun run check` passe sur le dépôt une fois les métadonnées ajoutées.", () => {
+	it("`bun run check` passes on the repository once the metadata is added.", () => {
 		expect(checkPluginMetadata(findPluginRoot())).toEqual([]);
 	});
 
-	it("découvre les 14 skills et les 4 agents du dépôt, chacun avec un `name` égal au nom de son dossier ou de son fichier", () => {
+	it("finds the 14 skills and the 4 agents of the repository, each with a `name` equal to the name of its folder or file", () => {
 		const pluginRoot = findPluginRoot();
 		const skillFiles = readPluginItemFiles(pluginRoot, SKILL_SOURCE);
 		const agentFiles = readPluginItemFiles(pluginRoot, AGENT_SOURCE);

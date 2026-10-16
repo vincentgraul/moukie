@@ -224,7 +224,7 @@ async function readFrenchCardTexts(page: Page) {
 	);
 }
 
-test("`/moukie/en/skills` et `/moukie/en/agents` affichent en anglais les titres, les introductions, les entrées de la barre latérale, les libellés de badge (Project, Feature, Story, Lane, Review), les résumés et ce que produit chaque élément.", async ({
+test("`/moukie/en/skills` and `/moukie/en/agents` show in English the titles, the introductions, the sidebar entries, the badge labels (Project, Feature, Story, Lane, Review), the summaries and what each item produces.", async ({
 	page,
 }) => {
 	for (const expectedPage of ENGLISH_PAGES) {
@@ -303,7 +303,7 @@ test('Les pages anglaises déclarent `lang="en"`, et leurs onglets s\'intitulent
 	}
 });
 
-test("Un test end-to-end vérifie qu'aucune chaîne d'interface française ne reste sur les pages anglaises.", async ({
+test("An end-to-end test checks that no French interface string remains on the English pages.", async ({
 	page,
 }) => {
 	const frenchStrings = frenchOnlyInterfaceStrings();
@@ -335,7 +335,7 @@ test("Un test end-to-end vérifie qu'aucune chaîne d'interface française ne re
 	}
 });
 
-test("Les pages anglaises sont pré-rendues, comme les pages françaises.", async ({
+test("The English pages are prerendered, like the French pages.", async ({
 	browser,
 }) => {
 	const context = await browser.newContext({ javaScriptEnabled: false });

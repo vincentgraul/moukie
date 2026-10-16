@@ -46,7 +46,7 @@ async function openLanguageOption(page: Page, locale: string) {
 		.click();
 }
 
-test("Le build produit, pré-rendues, la 404 française à `/moukie/404.html` et l'anglaise à `/moukie/en/404/`. Le serveur statique des tests end-to-end sert la française, avec le statut 404, pour toute URL inconnue sous `/moukie/`, comme GitHub Pages.", async ({
+test("The build produces, prerendered, the French 404 at `/moukie/404.html` and the English one at `/moukie/en/404/`. The end-to-end static server serves the French one, with status 404, for any unknown URL under `/moukie/`, like GitHub Pages.", async ({
 	page,
 }) => {
 	expect(
@@ -75,7 +75,7 @@ test("Le build produit, pré-rendues, la 404 française à `/moukie/404.html` et
 	expect(await outside.text()).not.toContain(FRENCH.title);
 });
 
-test("La 404 française affiche l'en-tête commun (icône GitHub, séparateur, sélecteur de langue), sans barre latérale, puis « 404 », « Page introuvable » et le bouton « Retour à l'accueil », qui mène à `/moukie/fr/`.", async ({
+test("The French 404 shows the shared header (GitHub icon, separator, language selector), without a sidebar, then “404”, “Page introuvable” and the “Retour à l'accueil” button, which leads to `/moukie/fr/`.", async ({
 	page,
 }) => {
 	for (const url of ["404.html", "unknown/"]) {
@@ -114,7 +114,7 @@ test("La 404 française affiche l'en-tête commun (icône GitHub, séparateur, s
 	}
 });
 
-test("La 404 anglaise affiche le même en-tête, puis « 404 », « Page not found » et le bouton « Go home », qui mène à `/moukie/en/`.", async ({
+test("The English 404 shows the same header, then “404”, “Page not found” and the “Go home” button, which leads to `/moukie/en/`.", async ({
 	page,
 }) => {
 	await page.goto(ENGLISH.url);
@@ -149,7 +149,7 @@ test("La 404 anglaise affiche le même en-tête, puis « 404 », « Page not fou
 	await expect(page.getByRole("heading", { level: 1 })).toHaveText("Moukie");
 });
 
-test("Sur une URL inconnue qui commence par `/moukie/en/`, la 404 française bascule aussitôt vers la 404 anglaise. Sans JavaScript, elle reste en français.", async ({
+test("On an unknown URL starting with `/moukie/en/`, the French 404 switches right away to the English 404. Without JavaScript, it stays in French.", async ({
 	page,
 	browser,
 }) => {
@@ -182,7 +182,7 @@ test("Sur une URL inconnue qui commence par `/moukie/en/`, la 404 française bas
 	await context.close();
 });
 
-test("Sur chaque 404, le sélecteur de langue mène à l'accueil de l'autre langue.", async ({
+test("On each 404, the language selector leads to the home page of the other language.", async ({
 	page,
 }) => {
 	const cases = [
@@ -202,7 +202,7 @@ test("Sur chaque 404, le sélecteur de langue mène à l'accueil de l'autre lang
 	}
 });
 
-test("Chaque 404 déclare la langue de sa page et `noindex`, et son onglet s'intitule « Page introuvable · Moukie » ou « Page not found · Moukie ».", async ({
+test("Each 404 declares its page language and `noindex`, and its tab is titled “Page introuvable · Moukie” or “Page not found · Moukie”.", async ({
 	page,
 }) => {
 	for (const { locale, file, url, documentTitle } of NOT_FOUND_PAGES) {
@@ -233,7 +233,7 @@ test("Chaque 404 déclare la langue de sa page et `noindex`, et son onglet s'int
 	);
 });
 
-test("En dessous de 768 px, le contenu tient dans la largeur, sans défilement horizontal.", async ({
+test("Below 768 px, the content fits the width, without horizontal scrolling.", async ({
 	page,
 }) => {
 	for (const { url, locale } of NOT_FOUND_PAGES) {
@@ -251,7 +251,7 @@ test("En dessous de 768 px, le contenu tient dans la largeur, sans défilement h
 	}
 });
 
-test("Sur desktop, le rendu correspond à la maquette : polices, tailles, couleurs, espacements. Seuls les textes de la version française en diffèrent.", async ({
+test("On desktop, the rendering matches the mockup: fonts, sizes, colors, spacing. Only the texts of the French version differ.", async ({
 	page,
 }) => {
 	await page.setViewportSize({ width: 1512, height: 982 });

@@ -33,7 +33,7 @@ async function readTriggerBackground(page: Page) {
 		.evaluate((span) => getComputedStyle(span).backgroundImage);
 }
 
-test("Le déclencheur du sélecteur de langue affiche le drapeau de la langue courante. Le sélecteur propose le français et l'anglais.", async ({
+test("The language selector trigger shows the flag of the current language. The selector offers French and English.", async ({
 	page,
 	browser,
 }) => {
@@ -81,7 +81,7 @@ test("Le déclencheur du sélecteur de langue affiche le drapeau de la langue co
 	await context.close();
 });
 
-test("Choisir l'autre langue mène à la même page dans cette langue : de `/moukie/fr/agents` à `/moukie/en/agents`, et inversement.", async ({
+test("Choosing the other language leads to the same page in that language: from `/moukie/fr/agents` to `/moukie/en/agents`, and back.", async ({
 	page,
 }) => {
 	const switches = [

@@ -33,7 +33,7 @@ test.beforeEach(async ({ page }) => {
 	await page.goto(SKILLS_URL);
 });
 
-test("La barre latérale affiche le logo, « Moukie », puis les entrées Getting started, Skills, Agents et Workflow map, avec leurs icônes.", async ({
+test("The sidebar shows the logo, “Moukie”, then the Getting started, Skills, Agents and Workflow map entries, with their icons.", async ({
 	page,
 }) => {
 	const logo = sidebar(page).locator("header img");
@@ -50,7 +50,7 @@ test("La barre latérale affiche le logo, « Moukie », puis les entrées Gettin
 	}
 });
 
-test("L'entrée de la page courante est mise en évidence comme dans la maquette.", async ({
+test("The current page's entry is highlighted as in the mockup.", async ({
 	page,
 }) => {
 	const skillsEntry = sidebar(page).getByRole("link", { name: "Skills" });
@@ -67,7 +67,7 @@ test("L'entrée de la page courante est mise en évidence comme dans la maquette
 	}
 });
 
-test("Une entrée dont la page n'existe pas encore est affichée désactivée et n'est pas cliquable : Workflow map.", async ({
+test("An entry whose page does not exist yet is shown disabled and is not clickable: Workflow map.", async ({
 	page,
 }) => {
 	for (const name of DISABLED_ENTRIES) {
@@ -83,7 +83,7 @@ test("Une entrée dont la page n'existe pas encore est affichée désactivée et
 	}
 });
 
-test("L'en-tête affiche l'icône GitHub, qui ouvre https://github.com/vincentgraul/moukie dans un nouvel onglet, puis un séparateur et le sélecteur de langue au drapeau français.", async ({
+test("The header shows the GitHub icon, which opens https://github.com/vincentgraul/moukie in a new tab, then a separator and the language selector with the French flag.", async ({
 	page,
 	context,
 }) => {
@@ -161,7 +161,7 @@ test("labels the language selector and keeps the header still while the page hyd
 	expect(prerenderedFlag).toMatch(/^url\(/);
 });
 
-test("À partir de 1200 px de large, la grille a 3 colonnes. Entre 768 et 1199 px, elle en a 2. En dessous de 768 px, elle en a 1.", async ({
+test("From 1200 px wide, the grid has 3 columns. Between 768 and 1199 px, it has 2. Below 768 px, it has 1.", async ({
 	page,
 }) => {
 	const expectations = [
@@ -181,7 +181,7 @@ test("À partir de 1200 px de large, la grille a 3 colonnes. Entre 768 et 1199 p
 	}
 });
 
-test("En dessous de 768 px, la barre latérale est remplacée par un bouton qui ouvre et ferme un menu contenant les mêmes entrées.", async ({
+test("Below 768 px, the sidebar is replaced by a button that opens and closes a menu with the same entries.", async ({
 	page,
 }) => {
 	const menuButton = page.getByRole("button", { name: "Ouvrir le menu" });

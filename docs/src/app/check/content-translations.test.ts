@@ -153,7 +153,7 @@ afterEach(() => {
 });
 
 describe("checkContentTranslations", () => {
-	it("Chaque skill et agent affiché a sa traduction anglaise versionnée dans le dépôt, avec l'empreinte du texte français qu'elle traduit.", () => {
+	it("Each displayed skill and agent has its English translation versioned in the repository, with the fingerprint of the French text it translates.", () => {
 		const pluginRoot = findPluginRoot();
 		const items = [
 			...readDisplayedItems(
@@ -187,7 +187,7 @@ describe("checkContentTranslations", () => {
 		}
 	});
 
-	it("`bun run check` échoue en nommant l'élément quand un skill ou un agent affiché n'a pas de traduction anglaise.", () => {
+	it("`bun run check` fails, naming the item, when a displayed skill or agent has no English translation.", () => {
 		const pluginRoot = createPluginRoot({
 			skillTranslation: "",
 			agentTranslation: "",
@@ -203,7 +203,7 @@ describe("checkContentTranslations", () => {
 		expect(result.stderr).toContain("« reviewer »");
 	});
 
-	it("`bun run check` échoue en nommant l'élément quand son `moukie-summary` ou son `moukie-produces` français a changé depuis sa traduction.", () => {
+	it("`bun run check` fails, naming the item, when its French `moukie-summary` or `moukie-produces` has changed since its translation.", () => {
 		const changedSummary = createPluginRoot({
 			skill: {
 				summary: "Cadre une feature et la découpe en petites stories.",
@@ -232,7 +232,7 @@ describe("checkContentTranslations", () => {
 		);
 	});
 
-	it("`bun run check` échoue en nommant l'élément quand une traduction a un champ en trop ou en moins par rapport au français", () => {
+	it("`bun run check` fails, naming the item, when a translation has a field too many or too few compared to the French", () => {
 		const missingField = createPluginRoot({
 			skillTranslation: buildTranslation({
 				summary: { text: "Scopes a feature.", source: SKILL_SUMMARY },
@@ -257,7 +257,7 @@ describe("checkContentTranslations", () => {
 		expect(runCheckCommand(extraField).status).toBe(1);
 	});
 
-	it("`bun run check` passe quand toutes les traductions sont à jour.", () => {
+	it("`bun run check` passes when every translation is up to date.", () => {
 		const pluginRoot = createPluginRoot();
 
 		expect(checkContentTranslations(pluginRoot)).toEqual([]);

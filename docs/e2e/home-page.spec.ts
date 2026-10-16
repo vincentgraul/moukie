@@ -30,7 +30,7 @@ function pageHeader(page: Page, githubLabel: string) {
 	});
 }
 
-test("`/moukie/fr/` affiche l'en-tête commun (icône GitHub, séparateur, sélecteur de langue), sans barre latérale, puis le logo, le titre « Moukie », le sous-titre « Seul, de la maquette Figma à la PR : Moukie code ton front et ton back en parallèle contre un contrat partagé. » et le bouton « Get started ».", async ({
+test("`/moukie/fr/` shows the shared header (GitHub icon, separator, language selector), without a sidebar, then the logo, the title “Moukie”, the subtitle “Seul, de la maquette Figma à la PR : Moukie code ton front et ton back en parallèle contre un contrat partagé.” and the “Get started” button.", async ({
 	page,
 }) => {
 	await page.goto("fr/");
@@ -72,7 +72,7 @@ test("`/moukie/fr/` affiche l'en-tête commun (icône GitHub, séparateur, séle
 	).toBeVisible();
 });
 
-test("`/moukie/en/` affiche la même page avec le sous-titre « Solo, from Figma mockup to PR: Moukie codes your front end and back end in parallel against a shared contract. » et le bouton « Get started ».", async ({
+test("`/moukie/en/` shows the same page with the subtitle “Solo, from Figma mockup to PR: Moukie codes your front end and back end in parallel against a shared contract.” and the “Get started” button.", async ({
 	page,
 }) => {
 	await page.goto("en/");
@@ -97,7 +97,7 @@ test("`/moukie/en/` affiche la même page avec le sous-titre « Solo, from Figma
 	).toBeVisible();
 });
 
-test("Le bouton « Get started » est un lien vers Getting started dans la langue courante (`/moukie/fr/getting-started/` ou `/moukie/en/getting-started/`).", async ({
+test("The “Get started” button links to Getting started in the current language (`/moukie/fr/getting-started/` or `/moukie/en/getting-started/`).", async ({
 	page,
 }) => {
 	for (const locale of ["fr", "en"]) {
@@ -117,7 +117,7 @@ test("Le bouton « Get started » est un lien vers Getting started dans la langu
 	}
 });
 
-test("`/moukie/` redirige vers `/moukie/fr/`, et `/moukie/fr/` comme `/moukie/en/` ne redirigent plus vers Skills.", async ({
+test("`/moukie/` redirects to `/moukie/fr/`, and neither `/moukie/fr/` nor `/moukie/en/` redirects to Skills anymore.", async ({
 	page,
 	browser,
 }) => {
@@ -147,7 +147,7 @@ test("`/moukie/` redirige vers `/moukie/fr/`, et `/moukie/fr/` comme `/moukie/en
 	}
 });
 
-test("Le sélecteur de langue mène de `/moukie/fr/` à `/moukie/en/`, et inversement.", async ({
+test("The language selector leads from `/moukie/fr/` to `/moukie/en/`, and back.", async ({
 	page,
 }) => {
 	for (const { from, to } of [
@@ -168,7 +168,7 @@ test("Le sélecteur de langue mène de `/moukie/fr/` à `/moukie/en/`, et invers
 	}
 });
 
-test("Dans la barre latérale et le menu mobile des autres pages, le logo et le nom « Moukie » sont un lien vers l'accueil de la langue courante.", async ({
+test("In the sidebar and the mobile menu of the other pages, the logo and the name “Moukie” link to the home page of the current language.", async ({
 	page,
 }) => {
 	for (const locale of ["fr", "en"]) {
@@ -200,7 +200,7 @@ test("Dans la barre latérale et le menu mobile des autres pages, le logo et le 
 	}
 });
 
-test("La page est pré-rendue, déclare la langue de sa page, et son onglet s'intitule « Moukie ». En dessous de 768 px, le contenu tient dans la largeur, sans défilement horizontal.", async ({
+test("The page is prerendered, declares its page language, and its tab is titled “Moukie”. Below 768 px, the content fits the width, without horizontal scrolling.", async ({
 	page,
 	browser,
 }) => {
@@ -236,7 +236,7 @@ test("La page est pré-rendue, déclare la langue de sa page, et son onglet s'in
 	}
 });
 
-test("Sur desktop, le rendu correspond à la maquette : polices, tailles, couleurs, espacements. Seul le sous-titre en diffère.", async ({
+test("On desktop, the rendering matches the mockup: fonts, sizes, colors, spacing. Only the subtitle differs.", async ({
 	page,
 }) => {
 	await page.setViewportSize({ width: 1512, height: 982 });
