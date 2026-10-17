@@ -121,3 +121,8 @@
 - **Choix** : une slice de page `not-found` pour la 404, en français et en anglais ; une slice `app/seo/` qui compose les métadonnées de chaque page et génère au build `sitemap.xml` à partir de la carte du site ; un workflow de vérification sur chaque PR, et un déploiement qui ne publie que si `check` et les tests unitaires passent.
 - **Écartés** : des métadonnées déclarées par chaque slice de `pages`.
 - **Raison** : feature `public-release`. L'URL canonique et le hreflang se déduisent tous deux de la carte du site : les composer à un seul endroit évite de répéter cette logique dans chaque page.
+
+## 2026-10-17 · Domaine personnalisé
+- **Choix** : le site est servi à la racine de `https://moukie.dev/`, chemin de base `/`, avec un `robots.txt` qui pointe vers le sitemap. GitHub redirige `vincentgraul.github.io/moukie/` et `www.moukie.dev` vers ce domaine.
+- **Écartés** : rester sous `https://vincentgraul.github.io/moukie/`, chemin de base `/moukie/`.
+- **Raison** : feature `public-release`. Le mainteneur a acquis `moukie.dev`, plus court et plus lisible à partager. À la racine d'un domaine, le `robots.txt` est enfin lu par les moteurs.
