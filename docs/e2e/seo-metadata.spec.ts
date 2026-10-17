@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { expect, type Page, test } from "@playwright/test";
 
-const SITE_URL = "https://vincentgraul.github.io/moukie/";
+const SITE_URL = "https://moukie.dev/";
 
 type Messages = Record<string, string>;
 
@@ -109,7 +109,7 @@ test("Each page declares `og:title`, `og:description`, `og:url`, `og:type` and `
 	await context.close();
 });
 
-test("Each page declares its absolute canonical URL, under `https://vincentgraul.github.io/moukie/`, with the trailing slash.", async ({
+test("Each page declares its absolute canonical URL, under `https://moukie.dev/`, with the trailing slash.", async ({
 	browser,
 }) => {
 	const context = await browser.newContext({ javaScriptEnabled: false });
@@ -149,10 +149,10 @@ test("Each page declares its `fr` and `en` versions in `hreflang`, and `x-defaul
 	await context.close();
 });
 
-test("The build produces `/moukie/sitemap.xml`, which lists every page in both languages by its canonical URL, and only them: neither the redirects nor the 404 pages.", async ({
+test("The build produces `/sitemap.xml`, which lists every page in both languages by its canonical URL, and only them: neither the redirects nor the 404 pages.", async ({
 	page,
 }) => {
-	const response = await page.request.get("/moukie/sitemap.xml");
+	const response = await page.request.get("/sitemap.xml");
 	expect(response.status()).toBe(200);
 	const sitemap = await response.text();
 
@@ -169,22 +169,39 @@ test("The build produces `/moukie/sitemap.xml`, which lists every page in both l
 
 	for (const location of locations) {
 		const pageResponse = await page.request.get(
-			location.replace(SITE_URL, "/moukie/"),
+			location.replace(SITE_URL, "/"),
 			{ maxRedirects: 0 },
 		);
 		expect(pageResponse.status(), location).toBe(200);
 	}
 });
 
+test("The build produces `/robots.txt`, which allows every robot on the whole site and gives the URL `https://moukie.dev/sitemap.xml`.", async ({
+	page,
+}) => {
+	const response = await page.request.get("/robots.txt");
+	expect(response.status()).toBe(200);
+	const lines = (await response.text())
+		.split("\n")
+		.map((line) => line.trim())
+		.filter((line) => line !== "");
+
+	expect(lines).toEqual([
+		"User-agent: *",
+		"Allow: /",
+		`Sitemap: ${SITE_URL}sitemap.xml`,
+	]);
+});
+
 test("The redirect pages declare `noindex`, and as canonical URL that of the page they redirect to.", async ({
 	page,
 }) => {
-	const response = await page.request.get("/moukie/");
+	const response = await page.request.get("/");
 	const html = await response.text();
 
 	expect(html).toMatch(/<meta name="robots" content="noindex"\/?>/);
 	expect(html).toMatch(
-		/<meta http-equiv="refresh" content="0; url=\/moukie\/fr\/"\/?>/,
+		/<meta http-equiv="refresh" content="0; url=\/fr\/"\/?>/,
 	);
 	expect(html.match(/<link rel="canonical"[^>]*>/g)).toEqual([
 		expect.stringContaining(`href="${SITE_URL}fr/"`),

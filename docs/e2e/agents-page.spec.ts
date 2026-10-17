@@ -93,10 +93,10 @@ test.beforeEach(async ({ page }) => {
 	await page.goto(AGENTS_URL);
 });
 
-test("`/moukie/fr/agents` shows the title “Agents”, then the introduction: “Les agents sont ceux qui codent. Tu ne les appelles jamais : l'orchestrateur les lance pour chaque story, un par app concernée, en parallèle, chacun dans sa propre copie du dépôt. Ils suivent ta stack, ton architecture et le contrat entre les apps, écrivent leurs tests d'abord, et ne mergent jamais rien.”", async ({
+test("`/fr/agents` shows the title “Agents”, then the introduction: “Les agents sont ceux qui codent. Tu ne les appelles jamais : l'orchestrateur les lance pour chaque story, un par app concernée, en parallèle, chacun dans sa propre copie du dépôt. Ils suivent ta stack, ton architecture et le contrat entre les apps, écrivent leurs tests d'abord, et ne mergent jamais rien.”", async ({
 	page,
 }) => {
-	await expect(page).toHaveURL(/\/moukie\/fr\/agents\/$/);
+	await expect(page).toHaveURL(/\/fr\/agents\/$/);
 	const title = page.getByRole("heading", { level: 1 });
 	await expect(title).toHaveText("Agents");
 	const introduction = title.locator("xpath=following-sibling::*[1]");
@@ -183,7 +183,7 @@ test("The cards have the same look, the same hover and the same lack of interact
 	await card.hover();
 	await expect(card).toHaveCSS("cursor", "default");
 	await card.click();
-	await expect(page).toHaveURL(/\/moukie\/fr\/agents\/$/);
+	await expect(page).toHaveURL(/\/fr\/agents\/$/);
 	for (let step = 0; step < 12; step += 1) {
 		await page.keyboard.press("Tab");
 		const isInsideCard = await page.evaluate(
@@ -200,7 +200,7 @@ test("The Agents sidebar entry is clickable from every page, and highlighted on 
 		await page.goto(path);
 		const agentsEntry = sidebar(page).getByRole("link", { name: "Agents" });
 		await expect(agentsEntry).toBeEnabled();
-		await expect(agentsEntry).toHaveAttribute("href", "/moukie/fr/agents/");
+		await expect(agentsEntry).toHaveAttribute("href", "/fr/agents/");
 	}
 
 	await page.goto(SKILLS_URL);
@@ -208,7 +208,7 @@ test("The Agents sidebar entry is clickable from every page, and highlighted on 
 		sidebar(page).getByRole("link", { name: "Agents" }),
 	).not.toHaveAttribute("aria-current", "page");
 	await sidebar(page).getByRole("link", { name: "Agents" }).click();
-	await expect(page).toHaveURL(/\/moukie\/fr\/agents\/$/);
+	await expect(page).toHaveURL(/\/fr\/agents\/$/);
 	await expect(page.getByRole("heading", { level: 1 })).toHaveText("Agents");
 
 	const agentsEntry = sidebar(page).getByRole("link", { name: "Agents" });
@@ -221,7 +221,7 @@ test("The Agents sidebar entry is clickable from every page, and highlighted on 
 	await expect(skillsEntry).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
 
 	await skillsEntry.click();
-	await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
+	await expect(page).toHaveURL(/\/fr\/skills\/$/);
 });
 
 test("The grid and the mobile menu follow the same breakpoints as the Skills page.", async ({

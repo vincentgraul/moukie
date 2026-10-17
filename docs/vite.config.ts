@@ -2,6 +2,7 @@ import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { robotsPlugin } from "./src/app/seo/robots-plugin.ts";
 import { sitemapPlugin } from "./src/app/seo/sitemap-plugin.ts";
 import {
 	listPagePaths,
@@ -12,7 +13,7 @@ import {
 import { toAbsoluteUrl } from "./src/shared/config/site-url.ts";
 
 export default defineConfig({
-	base: "/moukie/",
+	base: "/",
 	resolve: { tsconfigPaths: true },
 	preview: { host: "127.0.0.1" },
 	plugins: [
@@ -43,5 +44,6 @@ export default defineConfig({
 		}),
 		viteReact(),
 		sitemapPlugin(listPagePaths().map(toAbsoluteUrl)),
+		robotsPlugin(toAbsoluteUrl("/sitemap.xml")),
 	],
 });

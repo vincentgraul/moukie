@@ -30,12 +30,12 @@ function pageHeader(page: Page, githubLabel: string) {
 	});
 }
 
-test("`/moukie/fr/` shows the shared header (GitHub icon, separator, language selector), without a sidebar, then the logo, the title “Moukie”, the subtitle “Seul, de la maquette Figma à la PR : Moukie code ton front et ton back en parallèle contre un contrat partagé.” and the “Get started” button.", async ({
+test("`/fr/` shows the shared header (GitHub icon, separator, language selector), without a sidebar, then the logo, the title “Moukie”, the subtitle “Seul, de la maquette Figma à la PR : Moukie code ton front et ton back en parallèle contre un contrat partagé.” and the “Get started” button.", async ({
 	page,
 }) => {
 	await page.goto("fr/");
 
-	await expect(page).toHaveURL(/\/moukie\/fr\/$/);
+	await expect(page).toHaveURL(/\/fr\/$/);
 	await expect(
 		page.getByRole("navigation", { name: "Navigation principale" }),
 	).toHaveCount(0);
@@ -72,12 +72,12 @@ test("`/moukie/fr/` shows the shared header (GitHub icon, separator, language se
 	).toBeVisible();
 });
 
-test("`/moukie/en/` shows the same page with the subtitle “Solo, from Figma mockup to PR: Moukie codes your front end and back end in parallel against a shared contract.” and the “Get started” button.", async ({
+test("`/en/` shows the same page with the subtitle “Solo, from Figma mockup to PR: Moukie codes your front end and back end in parallel against a shared contract.” and the “Get started” button.", async ({
 	page,
 }) => {
 	await page.goto("en/");
 
-	await expect(page).toHaveURL(/\/moukie\/en\/$/);
+	await expect(page).toHaveURL(/\/en\/$/);
 	await expect(page.locator("html")).toHaveAttribute("lang", "en");
 	await expect(
 		page.getByRole("navigation", { name: "Main navigation" }),
@@ -97,32 +97,27 @@ test("`/moukie/en/` shows the same page with the subtitle “Solo, from Figma mo
 	).toBeVisible();
 });
 
-test("The “Get started” button links to Getting started in the current language (`/moukie/fr/getting-started/` or `/moukie/en/getting-started/`).", async ({
+test("The “Get started” button links to Getting started in the current language (`/fr/getting-started/` or `/en/getting-started/`).", async ({
 	page,
 }) => {
 	for (const locale of ["fr", "en"]) {
 		await page.goto(`${locale}/`);
 		const button = page.getByRole("link", { name: "Get started" });
-		await expect(button).toHaveAttribute(
-			"href",
-			`/moukie/${locale}/getting-started/`,
-		);
+		await expect(button).toHaveAttribute("href", `/${locale}/getting-started/`);
 		await button.click();
-		await expect(page).toHaveURL(
-			new RegExp(`/moukie/${locale}/getting-started/$`),
-		);
+		await expect(page).toHaveURL(new RegExp(`/${locale}/getting-started/$`));
 		await expect(page.getByRole("heading", { level: 1 })).toHaveText(
 			"Getting started",
 		);
 	}
 });
 
-test("`/moukie/` redirects to `/moukie/fr/`, and neither `/moukie/fr/` nor `/moukie/en/` redirects to Skills anymore.", async ({
+test("`/` redirects to `/fr/`, and neither `/fr/` nor `/en/` redirects to Skills anymore.", async ({
 	page,
 	browser,
 }) => {
 	expect(readBuiltPage("index.html")).toContain(
-		'<meta http-equiv="refresh" content="0; url=/moukie/fr/"/>',
+		'<meta http-equiv="refresh" content="0; url=/fr/"/>',
 	);
 	for (const path of ["fr/", "en/"]) {
 		expect(readBuiltPage(`${path}index.html`), path).not.toContain(
@@ -131,23 +126,23 @@ test("`/moukie/` redirects to `/moukie/fr/`, and neither `/moukie/fr/` nor `/mou
 	}
 
 	await page.goto("");
-	await expect(page).toHaveURL(/\/moukie\/fr\/$/);
+	await expect(page).toHaveURL(/\/fr\/$/);
 	await expect(page.getByRole("heading", { level: 1 })).toHaveText("Moukie");
 
 	const context = await browser.newContext({ javaScriptEnabled: false });
 	const staticPage = await context.newPage();
 	await staticPage.goto("");
-	await expect(staticPage).toHaveURL(/\/moukie\/fr\/$/);
+	await expect(staticPage).toHaveURL(/\/fr\/$/);
 	await context.close();
 
 	for (const path of ["fr/", "en/"]) {
 		await page.goto(path);
 		await page.waitForLoadState("networkidle");
-		await expect(page).toHaveURL(new RegExp(`/moukie/${path}$`));
+		await expect(page).toHaveURL(new RegExp(`/${path}$`));
 	}
 });
 
-test("The language selector leads from `/moukie/fr/` to `/moukie/en/`, and back.", async ({
+test("The language selector leads from `/fr/` to `/en/`, and back.", async ({
 	page,
 }) => {
 	for (const { from, to } of [
@@ -162,7 +157,7 @@ test("The language selector leads from `/moukie/fr/` to `/moukie/en/`, and back.
 			.filter({ has: page.getByRole("img", { name: to, exact: true }) })
 			.click();
 
-		await expect(page).toHaveURL(new RegExp(`/moukie/${to}/$`));
+		await expect(page).toHaveURL(new RegExp(`/${to}/$`));
 		await expect(page.locator("html")).toHaveAttribute("lang", to);
 		await expect(page.getByRole("heading", { level: 1 })).toHaveText("Moukie");
 	}
@@ -181,10 +176,10 @@ test("In the sidebar and the mobile menu of the other pages, the logo and the na
 		const sidebarBrand = page
 			.getByRole("navigation", { name: navigationName })
 			.getByRole("link", { name: "Moukie" });
-		await expect(sidebarBrand).toHaveAttribute("href", `/moukie/${locale}/`);
+		await expect(sidebarBrand).toHaveAttribute("href", `/${locale}/`);
 		await expect(sidebarBrand.locator("img")).toBeVisible();
 		await sidebarBrand.click();
-		await expect(page).toHaveURL(new RegExp(`/moukie/${locale}/$`));
+		await expect(page).toHaveURL(new RegExp(`/${locale}/$`));
 		await expect(page.getByRole("heading", { level: 1 })).toHaveText("Moukie");
 
 		await page.setViewportSize({ width: 500, height: 900 });
@@ -193,10 +188,10 @@ test("In the sidebar and the mobile menu of the other pages, the logo and the na
 		const menuBrand = page
 			.getByRole("navigation", { name: navigationName })
 			.getByRole("link", { name: "Moukie" });
-		await expect(menuBrand).toHaveAttribute("href", `/moukie/${locale}/`);
+		await expect(menuBrand).toHaveAttribute("href", `/${locale}/`);
 		await expect(menuBrand.locator("img")).toBeVisible();
 		await menuBrand.click();
-		await expect(page).toHaveURL(new RegExp(`/moukie/${locale}/$`));
+		await expect(page).toHaveURL(new RegExp(`/${locale}/$`));
 	}
 });
 

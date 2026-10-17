@@ -224,12 +224,12 @@ async function readFrenchCardTexts(page: Page) {
 	);
 }
 
-test("`/moukie/en/skills` and `/moukie/en/agents` show in English the titles, the introductions, the sidebar entries, the badge labels (Project, Feature, Story, Lane, Review), the summaries and what each item produces.", async ({
+test("`/en/skills` and `/en/agents` show in English the titles, the introductions, the sidebar entries, the badge labels (Project, Feature, Story, Lane, Review), the summaries and what each item produces.", async ({
 	page,
 }) => {
 	for (const expectedPage of ENGLISH_PAGES) {
 		await page.goto(expectedPage.url);
-		await expect(page).toHaveURL(new RegExp(`/moukie/${expectedPage.url}$`));
+		await expect(page).toHaveURL(new RegExp(`/${expectedPage.url}$`));
 
 		const title = page.getByRole("heading", { level: 1 });
 		await expect(title).toHaveText(expectedPage.title);
@@ -247,7 +247,7 @@ test("`/moukie/en/skills` and `/moukie/en/agents` show in English the titles, th
 		for (const name of ["Skills", "Agents"]) {
 			await expect(sidebar(page).getByRole("link", { name })).toHaveAttribute(
 				"href",
-				`/moukie/en/${name.toLowerCase()}/`,
+				`/en/${name.toLowerCase()}/`,
 			);
 		}
 

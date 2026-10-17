@@ -10,9 +10,7 @@ describe("toLanguageSwitchPath", () => {
 	});
 
 	it("finds the page after the base path of the site", () => {
-		expect(toLanguageSwitchPath("/moukie/fr/agents/", "en")).toBe(
-			"/en/agents/",
-		);
+		expect(toLanguageSwitchPath("/fr/agents/", "en")).toBe("/en/agents/");
 	});
 
 	it("leads to the home of the chosen language from a path without a known page", () => {
@@ -23,9 +21,7 @@ describe("toLanguageSwitchPath", () => {
 
 	it("leads to the home of the chosen language whatever the current page, when asked for the home", () => {
 		expect(toLanguageSwitchPath("/fr/agents/", "en", "home")).toBe("/en/");
-		expect(toLanguageSwitchPath("/moukie/en/skills/", "fr", "home")).toBe(
-			"/fr/",
-		);
+		expect(toLanguageSwitchPath("/en/skills/", "fr", "home")).toBe("/fr/");
 		expect(toLanguageSwitchPath("/zzz/", "en", "home")).toBe("/en/");
 	});
 });

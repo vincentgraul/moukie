@@ -29,12 +29,12 @@ async function readClipboard(page: Page) {
 	return page.evaluate(() => navigator.clipboard.readText());
 }
 
-test("`/moukie/fr/getting-started/` shows, in the shared layout, the title “Getting started”, then the introduction: “Moukie est un plugin Claude Code qui t'accompagne de l'idée à la pull request. Tu cadres, il code chaque app en parallèle contre un contrat partagé, puis il te rapporte la PR : c'est toi qui merges.”", async ({
+test("`/fr/getting-started/` shows, in the shared layout, the title “Getting started”, then the introduction: “Moukie est un plugin Claude Code qui t'accompagne de l'idée à la pull request. Tu cadres, il code chaque app en parallèle contre un contrat partagé, puis il te rapporte la PR : c'est toi qui merges.”", async ({
 	page,
 }) => {
 	await page.goto(FRENCH_URL);
 
-	await expect(page).toHaveURL(/\/moukie\/fr\/getting-started\/$/);
+	await expect(page).toHaveURL(/\/fr\/getting-started\/$/);
 	await expect(sidebar(page, "Navigation principale")).toBeVisible();
 	await expect(
 		page.getByRole("link", { name: "Moukie sur GitHub" }),
@@ -132,12 +132,12 @@ test("Each block has a copy button, reachable with the keyboard, that puts the e
 	).toBe(COMMANDS.addMarketplace);
 });
 
-test("`/moukie/en/getting-started/` shows the page in English: “Requirements”, “Installation” and “Update” sections, translated introduction, requirements and post-installation line, identical commands.", async ({
+test("`/en/getting-started/` shows the page in English: “Requirements”, “Installation” and “Update” sections, translated introduction, requirements and post-installation line, identical commands.", async ({
 	page,
 }) => {
 	await page.goto(ENGLISH_URL);
 
-	await expect(page).toHaveURL(/\/moukie\/en\/getting-started\/$/);
+	await expect(page).toHaveURL(/\/en\/getting-started\/$/);
 	const title = page.getByRole("heading", { level: 1 });
 	await expect(title).toHaveText("Getting started");
 	await expect(title.locator("xpath=following-sibling::*[1]")).toHaveText(
@@ -189,9 +189,9 @@ test("The Getting started entry of the sidebar and of the mobile menu is active 
 	const entry = sidebar(page, "Navigation principale").getByRole("link", {
 		name: "Getting started",
 	});
-	await expect(entry).toHaveAttribute("href", "/moukie/fr/getting-started/");
+	await expect(entry).toHaveAttribute("href", "/fr/getting-started/");
 	await entry.click();
-	await expect(page).toHaveURL(/\/moukie\/fr\/getting-started\/$/);
+	await expect(page).toHaveURL(/\/fr\/getting-started\/$/);
 
 	const desktopEntry = sidebar(page, "Navigation principale").getByRole(
 		"link",

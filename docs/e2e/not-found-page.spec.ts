@@ -8,7 +8,7 @@ const FRENCH = {
 	githubLabel: "Moukie sur GitHub",
 	title: "Page introuvable",
 	button: "Retour à l'accueil",
-	homeUrl: "/moukie/fr/",
+	homeUrl: "/fr/",
 	documentTitle: "Page introuvable · Moukie",
 	file: "404.html",
 	url: "404.html",
@@ -18,7 +18,7 @@ const ENGLISH = {
 	githubLabel: "Moukie on GitHub",
 	title: "Page not found",
 	button: "Go home",
-	homeUrl: "/moukie/en/",
+	homeUrl: "/en/",
 	documentTitle: "Page not found · Moukie",
 	file: "en/404/index.html",
 	url: "en/404/",
@@ -46,7 +46,7 @@ async function openLanguageOption(page: Page, locale: string) {
 		.click();
 }
 
-test("The build produces, prerendered, the French 404 at `/moukie/404.html` and the English one at `/moukie/en/404/`. The end-to-end static server serves the French one, with status 404, for any unknown URL under `/moukie/`, like GitHub Pages.", async ({
+test("The build produces, prerendered, the French 404 at `/404.html` and the English one at `/en/404/`. The end-to-end static server serves the French one, with status 404, for any unknown URL, like GitHub Pages.", async ({
 	page,
 }) => {
 	expect(
@@ -63,19 +63,15 @@ test("The build produces, prerendered, the French 404 at `/moukie/404.html` and 
 		"en/unknown.html",
 		"assets/unknown.js",
 	]) {
-		const response = await page.request.get(`/moukie/${path}`, {
+		const response = await page.request.get(`/${path}`, {
 			maxRedirects: 0,
 		});
 		expect(response.status(), path).toBe(404);
 		expect(await response.text(), path).toContain(FRENCH.title);
 	}
-
-	const outside = await page.request.get("/unknown/", { maxRedirects: 0 });
-	expect(outside.status()).toBe(404);
-	expect(await outside.text()).not.toContain(FRENCH.title);
 });
 
-test("The French 404 shows the shared header (GitHub icon, separator, language selector), without a sidebar, then “404”, “Page introuvable” and the “Retour à l'accueil” button, which leads to `/moukie/fr/`.", async ({
+test("The French 404 shows the shared header (GitHub icon, separator, language selector), without a sidebar, then “404”, “Page introuvable” and the “Retour à l'accueil” button, which leads to `/fr/`.", async ({
 	page,
 }) => {
 	for (const url of ["404.html", "unknown/"]) {
@@ -109,17 +105,17 @@ test("The French 404 shows the shared header (GitHub icon, separator, language s
 		await expect(button).toBeVisible();
 		await expect(button).toHaveAttribute("href", FRENCH.homeUrl);
 		await button.click();
-		await expect(page).toHaveURL(/\/moukie\/fr\/$/);
+		await expect(page).toHaveURL(/\/fr\/$/);
 		await expect(page.getByRole("heading", { level: 1 })).toHaveText("Moukie");
 	}
 });
 
-test("The English 404 shows the same header, then “404”, “Page not found” and the “Go home” button, which leads to `/moukie/en/`.", async ({
+test("The English 404 shows the same header, then “404”, “Page not found” and the “Go home” button, which leads to `/en/`.", async ({
 	page,
 }) => {
 	await page.goto(ENGLISH.url);
 
-	await expect(page).toHaveURL(/\/moukie\/en\/404\/$/);
+	await expect(page).toHaveURL(/\/en\/404\/$/);
 	await expect(
 		page.getByRole("navigation", { name: "Main navigation" }),
 	).toHaveCount(0);
@@ -145,17 +141,17 @@ test("The English 404 shows the same header, then “404”, “Page not found�
 	const button = main.getByRole("link", { name: ENGLISH.button });
 	await expect(button).toHaveAttribute("href", ENGLISH.homeUrl);
 	await button.click();
-	await expect(page).toHaveURL(/\/moukie\/en\/$/);
+	await expect(page).toHaveURL(/\/en\/$/);
 	await expect(page.getByRole("heading", { level: 1 })).toHaveText("Moukie");
 });
 
-test("On an unknown URL starting with `/moukie/en/`, the French 404 switches right away to the English 404. Without JavaScript, it stays in French.", async ({
+test("On an unknown URL starting with `/en/`, the French 404 switches right away to the English 404. Without JavaScript, it stays in French.", async ({
 	page,
 	browser,
 }) => {
 	for (const path of ["en/unknown/", "en/skills/unknown", "en/a/b/c/"]) {
 		await page.goto(path);
-		await expect(page).toHaveURL(/\/moukie\/en\/404\/$/);
+		await expect(page).toHaveURL(/\/en\/404\/$/);
 		await expect(page.locator("html")).toHaveAttribute("lang", "en");
 		await expect(page.getByRole("heading", { level: 1 })).toHaveText(
 			ENGLISH.title,
@@ -165,7 +161,7 @@ test("On an unknown URL starting with `/moukie/en/`, the French 404 switches rig
 	for (const path of ["unknown/", "fr/unknown/", "english/"]) {
 		await page.goto(path);
 		await page.waitForLoadState("networkidle");
-		await expect(page).toHaveURL(new RegExp(`/moukie/${path}$`));
+		await expect(page).toHaveURL(new RegExp(`/${path}$`));
 		await expect(page.getByRole("heading", { level: 1 })).toHaveText(
 			FRENCH.title,
 		);
@@ -175,7 +171,7 @@ test("On an unknown URL starting with `/moukie/en/`, the French 404 switches rig
 	const staticPage = await context.newPage();
 	const response = await staticPage.goto("en/unknown/");
 	expect(response?.status()).toBe(404);
-	await expect(staticPage).toHaveURL(/\/moukie\/en\/unknown\/$/);
+	await expect(staticPage).toHaveURL(/\/en\/unknown\/$/);
 	await expect(staticPage.getByRole("heading", { level: 1 })).toHaveText(
 		FRENCH.title,
 	);
@@ -186,10 +182,10 @@ test("On each 404, the language selector leads to the home page of the other lan
 	page,
 }) => {
 	const cases = [
-		{ url: "404.html", to: "en", home: /\/moukie\/en\/$/ },
-		{ url: "unknown/", to: "en", home: /\/moukie\/en\/$/ },
-		{ url: "fr/agents/unknown/", to: "en", home: /\/moukie\/en\/$/ },
-		{ url: "en/404/", to: "fr", home: /\/moukie\/fr\/$/ },
+		{ url: "404.html", to: "en", home: /\/en\/$/ },
+		{ url: "unknown/", to: "en", home: /\/en\/$/ },
+		{ url: "fr/agents/unknown/", to: "en", home: /\/en\/$/ },
+		{ url: "en/404/", to: "fr", home: /\/fr\/$/ },
 	];
 	for (const { url, to, home } of cases) {
 		await page.goto(url);

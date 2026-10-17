@@ -9,23 +9,22 @@ function runScript(pathname: string) {
 		pathname,
 		replace: (url) => replaced.push(url),
 	};
-	new Function(
-		"location",
-		createEnglishRedirectScript("/moukie/en/", "/moukie/en/404/"),
-	)(location);
+	new Function("location", createEnglishRedirectScript("/en/", "/en/404/"))(
+		location,
+	);
 	return replaced;
 }
 
 describe("createEnglishRedirectScript", () => {
 	it("sends an unknown URL under the English site to the English 404", () => {
-		expect(runScript("/moukie/en/unknown/")).toEqual(["/moukie/en/404/"]);
-		expect(runScript("/moukie/en/skills/missing")).toEqual(["/moukie/en/404/"]);
+		expect(runScript("/en/unknown/")).toEqual(["/en/404/"]);
+		expect(runScript("/en/skills/missing")).toEqual(["/en/404/"]);
 	});
 
 	it("leaves any other unknown URL on the French 404", () => {
-		expect(runScript("/moukie/unknown/")).toEqual([]);
-		expect(runScript("/moukie/fr/unknown/")).toEqual([]);
-		expect(runScript("/moukie/english/")).toEqual([]);
-		expect(runScript("/moukie/404.html")).toEqual([]);
+		expect(runScript("/unknown/")).toEqual([]);
+		expect(runScript("/fr/unknown/")).toEqual([]);
+		expect(runScript("/english/")).toEqual([]);
+		expect(runScript("/404.html")).toEqual([]);
 	});
 });

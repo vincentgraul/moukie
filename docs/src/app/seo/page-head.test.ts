@@ -24,7 +24,7 @@ describe("createPageHead", () => {
 				},
 				{
 					property: "og:url",
-					content: "https://vincentgraul.github.io/moukie/fr/skills/",
+					content: "https://moukie.dev/fr/skills/",
 				},
 				{ property: "og:type", content: "website" },
 				{ property: "og:locale", content: "fr_FR" },
@@ -32,22 +32,22 @@ describe("createPageHead", () => {
 			links: [
 				{
 					rel: "canonical",
-					href: "https://vincentgraul.github.io/moukie/fr/skills/",
+					href: "https://moukie.dev/fr/skills/",
 				},
 				{
 					rel: "alternate",
 					hreflang: "fr",
-					href: "https://vincentgraul.github.io/moukie/fr/skills/",
+					href: "https://moukie.dev/fr/skills/",
 				},
 				{
 					rel: "alternate",
 					hreflang: "en",
-					href: "https://vincentgraul.github.io/moukie/en/skills/",
+					href: "https://moukie.dev/en/skills/",
 				},
 				{
 					rel: "alternate",
 					hreflang: "x-default",
-					href: "https://vincentgraul.github.io/moukie/fr/skills/",
+					href: "https://moukie.dev/fr/skills/",
 				},
 			],
 		});
@@ -63,16 +63,16 @@ describe("createPageHead", () => {
 		expect(meta).toContainEqual({ property: "og:locale", content: "en_US" });
 		expect(meta).toContainEqual({
 			property: "og:url",
-			content: "https://vincentgraul.github.io/moukie/en/",
+			content: "https://moukie.dev/en/",
 		});
 		expect(links).toContainEqual({
 			rel: "canonical",
-			href: "https://vincentgraul.github.io/moukie/en/",
+			href: "https://moukie.dev/en/",
 		});
 		expect(links).toContainEqual({
 			rel: "alternate",
 			hreflang: "x-default",
-			href: "https://vincentgraul.github.io/moukie/fr/",
+			href: "https://moukie.dev/fr/",
 		});
 	});
 });
@@ -81,11 +81,11 @@ describe("createCanonicalLink", () => {
 	it("points to the absolute URL of a page, with its trailing slash", () => {
 		expect(createCanonicalLink("fr")).toEqual({
 			rel: "canonical",
-			href: "https://vincentgraul.github.io/moukie/fr/",
+			href: "https://moukie.dev/fr/",
 		});
 		expect(createCanonicalLink("en", "getting-started")).toEqual({
 			rel: "canonical",
-			href: "https://vincentgraul.github.io/moukie/en/getting-started/",
+			href: "https://moukie.dev/en/getting-started/",
 		});
 	});
 });
