@@ -81,32 +81,32 @@ test("The language selector trigger shows the flag of the current language. The 
 	await context.close();
 });
 
-test("Choosing the other language leads to the same page in that language: from `/moukie/fr/agents` to `/moukie/en/agents`, and back.", async ({
+test("Choosing the other language leads to the same page in that language: from `/fr/agents` to `/en/agents`, and back.", async ({
 	page,
 }) => {
 	const switches = [
 		{
 			from: "fr/agents/",
 			to: "en",
-			expected: "/moukie/en/agents/",
+			expected: "/en/agents/",
 			title: "Agents",
 		},
 		{
 			from: "en/agents/",
 			to: "fr",
-			expected: "/moukie/fr/agents/",
+			expected: "/fr/agents/",
 			title: "Agents",
 		},
 		{
 			from: "fr/skills/",
 			to: "en",
-			expected: "/moukie/en/skills/",
+			expected: "/en/skills/",
 			title: "Skills",
 		},
 		{
 			from: "en/skills/",
 			to: "fr",
-			expected: "/moukie/fr/skills/",
+			expected: "/fr/skills/",
 			title: "Skills",
 		},
 	];
@@ -133,6 +133,6 @@ test("keeps the current page when the current language is chosen again", async (
 	await languageTrigger(page).click();
 	await languageOption(page, "en").click();
 
-	await expect(page).toHaveURL(/\/moukie\/en\/agents\/$/);
+	await expect(page).toHaveURL(/\/en\/agents\/$/);
 	await expect(languageOption(page, "fr")).toBeHidden();
 });

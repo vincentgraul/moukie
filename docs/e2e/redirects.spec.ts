@@ -2,8 +2,8 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { expect, test } from "@playwright/test";
 
-const SKILLS_URL = /\/moukie\/fr\/skills\/$/;
-const AGENTS_URL = /\/moukie\/fr\/agents\/$/;
+const SKILLS_URL = /\/fr\/skills\/$/;
+const AGENTS_URL = /\/fr\/agents\/$/;
 
 function readPrerenderedPage(path: string) {
 	return readFileSync(
@@ -34,13 +34,13 @@ test("redirects a page asked without its trailing slash, as GitHub Pages does, a
 		{ path: "fr/agents", url: AGENTS_URL, title: "Agents", cardCount: 4 },
 		{
 			path: "en/skills",
-			url: /\/moukie\/en\/skills\/$/,
+			url: /\/en\/skills\/$/,
 			title: "Skills",
 			cardCount: 11,
 		},
 		{
 			path: "en/agents",
-			url: /\/moukie\/en\/agents\/$/,
+			url: /\/en\/agents\/$/,
 			title: "Agents",
 			cardCount: 4,
 		},
@@ -67,14 +67,12 @@ test("links to internal pages with a trailing slash, so that no click goes throu
 	for (const path of ["fr/skills/", "fr/agents/", "en/skills/", "en/agents/"]) {
 		await page.goto(path);
 		const internalLinks = await page
-			.locator("a[href^='/moukie/']")
+			.locator("a[href^='/']")
 			.evaluateAll((links) =>
 				links.map((link) => link.getAttribute("href") ?? ""),
 			);
 
-		expect(internalLinks, path).toContain(
-			`/moukie/${path.slice(0, 2)}/agents/`,
-		);
+		expect(internalLinks, path).toContain(`/${path.slice(0, 2)}/agents/`);
 		for (const href of internalLinks) {
 			expect(href).toMatch(/\/$/);
 		}
@@ -96,13 +94,28 @@ test("renders a single main landmark on each built page", () => {
 	}
 });
 
-test("redirects the site root asked without its trailing slash, as GitHub Pages does", async ({
-	page,
-}) => {
-	const response = await page.request.get("/moukie", { maxRedirects: 0 });
-	expect(response.status()).toBe(301);
-	expect(response.headers().location).toBe("/moukie/");
-
-	await page.goto("/moukie");
-	await expect(page).toHaveURL(/\/moukie\/fr\/$/);
+test("no link, script, stylesheet or font of the built HTML points under `/moukie/`", () => {
+	for (const path of [
+		"",
+		"fr/",
+		"fr/getting-started/",
+		"fr/skills/",
+		"fr/agents/",
+		"en/",
+		"en/getting-started/",
+		"en/skills/",
+		"en/agents/",
+		"en/404/",
+	]) {
+		const html = readPrerenderedPage(path);
+		expect(html, path || "/").not.toContain("/moukie/");
+		expect(html, path || "/").toMatch(
+			/(?:href|src)="\/assets\/[^"]+\.(?:js|css)"/,
+		);
+	}
+	const notFound = readFileSync(
+		resolve(import.meta.dirname, "../dist/client/404.html"),
+		"utf8",
+	);
+	expect(notFound).not.toContain("/moukie/");
 });

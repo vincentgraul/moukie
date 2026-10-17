@@ -3,7 +3,6 @@ import { createServer } from "node:http";
 import { extname, join, normalize, resolve } from "node:path";
 
 const ROOT_DIRECTORY = resolve(import.meta.dirname, "../dist/client");
-const BASE_PATH = "/moukie/";
 const NOT_FOUND_FILE = join(ROOT_DIRECTORY, "404.html");
 const PORT = Number(process.env.PORT ?? 3000);
 
@@ -24,15 +23,7 @@ type Resolution =
 	| { readonly kind: "missing" };
 
 function resolvePath(pathname: string): Resolution {
-	if (`${pathname}/` === BASE_PATH) {
-		return { kind: "directory-without-slash" };
-	}
-	if (!pathname.startsWith(BASE_PATH)) {
-		return { kind: "missing" };
-	}
-	const relativePath = normalize(
-		decodeURIComponent(pathname.slice(BASE_PATH.length)),
-	);
+	const relativePath = normalize(decodeURIComponent(pathname.slice(1)));
 	const candidate = join(ROOT_DIRECTORY, relativePath);
 	if (!candidate.startsWith(ROOT_DIRECTORY) || !existsSync(candidate)) {
 		return { kind: "missing" };
@@ -58,7 +49,7 @@ createServer((request, response) => {
 		return;
 	}
 	if (resolution.kind === "missing") {
-		if (pathname.startsWith(BASE_PATH) && existsSync(NOT_FOUND_FILE)) {
+		if (existsSync(NOT_FOUND_FILE)) {
 			response.writeHead(404, { "content-type": CONTENT_TYPES[".html"] });
 			createReadStream(NOT_FOUND_FILE).pipe(response);
 			return;

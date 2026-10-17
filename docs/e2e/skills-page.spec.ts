@@ -100,10 +100,10 @@ test.beforeEach(async ({ page }) => {
 	await page.goto(SKILLS_URL);
 });
 
-test("`/moukie/fr/skills` shows the title “Skills”, then the introduction: “Un skill est une compétence de Moukie. Tu n'as pas besoin de les appeler par leur nom : ils se déclenchent sur ce que tu dis. Tu peux aussi les invoquer directement, avec /moukie:<skill>.”", async ({
+test("`/fr/skills` shows the title “Skills”, then the introduction: “Un skill est une compétence de Moukie. Tu n'as pas besoin de les appeler par leur nom : ils se déclenchent sur ce que tu dis. Tu peux aussi les invoquer directement, avec /moukie:<skill>.”", async ({
 	page,
 }) => {
-	await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
+	await expect(page).toHaveURL(/\/fr\/skills\/$/);
 	const title = page.getByRole("heading", { level: 1 });
 	await expect(title).toHaveText("Skills");
 	const introduction = title.locator("xpath=following-sibling::*[1]");
@@ -215,7 +215,7 @@ test("A card is neither a link nor a focusable element, and the cursor stays the
 	await expect(card).toHaveCSS("cursor", "default");
 
 	await card.click();
-	await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
+	await expect(page).toHaveURL(/\/fr\/skills\/$/);
 	for (let step = 0; step < 12; step += 1) {
 		await page.keyboard.press("Tab");
 		const isInsideCard = await page.evaluate(

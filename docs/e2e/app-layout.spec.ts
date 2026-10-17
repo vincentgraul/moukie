@@ -76,7 +76,7 @@ test("An entry whose page does not exist yet is shown disabled and is not clicka
 		await expect(entry).toHaveCSS("opacity", "0.5");
 		await expect(sidebar(page).getByRole("link", { name })).toHaveCount(0);
 		await entry.click({ force: true });
-		await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
+		await expect(page).toHaveURL(/\/fr\/skills\/$/);
 	}
 	for (const name of ["Getting started", "Skills", "Agents"]) {
 		await expect(sidebar(page).getByRole("link", { name })).toBeEnabled();
@@ -116,7 +116,7 @@ test("The header shows the GitHub icon, which opens https://github.com/vincentgr
 	await githubLink.click();
 	const popup = await popupPromise;
 	await expect(popup).toHaveURL(REPOSITORY_URL);
-	await expect(page).toHaveURL(/\/moukie\/fr\/skills\/$/);
+	await expect(page).toHaveURL(/\/fr\/skills\/$/);
 });
 
 test("labels the language selector and keeps the header still while the page hydrates", async ({
