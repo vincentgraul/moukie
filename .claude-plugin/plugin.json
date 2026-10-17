@@ -1,7 +1,7 @@
 {
   "name": "moukie",
   "description": "Moukie, ton compagnon de développement spec-driven pour Claude Code : initialisation de projet, rédaction de specs, implémentation parallèle front/back contre un contrat d'interface gelé, et ouverture de PR. Embarque les agents, et installe dans chaque projet un hook git qui refuse les commits sur main/master.",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "author": {
     "name": "Vincent Graul"
   },

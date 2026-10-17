@@ -106,7 +106,7 @@ Avant d'écrire, confronte la feature à ce qui est déjà décidé :
 - **la stack** : demande-t-elle une capacité que `stack.md` ne couvre pas, comme un paiement, du temps réel, du stockage de fichiers, des emails ou de la recherche ? Si oui, invoque le skill `stack` en mode amendement, avec le besoin
 - **l'architecture** : demande-t-elle un module, une app ou une communication entre apps que `architecture.md` ne prévoit pas ? Si oui, invoque le skill `architecture` en mode amendement, avec le besoin
 
-Récapitule, puis demande une confirmation avant d'écrire.
+Récapitule en quelques lignes le découpage, les slugs et les amendements du vault, puis demande une confirmation avant d'écrire.
 
 ---
 
@@ -174,7 +174,7 @@ Le champ `figma:` porte l'URL du **nœud** de l'écran, qui contient un `node-id
 
 ## Phase 4 — Validation et commit
 
-Présente le cadrage et les stories. Quand l'utilisateur valide, passe le `README.md` de la feature à `status: validated`, retire de `project/ideas.md` l'idée dont la feature est partie, puis **commite la feature** :
+Donne un lien vers le `README.md` de la feature et vers chaque story, avec une ligne par story : son titre, son slug et, en mise à jour, ce qui a changé. Ne recopie ni le cadrage ni les critères : l'utilisateur les relit dans les fichiers, et tu y reportes ses corrections. Quand l'utilisateur valide, passe le `README.md` de la feature à `status: validated`, retire de `project/ideas.md` l'idée dont la feature est partie, puis **commite la feature** :
 
 - bascule sur la branche `<feature>/spec`, en la créant si besoin depuis la branche par défaut du remote, à jour. Pas `<feature>` tout court : git refuse qu'une branche `cart` coexiste avec les branches de story `cart/add-item`
 - ajoute le dossier `project/specs/<feature>/`, les fichiers du vault amendés en 2.5 et `project/ideas.md` s'il a changé, et rien d'autre
